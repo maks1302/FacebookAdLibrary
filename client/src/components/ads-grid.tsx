@@ -99,27 +99,29 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
           <CardContent className="flex-1 flex flex-col">
             {/* Ad Preview */}
             {ad.ad_snapshot_url && (
-              <div className="w-full h-[300px] mb-4 rounded-md overflow-hidden border relative">
-                {loadingPreviews[ad.id] && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-background/80">
-                    <Skeleton className="h-[250px] w-full" />
-                  </div>
-                )}
-                {previewErrors[ad.id] ? (
-                  <div className="h-full flex items-center justify-center text-muted-foreground">
-                    <p>{previewErrors[ad.id]}</p>
-                  </div>
-                ) : (
-                  <iframe
-                    src={`/api/ad-preview?url=${encodeURIComponent(ad.ad_snapshot_url)}`}
-                    className="w-full h-full"
-                    style={{ border: 'none' }}
-                    title={`Facebook Ad ${ad.id}`}
-                    sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-                    onLoad={() => handlePreviewLoad(ad.id)}
-                    onError={() => handlePreviewError(ad.id)}
-                  />
-                )}
+              <div className="relative flex justify-center mb-4">
+                <div className="w-full max-w-[500px] aspect-[1/2] rounded-md overflow-hidden border bg-white">
+                  {loadingPreviews[ad.id] && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-background/80">
+                      <Skeleton className="w-full h-full" />
+                    </div>
+                  )}
+                  {previewErrors[ad.id] ? (
+                    <div className="h-full flex items-center justify-center text-muted-foreground">
+                      <p>{previewErrors[ad.id]}</p>
+                    </div>
+                  ) : (
+                    <iframe
+                      src={`/api/ad-preview?url=${encodeURIComponent(ad.ad_snapshot_url)}`}
+                      className="w-full h-full scale-[0.65] origin-top"
+                      style={{ border: 'none' }}
+                      title={`Facebook Ad ${ad.id}`}
+                      sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                      onLoad={() => handlePreviewLoad(ad.id)}
+                      onError={() => handlePreviewError(ad.id)}
+                    />
+                  )}
+                </div>
               </div>
             )}
 
