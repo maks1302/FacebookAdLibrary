@@ -100,7 +100,7 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
             {/* Ad Preview */}
             {ad.ad_snapshot_url && (
               <div className="relative flex justify-center mb-4">
-                <div className="w-full max-w-[400px] aspect-video rounded-md overflow-hidden border bg-white">
+                <div className="w-full max-w-[400px] aspect-[4/3] rounded-md overflow-hidden border bg-white">
                   {loadingPreviews[ad.id] && (
                     <div className="absolute inset-0 flex items-center justify-center bg-background/80">
                       <Skeleton className="w-full h-full" />
@@ -113,12 +113,12 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
                   ) : (
                     <iframe
                       src={`/api/ad-preview?url=${encodeURIComponent(ad.ad_snapshot_url)}`}
-                      className="w-full h-full scale-[0.45] origin-top-left"
+                      className="w-full h-full"
                       style={{ 
                         border: 'none',
-                        width: '220%',
-                        height: '220%',
-                        transform: 'scale(0.45)',
+                        width: '180%',
+                        height: '180%',
+                        transform: 'scale(0.55)',
                         transformOrigin: 'top left'
                       }}
                       title={`Facebook Ad ${ad.id}`}
