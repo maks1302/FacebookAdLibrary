@@ -100,7 +100,7 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
             {/* Ad Preview */}
             {ad.ad_snapshot_url && (
               <div className="relative flex justify-center">
-                <div className="w-full aspect-[630/1200] rounded-md overflow-hidden border bg-white flex items-center justify-center">
+                <div className="w-full aspect-[630/1200] rounded-md border bg-white flex items-center justify-center">
                   {loadingPreviews[ad.id] && (
                     <div className="absolute inset-0 flex items-center justify-center bg-background/80">
                       <Skeleton className="w-full h-full" />
@@ -131,7 +131,7 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
               </div>
             )}
 
-            <ScrollArea className="h-[200px] mb-4">
+            <ScrollArea className="h-[200px]">
               <div className="space-y-2">
                 <p className="text-sm text-muted-foreground">
                   {ad.ad_creative_bodies?.[0] || "No ad content available"}
