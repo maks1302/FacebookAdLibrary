@@ -99,8 +99,8 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
           <CardContent className="flex-1 flex flex-col">
             {/* Ad Preview */}
             {ad.ad_snapshot_url && (
-              <div className="relative flex justify-center mb-4">
-                <div className="w-full max-w-[400px] aspect-[630/1200] rounded-md overflow-hidden border bg-white flex items-center justify-center">
+              <div className="relative flex justify-center">
+                <div className="w-full aspect-[630/1200] rounded-md overflow-hidden border bg-white flex items-center justify-center">
                   {loadingPreviews[ad.id] && (
                     <div className="absolute inset-0 flex items-center justify-center bg-background/80">
                       <Skeleton className="w-full h-full" />
@@ -114,7 +114,7 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
                     <iframe
                       src={`/api/ad-preview?url=${encodeURIComponent(ad.ad_snapshot_url)}`}
                       className="w-full h-full"
-                      style={{ 
+                      style={{
                         border: 'none',
                         width: '630px',
                         height: '1200px',
