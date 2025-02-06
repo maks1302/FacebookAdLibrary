@@ -83,8 +83,21 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
             )}
           </CardHeader>
           <CardContent className="flex-1 flex flex-col">
+            {/* Ad Preview */}
+            {ad.ad_snapshot_url && (
+              <div className="w-full h-[300px] mb-4 rounded-md overflow-hidden border">
+                <iframe
+                  src={ad.ad_snapshot_url}
+                  className="w-full h-full"
+                  style={{ border: 'none' }}
+                  title={`Facebook Ad ${ad.id}`}
+                  sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                />
+              </div>
+            )}
+
+            {/* Ad Creative Content as Fallback */}
             <ScrollArea className="h-[200px] mb-4">
-              {/* Ad Creative Content */}
               <div className="space-y-2">
                 <p className="text-sm text-muted-foreground">
                   {ad.ad_creative_bodies?.[0] || "No ad content available"}
