@@ -44,12 +44,21 @@ export function registerRoutes(app: Express): Server {
           }),
       );
 
+      const responseData = await response.json();
+
       if (!response.ok) {
-        const error = await response.text();
-        throw new Error(`Facebook API error: ${error}`);
+        throw new Error(`Facebook API error: ${JSON.stringify(responseData)}`);
       }
 
-      res.json({ status: "connected" });
+      res.json({
+        status: "connected",
+        api_version: FB_API_VERSION,
+        response_data: {
+          data_count: responseData.data?.length || 0,
+          has_paging: !!responseData.paging,
+          timestamp: new Date().toISOString()
+        }
+      });
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "An unexpected error occurred";
