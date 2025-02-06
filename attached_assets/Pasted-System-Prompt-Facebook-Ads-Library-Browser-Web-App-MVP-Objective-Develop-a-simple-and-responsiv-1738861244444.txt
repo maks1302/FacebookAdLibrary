@@ -1,0 +1,84 @@
+System Prompt: Facebook Ads Library Browser Web App (MVP)
+
+Objective:
+Develop a simple and responsive web application that allows users to browse and search ads using the Facebook Ads Library API. The initial version (MVP) should focus on core functionality, be easy to debug, and allow for future scalability.
+
+Reference:
+
+GitHub Repo: FacebookResearch Ad Library API Script Repository
+Official Documentation: Facebook Ads Library API
+Development Approach (MVP-First)
+Key Principles for MVP:
+✅ Simple UI – Minimalistic and easy to use.
+✅ Responsive Design – Works well on desktop and mobile.
+✅ Easy Debugging – Clear error handling and logging.
+✅ Scalable Foundation – Ready for future improvements.
+
+Development Phases
+Phase 1: Requirement Analysis and Planning
+Define the Project Structure:
+Separate frontend and backend for modularity.
+Select the Tech Stack:
+Frontend: React.js with Tailwind CSS.
+Backend: Node.js with Express.js.
+Database: PostgreSQL for storing search history (optional for MVP).
+Set Up Version Control:
+Initialize a Git repository.
+Phase 2: UI/UX Design (Keep It Simple & Responsive)
+Basic Wireframes:
+Simple layout with search bar, filters, and ad cards.
+Prototype (Optional for MVP):
+Can use Figma for basic UI reference.
+Phase 3: Backend Development & API Integration
+Set Up Express Server:
+Minimal API routes to fetch ads from Facebook Ads Library API.
+Integrate Facebook Ads Library API:
+Implement authentication & API calls.
+Basic Logging & Error Handling:
+Ensure clear logs for debugging.
+Phase 4: Frontend Development (Simple & Responsive)
+Set Up React App:
+Use Create React App (CRA) or Vite for fast development.
+Build Core Components:
+Search Bar – Simple input field for ad search.
+Filter Options – Basic filters like country, advertiser name.
+Ad Display – Show results in a clean, responsive grid.
+Mobile-Friendly & Responsive UI:
+Use Tailwind CSS for quick styling.
+Phase 5: Testing & Debugging
+Basic Tests:
+Ensure API calls work correctly.
+Check UI responsiveness.
+Debugging & Error Handling:
+Add clear error messages for API failures.
+Phase 6: Deployment & Documentation
+Deploy MVP:
+Frontend: Vercel/Netlify.
+Backend: Heroku/Railway.
+Write Simple Documentation:
+Cover setup, API usage, and future improvements.
+Project Structure
+plaintext
+Copy
+Edit
+facebook-ads-library-browser/
+│── frontend/     # React.js application
+│── backend/      # Express.js server
+│── docs/         # Documentation
+│── .gitignore
+│── README.md
+│── package.json
+API Integration Overview
+Authenticate: Obtain an access token via Facebook’s OAuth 2.0.
+Fetch Ads: Use /ads_archive API endpoint.
+Render Results: Display ads in a responsive grid.
+Example API Query
+bash
+Copy
+Edit
+curl -X GET "https://graph.facebook.com/v18.0/ads_archive?access_token=YOUR_ACCESS_TOKEN&search_terms=example&ad_type=ALL&country=US"
+Next Steps
+Create the Project Structure ✅
+Initialize Git Repository ✅
+Set Up Basic Express Server & React App ✅
+This ensures a fast, simple, and easily debuggable MVP while keeping the foundation scalable. 🚀 Let me know if you want any modifications!
