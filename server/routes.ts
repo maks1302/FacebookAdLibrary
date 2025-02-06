@@ -43,13 +43,13 @@ export function registerRoutes(app: Express): Server {
             fields: [
               "id",
               "page_name",
-              "ad_creatives{body}",
-              "funding_entity"
+              "ad_creative_bodies",
+              "bylines"
             ].join(","),
           }),
       );
 
-      const responseData = await response.json();
+      const responseData = await response.json() as any;
 
       if (!response.ok) {
         throw new Error(`Facebook API error: ${JSON.stringify(responseData)}`);
@@ -84,11 +84,11 @@ export function registerRoutes(app: Express): Server {
       const fields = [
         "id",
         "page_name",
-        "ad_creatives{body,link_caption,link_title,link_description}",
+        "ad_creative_bodies",
+        "bylines",
         "ad_delivery_start_time",
         "ad_delivery_stop_time",
         "currency",
-        "funding_entity",
         "impressions",
         "spend",
         "demographic_distribution",

@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
-import { type Ad } from "@/lib/types";
+import { type Ad } from "@shared/types";
 import { Calendar, DollarSign, Users } from "lucide-react";
 
 interface AdsGridProps {
@@ -50,15 +50,22 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
           </CardHeader>
           <CardContent className="flex-1 flex flex-col">
             <ScrollArea className="h-[200px] mb-4">
-              <p className="text-sm text-muted-foreground">{ad.ad_creative_body}</p>
+              <p className="text-sm text-muted-foreground">
+                {ad.ad_creative_bodies?.[0] || "No ad content available"}
+              </p>
+              {ad.bylines && ad.bylines.length > 0 && (
+                <p className="text-sm text-muted-foreground mt-2">
+                  By: {ad.bylines.join(", ")}
+                </p>
+              )}
             </ScrollArea>
-            
+
             <div className="mt-auto space-y-2 text-sm">
               <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
                 <span>Started: {new Date(ad.ad_delivery_start_time).toLocaleDateString()}</span>
               </div>
-              
+
               {ad.spend && (
                 <div className="flex items-center gap-2">
                   <DollarSign className="h-4 w-4" />
@@ -67,7 +74,7 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
                   </span>
                 </div>
               )}
-              
+
               {ad.impressions && (
                 <div className="flex items-center gap-2">
                   <Users className="h-4 w-4" />
