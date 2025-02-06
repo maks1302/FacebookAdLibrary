@@ -118,8 +118,8 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
                         border: 'none',
                         width: '630px',
                         height: '1200px',
-                        transform: 'scale(0.33)',
-                        transformOrigin: 'top left'
+                        transform: 'scale(0.5)',
+                        transformOrigin: 'top'
                       }}
                       title={`Facebook Ad ${ad.id}`}
                       sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
