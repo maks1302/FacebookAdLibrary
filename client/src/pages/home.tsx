@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { SearchForm } from "@/components/search-form";
 import { AdsGrid } from "@/components/ads-grid";
+import { ConnectionTest } from "@/components/connection-test";
 import { type Ad } from "@shared/types";
 import { useToast } from "@/hooks/use-toast";
 
@@ -45,6 +46,11 @@ export default function Home() {
           <h1 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
             Facebook Ads Library Browser
           </h1>
+
+          <div className="mb-6">
+            <ConnectionTest />
+          </div>
+
           <SearchForm onSearch={handleSearch} isLoading={isLoading} />
         </div>
 

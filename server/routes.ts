@@ -25,6 +25,37 @@ type FacebookApiResponse = {
 };
 
 export function registerRoutes(app: Express): Server {
+  // Test API connection endpoint
+  app.get("/api/test-connection", async (_req, res) => {
+    try {
+      if (!FB_ACCESS_TOKEN) {
+        throw new Error("Facebook API access token not configured");
+      }
+
+      const response = await fetch(
+        `https://graph.facebook.com/${FB_API_VERSION}/ads_archive?` +
+          new URLSearchParams({
+            access_token: FB_ACCESS_TOKEN,
+            search_terms: "test",
+            ad_type: "ALL",
+            ad_reached_countries: '["US"]',
+            limit: "1",
+            fields: ["id"].join(","),
+          })
+      );
+
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(`Facebook API error: ${error}`);
+      }
+
+      res.json({ status: "connected" });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "An unexpected error occurred";
+      res.status(400).json({ status: "error", message });
+    }
+  });
+
   app.get("/api/ads", async (req, res) => {
     try {
       const { search_terms, ad_type, country } = searchParamsSchema.parse(req.query);

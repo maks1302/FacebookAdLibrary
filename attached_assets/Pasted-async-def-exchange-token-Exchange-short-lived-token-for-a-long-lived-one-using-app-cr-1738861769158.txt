@@ -1,0 +1,57 @@
+async def exchange_token():
+    """
+    Exchange short-lived token for a long-lived one using app credentials
+    """
+    # Force reload environment variables
+    load_dotenv(override=True)
+    app_id = os.getenv("FB_APP_ID")
+    app_secret = os.getenv("FB_APP_SECRET")
+    short_lived_token = os.getenv("FB_ACCESS_TOKEN")
+    
+    print(f"Exchange token using: {short_lived_token}")  # Debug print
+
+    if not all([app_id, app_secret, short_lived_token]):
+        return False, "Missing required credentials in .env file"
+
+    try:
+        async with httpx.AsyncClient() as client:
+            # Construct the exact URL as specified
+            url = f"{FB_GRAPH_URL}/{FB_API_VERSION}/oauth/access_token"
+            params = {
+                "grant_type": "fb_exchange_token",
+                "client_id": app_id,
+                "client_secret": app_secret,
+                "fb_exchange_token": short_lived_token
+            }
+            
+            print(f"Exchange token URL: {url}")  # Debug print
+            # Make request
+            response = await client.get(url, params=params)
+            print(f"Exchange token response: {response.text}")  # Debug print
+            
+            if response.status_code == 200:
+                data = response.json()
+                new_token = data.get("access_token")
+                if new_token:
+                    return True, new_token
+                return False, "No access token in response"
+            else:
+                error_data = response.json()
+                error_msg = error_data.get('error', {}).get('message', 'Unknown error')
+                return False, f"Token exchange failed: {error_msg}\nFull URL: {response.url}"
+
+    except Exception as e:
+        return False, f"Token exchange error: {str(e)}"
+
+@app.get("/", response_class=HTMLResponse)
+async def home(request: Request):
+    # Check API connection status
+    success, _ = await test_api_connection()
+    
+    return templates.TemplateResponse(
+        "index.html",
+        {
+            "request": request,
+            "is_connected": success
+        }
+    )
