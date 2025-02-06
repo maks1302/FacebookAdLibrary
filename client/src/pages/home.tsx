@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { SearchForm } from "@/components/search-form";
 import { AdsGrid } from "@/components/ads-grid";
-import { type Ad } from "@/lib/types";
+import { type Ad } from "@shared/types";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Home() {
@@ -16,15 +16,22 @@ export default function Home() {
   const { data: ads, isLoading } = useQuery<Ad[]>({
     queryKey: ['/api/ads', searchParams],
     enabled: !!searchParams,
+    queryFn: async () => {
+      if (!searchParams) return [];
+      const url = `/api/ads?${new URLSearchParams({
+        search_terms: searchParams.search_terms,
+        ad_type: searchParams.ad_type,
+        country: searchParams.country,
+      })}`;
+      const response = await fetch(url);
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message);
+      }
+      return response.json();
+    },
     gcTime: 0,
     retry: false,
-    onError: (error) => {
-      toast({
-        title: "Error",
-        description: (error as Error).message,
-        variant: "destructive",
-      });
-    },
   });
 
   const handleSearch = (data: { search_terms: string; ad_type: string; country: string }) => {
