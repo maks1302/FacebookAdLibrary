@@ -85,15 +85,24 @@ export function registerRoutes(app: Express): Server {
         "id",
         "page_name",
         "ad_creative_bodies",
-        "bylines",
+        "ad_creative_link_captions",
+        "ad_creative_link_descriptions",
+        "ad_creative_link_titles",
+        "ad_creation_time",
         "ad_delivery_start_time",
         "ad_delivery_stop_time",
+        "ad_snapshot_url",
         "currency",
         "impressions",
         "spend",
         "demographic_distribution",
+        "delivery_by_region",
         "publisher_platforms",
-        "target_locations"
+        "target_ages",
+        "target_gender",
+        "target_locations",
+        "bylines",
+        "languages"
       ].join(",");
 
       const response = await fetch(

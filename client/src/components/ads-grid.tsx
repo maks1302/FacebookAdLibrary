@@ -2,7 +2,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import { type Ad } from "@shared/types";
-import { Calendar, DollarSign, Users } from "lucide-react";
+import { 
+  Calendar, 
+  DollarSign, 
+  Users, 
+  Globe, 
+  Target, 
+  Languages, 
+  ExternalLink,
+  Clock
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface AdsGridProps {
   ads: Ad[];
@@ -42,47 +52,109 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
       {ads.map((ad) => (
         <Card key={ad.id} className="flex flex-col">
           <CardHeader>
-            <CardTitle className="text-lg">{ad.page_name}</CardTitle>
+            <CardTitle className="text-lg">
+              {ad.page_name}
+              {ad.ad_snapshot_url && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="ml-2"
+                  onClick={() => window.open(ad.ad_snapshot_url, '_blank')}
+                >
+                  <ExternalLink className="h-4 w-4" />
+                </Button>
+              )}
+            </CardTitle>
           </CardHeader>
           <CardContent className="flex-1 flex flex-col">
             <ScrollArea className="h-[200px] mb-4">
-              <p className="text-sm text-muted-foreground">
-                {ad.ad_creative_bodies?.[0] || "No ad content available"}
-              </p>
-              {ad.bylines && ad.bylines.length > 0 && (
-                <p className="text-sm text-muted-foreground mt-2">
-                  By: {ad.bylines.join(", ")}
+              {/* Ad Creative Content */}
+              <div className="space-y-2">
+                <p className="text-sm text-muted-foreground">
+                  {ad.ad_creative_bodies?.[0] || "No ad content available"}
                 </p>
-              )}
+                {ad.ad_creative_link_titles?.[0] && (
+                  <p className="text-sm font-medium">
+                    {ad.ad_creative_link_titles[0]}
+                  </p>
+                )}
+                {ad.ad_creative_link_descriptions?.[0] && (
+                  <p className="text-sm text-muted-foreground">
+                    {ad.ad_creative_link_descriptions[0]}
+                  </p>
+                )}
+                {ad.bylines && ad.bylines.length > 0 && (
+                  <p className="text-sm text-muted-foreground mt-2">
+                    By: {ad.bylines.join(", ")}
+                  </p>
+                )}
+              </div>
             </ScrollArea>
 
-            <div className="mt-auto space-y-2 text-sm">
-              <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
-                <span>Started: {new Date(ad.ad_delivery_start_time).toLocaleDateString()}</span>
+            <div className="mt-auto space-y-2 text-sm divide-y">
+              {/* Timing Information */}
+              <div className="space-y-1 pb-2">
+                <div className="flex items-center gap-2">
+                  <Clock className="h-4 w-4" />
+                  <span>Created: {new Date(ad.ad_creation_time).toLocaleDateString()}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4" />
+                  <span>
+                    Active: {new Date(ad.ad_delivery_start_time).toLocaleDateString()}
+                    {ad.ad_delivery_stop_time && ` - ${new Date(ad.ad_delivery_stop_time).toLocaleDateString()}`}
+                  </span>
+                </div>
               </div>
 
-              {ad.spend && (
-                <div className="flex items-center gap-2">
-                  <DollarSign className="h-4 w-4" />
-                  <span>
-                    Spent: {ad.spend.lower_bound}-{ad.spend.upper_bound} {ad.currency}
-                  </span>
-                </div>
-              )}
+              {/* Reach and Spend */}
+              <div className="space-y-1 py-2">
+                {ad.spend && (
+                  <div className="flex items-center gap-2">
+                    <DollarSign className="h-4 w-4" />
+                    <span>
+                      Spent: {ad.spend.lower_bound}-{ad.spend.upper_bound} {ad.currency}
+                    </span>
+                  </div>
+                )}
+                {ad.impressions && (
+                  <div className="flex items-center gap-2">
+                    <Users className="h-4 w-4" />
+                    <span>
+                      Impressions: {ad.impressions.lower_bound}-{ad.impressions.upper_bound}
+                    </span>
+                  </div>
+                )}
+              </div>
 
-              {ad.impressions && (
-                <div className="flex items-center gap-2">
-                  <Users className="h-4 w-4" />
-                  <span>
-                    Impressions: {ad.impressions.lower_bound}-{ad.impressions.upper_bound}
-                  </span>
-                </div>
-              )}
+              {/* Targeting Information */}
+              <div className="space-y-1 pt-2">
+                {ad.target_gender && (
+                  <div className="flex items-center gap-2">
+                    <Target className="h-4 w-4" />
+                    <span>Target: {ad.target_gender}</span>
+                    {ad.target_ages && (
+                      <span>({ad.target_ages.join(", ")} years)</span>
+                    )}
+                  </div>
+                )}
+                {ad.languages && ad.languages.length > 0 && (
+                  <div className="flex items-center gap-2">
+                    <Languages className="h-4 w-4" />
+                    <span>Languages: {ad.languages.join(", ")}</span>
+                  </div>
+                )}
+                {ad.publisher_platforms && ad.publisher_platforms.length > 0 && (
+                  <div className="flex items-center gap-2">
+                    <Globe className="h-4 w-4" />
+                    <span>Platforms: {ad.publisher_platforms.join(", ")}</span>
+                  </div>
+                )}
+              </div>
             </div>
           </CardContent>
         </Card>
