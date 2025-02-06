@@ -127,7 +127,17 @@ export function registerRoutes(app: Express): Server {
       }
 
       const apiResponse = (await response.json()) as FacebookApiResponse;
-      console.log(`Found ${apiResponse.data?.length || 0} ads`);
+      console.log('=== Facebook Ads API Response ===');
+      console.log('Total ads found:', apiResponse.data?.length || 0);
+      console.log('\nFirst ad raw data:');
+      if (apiResponse.data?.[0]) {
+        console.log(JSON.stringify(apiResponse.data[0], null, 2));
+      }
+      console.log('\nAll available fields in first ad:');
+      if (apiResponse.data?.[0]) {
+        console.log(Object.keys(apiResponse.data[0]).sort());
+      }
+      console.log('===============================');
 
       // Store search in history
       await storage.createSearchHistory({
