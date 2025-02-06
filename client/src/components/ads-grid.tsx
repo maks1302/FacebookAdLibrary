@@ -101,7 +101,7 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
           <CardContent className="p-0">
             {/* Ad Preview */}
             {ad.ad_snapshot_url && (
-              <div className="relative flex justify-center items-center h-[400px]">
+              <div className="relative flex justify-center items-center h-[600px]">
                 <div className="w-full h-full rounded-none bg-white overflow-hidden">
                   {loadingPreviews[ad.id] && (
                     <div className="absolute inset-0 flex items-center justify-center bg-background/80">
