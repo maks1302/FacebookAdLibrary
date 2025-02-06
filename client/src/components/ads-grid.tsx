@@ -2,21 +2,34 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import { type Ad } from "@shared/types";
-import { 
-  Calendar, 
-  DollarSign, 
-  Users, 
-  Globe, 
-  Target, 
-  Languages, 
+import {
+  Calendar,
+  DollarSign,
+  Users,
+  Globe,
+  Target,
+  Languages,
   ExternalLink,
-  Clock
+  Clock,
+  MapPin
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface AdsGridProps {
   ads: Ad[];
   isLoading: boolean;
+}
+
+function summarizeTargetLocations(locations?: Ad['target_locations']) {
+  if (!locations || locations.length === 0) return null;
+
+  const includedLocations = locations.filter(loc => !loc.excluded);
+  if (includedLocations.length === 0) return null;
+
+  const countries = new Set(includedLocations.map(loc => loc.name));
+  const summary = Array.from(countries).join(", ");
+
+  return summary.length > 50 ? `${summary.slice(0, 47)}...` : summary;
 }
 
 export function AdsGrid({ ads, isLoading }: AdsGridProps) {
@@ -152,6 +165,12 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
                   <div className="flex items-center gap-2">
                     <Globe className="h-4 w-4" />
                     <span>Platforms: {ad.publisher_platforms.join(", ")}</span>
+                  </div>
+                )}
+                {ad.target_locations && (
+                  <div className="flex items-center gap-2">
+                    <MapPin className="h-4 w-4" />
+                    <span>Locations: {summarizeTargetLocations(ad.target_locations)}</span>
                   </div>
                 )}
               </div>
