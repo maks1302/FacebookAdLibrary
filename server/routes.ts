@@ -43,7 +43,7 @@ export function registerRoutes(app: Express): Server {
             fields: [
               "id",
               "page_name",
-              "ad_creative_body",
+              "ad_creatives{body}",
               "funding_entity"
             ].join(","),
           }),
@@ -84,9 +84,7 @@ export function registerRoutes(app: Express): Server {
       const fields = [
         "id",
         "page_name",
-        "ad_creative_body",
-        "ad_creative_link_caption",
-        "ad_creative_link_title",
+        "ad_creatives{body,link_caption,link_title,link_description}",
         "ad_delivery_start_time",
         "ad_delivery_stop_time",
         "currency",
