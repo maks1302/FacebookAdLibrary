@@ -2,10 +2,15 @@ import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 
+type ConnectionResponse = {
+  status: "connected" | "error";
+  message?: string;
+};
+
 export function ConnectionTest() {
   const { toast } = useToast();
 
-  const { data, error } = useQuery({
+  const { data, error } = useQuery<ConnectionResponse>({
     queryKey: ['/api/test-connection'],
     retry: 2,
     gcTime: 0,
