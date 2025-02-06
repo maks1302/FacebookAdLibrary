@@ -101,8 +101,8 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
           <CardContent className="p-0">
             {/* Ad Preview */}
             {ad.ad_snapshot_url && (
-              <div className="relative flex justify-center items-center h-[800px]">
-                <div className="w-full h-full rounded-none bg-white overflow-hidden">
+              <div className="relative flex justify-center">
+                <div className="max-w-[700px] h-[864px] rounded-none bg-white">
                   {loadingPreviews[ad.id] && (
                     <div className="absolute inset-0 flex items-center justify-center bg-background/80">
                       <Skeleton className="w-full h-full" />
@@ -121,7 +121,6 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
                         width: '100%',
                         height: '100%',
                         transform: 'none',
-                        objectFit: 'contain',
                       }}
                       title={`Facebook Ad ${ad.id}`}
                       sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
@@ -133,7 +132,29 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
               </div>
             )}
 
-            
+            <div className="p-3 space-y-2">
+              <ScrollArea className="h-[120px]">
+                <div className="space-y-1">
+                  <p className="text-xs text-muted-foreground">
+                    {ad.ad_creative_bodies?.[0] || "No ad content available"}
+                  </p>
+                  {ad.ad_creative_link_titles?.[0] && (
+                    <p className="text-xs font-medium">
+                      {ad.ad_creative_link_titles[0]}
+                    </p>
+                  )}
+                  {ad.ad_creative_link_descriptions?.[0] && (
+                    <p className="text-xs text-muted-foreground">
+                      {ad.ad_creative_link_descriptions[0]}
+                    </p>
+                  )}
+                  {ad.bylines && ad.bylines.length > 0 && (
+                    <p className="text-xs text-muted-foreground mt-1">
+                      By: {ad.bylines.join(", ")}
+                    </p>
+                  )}
+                </div>
+              </ScrollArea>
 
               <div className="text-xs divide-y">
                 <div className="space-y-0.5 pb-1">
