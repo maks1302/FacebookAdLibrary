@@ -133,29 +133,7 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
               </div>
             )}
 
-            <div className="p-3 space-y-2">
-              <ScrollArea className="h-[120px]">
-                <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground">
-                    {ad.ad_creative_bodies?.[0] || "No ad content available"}
-                  </p>
-                  {ad.ad_creative_link_titles?.[0] && (
-                    <p className="text-xs font-medium">
-                      {ad.ad_creative_link_titles[0]}
-                    </p>
-                  )}
-                  {ad.ad_creative_link_descriptions?.[0] && (
-                    <p className="text-xs text-muted-foreground">
-                      {ad.ad_creative_link_descriptions[0]}
-                    </p>
-                  )}
-                  {ad.bylines && ad.bylines.length > 0 && (
-                    <p className="text-xs text-muted-foreground mt-1">
-                      By: {ad.bylines.join(", ")}
-                    </p>
-                  )}
-                </div>
-              </ScrollArea>
+            
 
               <div className="text-xs divide-y">
                 <div className="space-y-0.5 pb-1">
