@@ -82,25 +82,27 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
       {ads.map((ad) => (
         <Card key={ad.id} className="flex flex-col">
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle className="text-lg">{ad.page_name}</CardTitle>
-            {ad.ad_snapshot_url && (
-              <Button
-                variant="outline"
-                size="sm"
-                className="gap-2"
-                onClick={() => window.open(ad.ad_snapshot_url, '_blank')}
-              >
-                <ExternalLink className="h-4 w-4" />
-                View Ad
-              </Button>
-            )}
+          <CardHeader className="py-2 px-3">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-base">{ad.page_name}</CardTitle>
+              {ad.ad_snapshot_url && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="gap-1"
+                  onClick={() => window.open(ad.ad_snapshot_url, '_blank')}
+                >
+                  <ExternalLink className="h-3 w-3" />
+                  View
+                </Button>
+              )}
+            </div>
           </CardHeader>
-          <CardContent className="flex-1 flex flex-col">
+          <CardContent className="p-0">
             {/* Ad Preview */}
             {ad.ad_snapshot_url && (
               <div className="relative flex justify-center">
-                <div className="max-w-[700px] h-[864px] rounded-md border bg-white">
+                <div className="max-w-[700px] h-[864px] rounded-none bg-white">
                   {loadingPreviews[ad.id] && (
                     <div className="absolute inset-0 flex items-center justify-center bg-background/80">
                       <Skeleton className="w-full h-full" />
@@ -130,91 +132,93 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
               </div>
             )}
 
-            <ScrollArea className="h-[200px]">
-              <div className="space-y-2">
-                <p className="text-sm text-muted-foreground">
-                  {ad.ad_creative_bodies?.[0] || "No ad content available"}
-                </p>
-                {ad.ad_creative_link_titles?.[0] && (
-                  <p className="text-sm font-medium">
-                    {ad.ad_creative_link_titles[0]}
+            <div className="p-3 space-y-2">
+              <ScrollArea className="h-[120px]">
+                <div className="space-y-1">
+                  <p className="text-xs text-muted-foreground">
+                    {ad.ad_creative_bodies?.[0] || "No ad content available"}
                   </p>
-                )}
-                {ad.ad_creative_link_descriptions?.[0] && (
-                  <p className="text-sm text-muted-foreground">
-                    {ad.ad_creative_link_descriptions[0]}
-                  </p>
-                )}
-                {ad.bylines && ad.bylines.length > 0 && (
-                  <p className="text-sm text-muted-foreground mt-2">
-                    By: {ad.bylines.join(", ")}
-                  </p>
-                )}
-              </div>
-            </ScrollArea>
-
-            <div className="mt-auto space-y-2 text-sm divide-y">
-              <div className="space-y-1 pb-2">
-                <div className="flex items-center gap-2">
-                  <Clock className="h-4 w-4" />
-                  <span>Created: {new Date(ad.ad_creation_time).toLocaleDateString()}</span>
+                  {ad.ad_creative_link_titles?.[0] && (
+                    <p className="text-xs font-medium">
+                      {ad.ad_creative_link_titles[0]}
+                    </p>
+                  )}
+                  {ad.ad_creative_link_descriptions?.[0] && (
+                    <p className="text-xs text-muted-foreground">
+                      {ad.ad_creative_link_descriptions[0]}
+                    </p>
+                  )}
+                  {ad.bylines && ad.bylines.length > 0 && (
+                    <p className="text-xs text-muted-foreground mt-1">
+                      By: {ad.bylines.join(", ")}
+                    </p>
+                  )}
                 </div>
-                <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4" />
-                  <span>
-                    Active: {new Date(ad.ad_delivery_start_time).toLocaleDateString()}
-                    {ad.ad_delivery_stop_time && ` - ${new Date(ad.ad_delivery_stop_time).toLocaleDateString()}`}
-                  </span>
-                </div>
-              </div>
+              </ScrollArea>
 
-              <div className="space-y-1 py-2">
-                {ad.spend && (
-                  <div className="flex items-center gap-2">
-                    <DollarSign className="h-4 w-4" />
+              <div className="text-xs divide-y">
+                <div className="space-y-0.5 pb-1">
+                  <div className="flex items-center gap-1">
+                    <Clock className="h-3 w-3" />
+                    <span>Created: {new Date(ad.ad_creation_time).toLocaleDateString()}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Calendar className="h-3 w-3" />
                     <span>
-                      Spent: {ad.spend.lower_bound}-{ad.spend.upper_bound} {ad.currency}
+                      Active: {new Date(ad.ad_delivery_start_time).toLocaleDateString()}
+                      {ad.ad_delivery_stop_time && ` - ${new Date(ad.ad_delivery_stop_time).toLocaleDateString()}`}
                     </span>
                   </div>
-                )}
-                {ad.impressions && (
-                  <div className="flex items-center gap-2">
-                    <Users className="h-4 w-4" />
-                    <span>
-                      Impressions: {ad.impressions.lower_bound}-{ad.impressions.upper_bound}
-                    </span>
-                  </div>
-                )}
-              </div>
+                </div>
 
-              <div className="space-y-1 pt-2">
-                {ad.target_gender && (
-                  <div className="flex items-center gap-2">
-                    <Target className="h-4 w-4" />
-                    <span>Target: {ad.target_gender}</span>
-                    {ad.target_ages && (
-                      <span>({ad.target_ages.join(", ")} years)</span>
-                    )}
-                  </div>
-                )}
-                {ad.languages && ad.languages.length > 0 && (
-                  <div className="flex items-center gap-2">
-                    <Languages className="h-4 w-4" />
-                    <span>Languages: {ad.languages.join(", ")}</span>
-                  </div>
-                )}
-                {ad.publisher_platforms && ad.publisher_platforms.length > 0 && (
-                  <div className="flex items-center gap-2">
-                    <Globe className="h-4 w-4" />
-                    <span>Platforms: {ad.publisher_platforms.join(", ")}</span>
-                  </div>
-                )}
-                {ad.target_locations && (
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4" />
-                    <span>Locations: {summarizeTargetLocations(ad.target_locations)}</span>
-                  </div>
-                )}
+                <div className="space-y-0.5 py-1">
+                  {ad.spend && (
+                    <div className="flex items-center gap-1">
+                      <DollarSign className="h-3 w-3" />
+                      <span>
+                        Spent: {ad.spend.lower_bound}-{ad.spend.upper_bound} {ad.currency}
+                      </span>
+                    </div>
+                  )}
+                  {ad.impressions && (
+                    <div className="flex items-center gap-1">
+                      <Users className="h-3 w-3" />
+                      <span>
+                        Impressions: {ad.impressions.lower_bound}-{ad.impressions.upper_bound}
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                <div className="space-y-0.5 pt-1">
+                  {ad.target_gender && (
+                    <div className="flex items-center gap-1">
+                      <Target className="h-3 w-3" />
+                      <span>Target: {ad.target_gender}</span>
+                      {ad.target_ages && (
+                        <span>({ad.target_ages.join(", ")} years)</span>
+                      )}
+                    </div>
+                  )}
+                  {ad.languages && ad.languages.length > 0 && (
+                    <div className="flex items-center gap-1">
+                      <Languages className="h-3 w-3" />
+                      <span>Languages: {ad.languages.join(", ")}</span>
+                    </div>
+                  )}
+                  {ad.publisher_platforms && ad.publisher_platforms.length > 0 && (
+                    <div className="flex items-center gap-1">
+                      <Globe className="h-3 w-3" />
+                      <span>Platforms: {ad.publisher_platforms.join(", ")}</span>
+                    </div>
+                  )}
+                  {ad.target_locations && (
+                    <div className="flex items-center gap-1">
+                      <MapPin className="h-3 w-3" />
+                      <span>Locations: {summarizeTargetLocations(ad.target_locations)}</span>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </CardContent>
