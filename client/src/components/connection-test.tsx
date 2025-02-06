@@ -1,73 +1,43 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
+import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 
 export function ConnectionTest() {
-  const [status, setStatus] = useState<"idle" | "loading" | "connected" | "error">("idle");
-  const [errorMessage, setErrorMessage] = useState<string>("");
   const { toast } = useToast();
 
-  const testConnection = async () => {
-    setStatus("loading");
-    setErrorMessage("");
+  const { data, error } = useQuery({
+    queryKey: ['/api/test-connection'],
+    retry: 2,
+    gcTime: 0,
+  });
 
-    try {
-      const response = await fetch("/api/test-connection");
-      const data = await response.json();
+  const isConnected = data?.status === "connected";
+  const errorMessage = error instanceof Error ? error.message : "";
 
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to connect to Facebook API");
-      }
-
-      setStatus("connected");
+  useEffect(() => {
+    if (error) {
       toast({
-        title: "Success",
-        description: "Successfully connected to Facebook API",
-      });
-    } catch (error) {
-      setStatus("error");
-      const message = error instanceof Error ? error.message : "An unexpected error occurred";
-      setErrorMessage(message);
-      toast({
-        title: "Error",
-        description: message,
+        title: "Connection Error",
+        description: errorMessage,
         variant: "destructive",
       });
     }
-  };
+  }, [error, errorMessage, toast]);
 
   return (
-    <div className="flex items-center gap-2">
-      <Button
-        variant="outline"
-        onClick={testConnection}
-        disabled={status === "loading"}
-        className="w-40"
-      >
-        {status === "loading" ? (
-          <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Testing...
-          </>
-        ) : (
-          "Test Connection"
-        )}
-      </Button>
-
-      {status === "connected" && (
-        <div className="flex items-center text-green-600">
-          <CheckCircle2 className="mr-1 h-4 w-4" />
-          Connected
-        </div>
-      )}
-
-      {status === "error" && (
-        <div className="flex items-center text-destructive">
-          <AlertCircle className="mr-1 h-4 w-4" />
-          {errorMessage}
-        </div>
-      )}
+    <div className="fixed top-4 right-4">
+      <div className="relative flex items-center">
+        <div
+          className={`h-3 w-3 rounded-full ${
+            isConnected ? "bg-green-500" : "bg-red-500"
+          }`}
+        />
+        <div
+          className={`absolute -inset-0.5 rounded-full ${
+            isConnected ? "bg-green-500" : "bg-red-500"
+          } animate-pulse opacity-20`}
+        />
+      </div>
     </div>
   );
 }
