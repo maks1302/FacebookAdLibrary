@@ -68,20 +68,19 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
       {ads.map((ad) => (
         <Card key={ad.id} className="flex flex-col">
-          <CardHeader>
-            <CardTitle className="text-lg">
-              {ad.page_name}
-              {ad.ad_snapshot_url && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="ml-2"
-                  onClick={() => window.open(ad.ad_snapshot_url, '_blank')}
-                >
-                  <ExternalLink className="h-4 w-4" />
-                </Button>
-              )}
-            </CardTitle>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <CardTitle className="text-lg">{ad.page_name}</CardTitle>
+            {ad.ad_snapshot_url && (
+              <Button
+                variant="outline"
+                size="sm"
+                className="gap-2"
+                onClick={() => window.open(ad.ad_snapshot_url, '_blank')}
+              >
+                <ExternalLink className="h-4 w-4" />
+                View Ad
+              </Button>
+            )}
           </CardHeader>
           <CardContent className="flex-1 flex flex-col">
             <ScrollArea className="h-[200px] mb-4">
