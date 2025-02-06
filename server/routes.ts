@@ -129,15 +129,20 @@ export function registerRoutes(app: Express): Server {
       const apiResponse = (await response.json()) as FacebookApiResponse;
       console.log('=== Facebook Ads API Response ===');
       console.log('Total ads found:', apiResponse.data?.length || 0);
-      console.log('\nFirst ad raw data:');
-      if (apiResponse.data?.[0]) {
-        console.log(JSON.stringify(apiResponse.data[0], null, 2));
-      }
-      console.log('\nAll available fields in first ad:');
-      if (apiResponse.data?.[0]) {
+
+      if (apiResponse.data && apiResponse.data.length > 0) {
+        console.log('\nAvailable fields in ads:');
         console.log(Object.keys(apiResponse.data[0]).sort());
+
+        console.log('\nAll Ads Raw Data:');
+        apiResponse.data.forEach((ad, index) => {
+          console.log(`\n=== Ad ${index + 1} ===`);
+          console.log(JSON.stringify(ad, null, 2));
+        });
+      } else {
+        console.log('\nNo ads found in the response');
       }
-      console.log('===============================');
+      console.log('\n===============================');
 
       // Store search in history
       await storage.createSearchHistory({
