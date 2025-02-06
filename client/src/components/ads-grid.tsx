@@ -101,8 +101,8 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
           <CardContent className="p-0">
             {/* Ad Preview */}
             {ad.ad_snapshot_url && (
-              <div className="relative flex justify-center">
-                <div className="w-full aspect-[0.81] rounded-none bg-white">
+              <div className="relative flex justify-center items-center h-[400px]">
+                <div className="w-full h-full rounded-none bg-white overflow-hidden">
                   {loadingPreviews[ad.id] && (
                     <div className="absolute inset-0 flex items-center justify-center bg-background/80">
                       <Skeleton className="w-full h-full" />
@@ -121,6 +121,7 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
                         width: '100%',
                         height: '100%',
                         transform: 'none',
+                        objectFit: 'contain',
                       }}
                       title={`Facebook Ad ${ad.id}`}
                       sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
