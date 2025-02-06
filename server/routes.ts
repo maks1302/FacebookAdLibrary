@@ -11,7 +11,7 @@ const searchParamsSchema = z.object({
   country: z.string().length(2),
 });
 
-const FB_API_VERSION = "v18.0";
+const FB_API_VERSION = "v22.0";
 const FB_ACCESS_TOKEN = process.env.FB_ACCESS_TOKEN;
 
 type FacebookApiResponse = {
@@ -41,7 +41,7 @@ export function registerRoutes(app: Express): Server {
             ad_reached_countries: '["US"]',
             limit: "1",
             fields: ["id"].join(","),
-          })
+          }),
       );
 
       if (!response.ok) {
@@ -51,14 +51,17 @@ export function registerRoutes(app: Express): Server {
 
       res.json({ status: "connected" });
     } catch (error) {
-      const message = error instanceof Error ? error.message : "An unexpected error occurred";
+      const message =
+        error instanceof Error ? error.message : "An unexpected error occurred";
       res.status(400).json({ status: "error", message });
     }
   });
 
   app.get("/api/ads", async (req, res) => {
     try {
-      const { search_terms, ad_type, country } = searchParamsSchema.parse(req.query);
+      const { search_terms, ad_type, country } = searchParamsSchema.parse(
+        req.query,
+      );
 
       if (!FB_ACCESS_TOKEN) {
         throw new Error("Facebook API access token not configured");
@@ -85,7 +88,7 @@ export function registerRoutes(app: Express): Server {
               "impressions",
               "spend",
             ].join(","),
-          })
+          }),
       );
 
       if (!response.ok) {
@@ -104,7 +107,8 @@ export function registerRoutes(app: Express): Server {
 
       res.json(apiResponse.data);
     } catch (error) {
-      const message = error instanceof Error ? error.message : "An unexpected error occurred";
+      const message =
+        error instanceof Error ? error.message : "An unexpected error occurred";
       res.status(400).json({ message });
     }
   });
