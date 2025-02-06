@@ -160,6 +160,34 @@ export function registerRoutes(app: Express): Server {
     }
   });
 
+  app.get("/api/ad-preview", async (req, res) => {
+    try {
+      const { url } = req.query;
+
+      if (!url || typeof url !== 'string') {
+        throw new Error("Missing or invalid ad preview URL");
+      }
+
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch ad preview: ${response.statusText}`);
+      }
+
+      const contentType = response.headers.get('content-type');
+      if (contentType) {
+        res.setHeader('Content-Type', contentType);
+      }
+
+      const content = await response.text();
+      res.send(content);
+    } catch (error) {
+      console.error("Ad preview error:", error);
+      const message = error instanceof Error ? error.message : "An unexpected error occurred";
+      res.status(400).json({ message });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

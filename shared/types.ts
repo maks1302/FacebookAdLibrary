@@ -16,9 +16,10 @@ export interface Ad {
   target_ages?: string[];
   target_gender?: "Women" | "Men" | "All";
   target_locations?: {
-    country: string;
-    region?: string;
-    key: string;
+    name: string;
+    type: string;
+    excluded: boolean;
+    num_obfuscated: number;
   }[];
   delivery_by_region?: {
     region: string;

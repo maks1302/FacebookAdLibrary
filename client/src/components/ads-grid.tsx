@@ -14,6 +14,7 @@ import {
   MapPin
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 interface AdsGridProps {
   ads: Ad[];
@@ -33,6 +34,19 @@ function summarizeTargetLocations(locations?: Ad['target_locations']) {
 }
 
 export function AdsGrid({ ads, isLoading }: AdsGridProps) {
+  const [loadingPreviews, setLoadingPreviews] = useState<Record<string, boolean>>({});
+  const [previewErrors, setPreviewErrors] = useState<Record<string, string>>({});
+
+  const handlePreviewLoad = (adId: string) => {
+    setLoadingPreviews(prev => ({ ...prev, [adId]: false }));
+    setPreviewErrors(prev => ({ ...prev, [adId]: '' }));
+  };
+
+  const handlePreviewError = (adId: string) => {
+    setLoadingPreviews(prev => ({ ...prev, [adId]: false }));
+    setPreviewErrors(prev => ({ ...prev, [adId]: 'Failed to load preview' }));
+  };
+
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -85,18 +99,30 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
           <CardContent className="flex-1 flex flex-col">
             {/* Ad Preview */}
             {ad.ad_snapshot_url && (
-              <div className="w-full h-[300px] mb-4 rounded-md overflow-hidden border">
-                <iframe
-                  src={ad.ad_snapshot_url}
-                  className="w-full h-full"
-                  style={{ border: 'none' }}
-                  title={`Facebook Ad ${ad.id}`}
-                  sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-                />
+              <div className="w-full h-[300px] mb-4 rounded-md overflow-hidden border relative">
+                {loadingPreviews[ad.id] && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-background/80">
+                    <Skeleton className="h-[250px] w-full" />
+                  </div>
+                )}
+                {previewErrors[ad.id] ? (
+                  <div className="h-full flex items-center justify-center text-muted-foreground">
+                    <p>{previewErrors[ad.id]}</p>
+                  </div>
+                ) : (
+                  <iframe
+                    src={`/api/ad-preview?url=${encodeURIComponent(ad.ad_snapshot_url)}`}
+                    className="w-full h-full"
+                    style={{ border: 'none' }}
+                    title={`Facebook Ad ${ad.id}`}
+                    sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                    onLoad={() => handlePreviewLoad(ad.id)}
+                    onError={() => handlePreviewError(ad.id)}
+                  />
+                )}
               </div>
             )}
 
-            {/* Ad Creative Content as Fallback */}
             <ScrollArea className="h-[200px] mb-4">
               <div className="space-y-2">
                 <p className="text-sm text-muted-foreground">
@@ -121,7 +147,6 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
             </ScrollArea>
 
             <div className="mt-auto space-y-2 text-sm divide-y">
-              {/* Timing Information */}
               <div className="space-y-1 pb-2">
                 <div className="flex items-center gap-2">
                   <Clock className="h-4 w-4" />
@@ -136,7 +161,6 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
                 </div>
               </div>
 
-              {/* Reach and Spend */}
               <div className="space-y-1 py-2">
                 {ad.spend && (
                   <div className="flex items-center gap-2">
@@ -156,7 +180,6 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
                 )}
               </div>
 
-              {/* Targeting Information */}
               <div className="space-y-1 pt-2">
                 {ad.target_gender && (
                   <div className="flex items-center gap-2">
