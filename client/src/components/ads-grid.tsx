@@ -99,8 +99,8 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
           <CardContent className="flex-1 flex flex-col">
             {/* Ad Preview */}
             {ad.ad_snapshot_url && (
-              <div className="relative">
-                <div className="w-full h-[800px] rounded-md border bg-white">
+              <div className="relative flex justify-center">
+                <div className="max-w-[400px] h-[800px] rounded-md border bg-white">
                   {loadingPreviews[ad.id] && (
                     <div className="absolute inset-0 flex items-center justify-center bg-background/80">
                       <Skeleton className="w-full h-full" />
