@@ -1,9 +1,16 @@
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
+import { Card, CardContent } from "@/components/ui/card";
 
 type ConnectionResponse = {
   status: "connected" | "error";
+  api_version?: string;
+  response_data?: {
+    data_count: number;
+    has_paging: boolean;
+    timestamp: string;
+  };
   message?: string;
 };
 
@@ -30,7 +37,7 @@ export function ConnectionTest() {
   }, [error, errorMessage, toast]);
 
   return (
-    <div className="fixed top-4 right-4">
+    <div className="fixed top-4 right-4 flex items-start gap-2">
       <div className="relative flex items-center">
         <div
           className={`h-3 w-3 rounded-full ${
@@ -43,6 +50,29 @@ export function ConnectionTest() {
           } animate-pulse opacity-20`}
         />
       </div>
+
+      {data && (
+        <Card className="w-64">
+          <CardContent className="p-4 text-xs space-y-2">
+            <div className="font-semibold">
+              Status: {data.status}
+            </div>
+            {data.api_version && (
+              <div>API Version: {data.api_version}</div>
+            )}
+            {data.response_data && (
+              <>
+                <div>Results: {data.response_data.data_count}</div>
+                <div>Has Paging: {data.response_data.has_paging ? "Yes" : "No"}</div>
+                <div>Last Updated: {new Date(data.response_data.timestamp).toLocaleTimeString()}</div>
+              </>
+            )}
+            {data.message && (
+              <div className="text-red-500">{data.message}</div>
+            )}
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }
