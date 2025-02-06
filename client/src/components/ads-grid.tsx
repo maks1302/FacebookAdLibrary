@@ -100,7 +100,7 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
             {/* Ad Preview */}
             {ad.ad_snapshot_url && (
               <div className="relative flex justify-center mb-4">
-                <div className="w-full max-w-[400px] aspect-[1200/630] rounded-md overflow-hidden border bg-white">
+                <div className="w-full max-w-[400px] aspect-[630/1200] rounded-md overflow-hidden border bg-white">
                   {loadingPreviews[ad.id] && (
                     <div className="absolute inset-0 flex items-center justify-center bg-background/80">
                       <Skeleton className="w-full h-full" />
@@ -116,8 +116,8 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
                       className="w-full h-full"
                       style={{ 
                         border: 'none',
-                        width: '1200px',
-                        height: '630px',
+                        width: '630px',
+                        height: '1200px',
                         transform: 'scale(0.33)',
                         transformOrigin: 'top left'
                       }}
