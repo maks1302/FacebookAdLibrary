@@ -797,24 +797,41 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
               name="ad_active_status"
               render={({ field }) => (
                 <FormItem className="flex-1">
-                  <FormLabel>Status & Type</FormLabel>
-                  <Select onValueChange={(value) => {
-                    const [status, media] = value.split('|');
-                    field.onChange(status);
-                    form.setValue('media_type', media);
-                  }} 
-                  defaultValue={`${field.value}|${form.getValues('media_type')}`}>
+                  <FormLabel>Status</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select filters" />
+                        <SelectValue placeholder="Select status" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="ALL|ALL">All Status & Types</SelectItem>
-                      <SelectItem value="ACTIVE|ALL">Active - All Media</SelectItem>
-                      <SelectItem value="ACTIVE|IMAGE">Active - Images</SelectItem>
-                      <SelectItem value="ACTIVE|VIDEO">Active - Videos</SelectItem>
-                      <SelectItem value="INACTIVE|ALL">Inactive - All Media</SelectItem>
+                      <SelectItem value="ALL">All Status</SelectItem>
+                      <SelectItem value="ACTIVE">Active</SelectItem>
+                      <SelectItem value="INACTIVE">Inactive</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="media_type"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel>Media Type</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select media type" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="ALL">All Media</SelectItem>
+                      <SelectItem value="IMAGE">Image</SelectItem>
+                      <SelectItem value="VIDEO">Video</SelectItem>
+                      <SelectItem value="MEME">Meme</SelectItem>
+                      <SelectItem value="NONE">None</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
