@@ -187,7 +187,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                       const latamCountries = ["AR", "BO", "BR", "CL", "CO", "CR", "DO", "EC", "SV", "GT", "HT", "HN", "MX", "NI", "PA", "PY", "PE", "PR", "UY", "VE"];
                       const aseanCountries = ["BN", "KH", "ID", "LA", "MY", "MM", "PH", "SG", "TH", "VN"];
                       const naftaCountries = ["US", "CA", "MX"];
-                      
+
                       switch(value) {
                         case "EU":
                           field.onChange(euCountries);
@@ -468,16 +468,15 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                       <SelectItem value="NAFTA">NAFTA (3)</SelectItem>
                     </SelectContent>
                   </Select>
-                  <div className="flex items-center gap-2">
-                    <Collapsible>
-                      <CollapsibleTrigger asChild>
+                  <Popover>
+                      <PopoverTrigger asChild>
                         <Button variant="outline" className="w-[300px] justify-between">
                           <span>Selected Countries ({field.value.length})</span>
-                      <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
-                    </Button>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent>
-                    <div className="absolute z-50 w-[200px] mt-2 max-h-[300px] overflow-y-auto border rounded-md p-4 bg-white/95 backdrop-blur-sm shadow-lg">
+                          <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[200px] p-0">
+                        <div className="max-h-[300px] overflow-y-auto">
                   {[
                     { code: "AD", name: "Andorra" },
                     { code: "AE", name: "United Arab Emirates" },
@@ -570,7 +569,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     { code: "GR", name: "Greece" },
                     { code: "GS", name: "South Georgia" },
                     { code: "GT", name: "Guatemala" },
-                    { code: "GU", name: "Guam" },
+                    { code: ""GU", name: "Guam" },
                     { code: "GW", name: "Guinea-Bissau" },
                     { code: "GY", name: "Guyana" },
                     { code: "HK", name: "Hong Kong" },
@@ -743,9 +742,9 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     </label>
                   ))}
                     </div>
-                  </CollapsibleContent>
-                </Collapsible>
-                <Button 
+                      </PopoverContent>
+                    </Popover>
+                  <Button 
                       type="button" 
                       variant="ghost" 
                       size="icon"
