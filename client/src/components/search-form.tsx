@@ -75,26 +75,50 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSearch)} className="space-y-4 max-w-2xl mx-auto bg-white/50 backdrop-blur-sm rounded-lg p-4 shadow-lg border border-gray-100">
         <div className="space-y-4">
-            <FormField
-              control={form.control}
-              name="search_terms"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Search Terms</FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                      <Input 
-                        placeholder="Enter keywords..." 
-                        {...field}
-                        className="pl-10 transition-all focus:ring-2 focus:ring-primary/20" 
-                      />
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="grid grid-cols-1 md:grid-cols-[2fr,1fr] gap-4">
+              <FormField
+                control={form.control}
+                name="search_terms"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Search Terms</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input 
+                          placeholder="Enter keywords..." 
+                          {...field}
+                          className="pl-10 transition-all focus:ring-2 focus:ring-primary/20" 
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="ad_type"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Ad Type</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select ad type" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="ALL">All Ads</SelectItem>
+                        <SelectItem value="POLITICAL_AND_ISSUE_ADS">Political & Issue Ads</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             <FormField
               control={form.control}
               name="search_type"
@@ -767,32 +791,42 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
           />
         </div>
 
-        <FormField
-          control={form.control}
-          name="ad_active_status"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Status</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select status" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="ALL">All</SelectItem>
-                  <SelectItem value="ACTIVE">Active</SelectItem>
-                  <SelectItem value="INACTIVE">Inactive</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-4">
-            <FormLabel>Date Range</FormLabel>
+          <div className="flex gap-4">
+            <FormField
+              control={form.control}
+              name="ad_active_status"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel>Status & Type</FormLabel>
+                  <Select onValueChange={(value) => {
+                    const [status, media] = value.split('|');
+                    field.onChange(status);
+                    form.setValue('media_type', media);
+                  }} 
+                  defaultValue={`${field.value}|${form.getValues('media_type')}`}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select filters" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="ALL|ALL">All Status & Types</SelectItem>
+                      <SelectItem value="ACTIVE|ALL">Active - All Media</SelectItem>
+                      <SelectItem value="ACTIVE|IMAGE">Active - Images</SelectItem>
+                      <SelectItem value="ACTIVE|VIDEO">Active - Videos</SelectItem>
+                      <SelectItem value="INACTIVE|ALL">Inactive - All Media</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <div className="flex items-end gap-4">
+            <div className="flex-1">
+              <FormLabel className="mb-2 block">Date Range</FormLabel>
             <Select
               onValueChange={(value) => {
                 const today = new Date();
@@ -839,83 +873,39 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                 <SelectItem value="clear">Clear dates</SelectItem>
               </SelectContent>
             </Select>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="ad_delivery_date_min"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <FormLabel>Start Date</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant="outline"
-                            className={cn(
-                              "w-full pl-3 text-left font-normal",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value ? format(field.value, "PPP") : "Pick a date"}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={new Date(field.value)}
-                          onSelect={(date) => field.onChange(date?.toISOString().split('T')[0])}
-                          disabled={(date) =>
-                            date > new Date() || date < new Date("1900-01-01")
-                          }
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="ad_delivery_date_max"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <FormLabel>End Date</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant="outline"
-                            className={cn(
-                              "w-full pl-3 text-left font-normal",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value ? format(field.value, "PPP") : "Pick a date"}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={new Date(field.value)}
-                          onSelect={(date) => field.onChange(date?.toISOString().split('T')[0])}
-                          disabled={(date) =>
-                            date > new Date() || date < new Date("1900-01-01")
-                          }
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline" className="w-[240px]">
+                  {form.watch('ad_delivery_date_min') && form.watch('ad_delivery_date_max') ? (
+                    `${format(new Date(form.watch('ad_delivery_date_min')), "MMM d")} - ${format(new Date(form.watch('ad_delivery_date_max')), "MMM d, yyyy")}`
+                  ) : (
+                    "Select dates"
+                  )}
+                  <CalendarIcon className="ml-2 h-4 w-4" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="range"
+                  selected={{
+                    from: form.watch('ad_delivery_date_min') ? new Date(form.watch('ad_delivery_date_min')) : undefined,
+                    to: form.watch('ad_delivery_date_max') ? new Date(form.watch('ad_delivery_date_max')) : undefined,
+                  }}
+                  onSelect={(range) => {
+                    if (range?.from) {
+                      form.setValue('ad_delivery_date_min', range.from.toISOString().split('T')[0]);
+                    }
+                    if (range?.to) {
+                      form.setValue('ad_delivery_date_max', range.to.toISOString().split('T')[0]);
+                    }
+                  }}
+                  disabled={(date) =>
+                    date > new Date() || date < new Date("1900-01-01")
+                  }
+                  numberOfMonths={2}
+                />
+              </PopoverContent>
+            </Popover>
           </div>
         </div>
 
