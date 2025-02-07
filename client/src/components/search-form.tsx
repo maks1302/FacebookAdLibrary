@@ -181,13 +181,73 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
               <FormItem className="space-y-4">
                 <FormLabel>Target Location</FormLabel>
                 <div className="flex items-center gap-4">
-                  <Select
-                    onValueChange={(value) => {
+                  <div className="flex gap-2">
+                    <Button
+                      type="button"
+                    variant={field.value.every(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)) ? "default" : "outline"}
+                    size="sm"
+                    className="transition-all relative"
+                    onClick={() => {
                       const euCountries = ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"];
+                      field.onChange(euCountries);
+                    }}
+                  >
+                    EU
+                    {field.value.filter(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)).length > 0 && (
+                      <Badge className="ml-2 bg-primary/20">{field.value.filter(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)).length}</Badge>
+                    )}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant={field.value.every(country => ["AR", "BO", "BR", "CL", "CO", "CR", "DO", "EC", "SV", "GT", "HT", "HN", "MX", "NI", "PA", "PY", "PE", "PR", "UY", "VE"].includes(country)) ? "default" : "outline"}
+                    size="sm"
+                    className="relative"
+                    onClick={() => {
                       const latamCountries = ["AR", "BO", "BR", "CL", "CO", "CR", "DO", "EC", "SV", "GT", "HT", "HN", "MX", "NI", "PA", "PY", "PE", "PR", "UY", "VE"];
+                      field.onChange(latamCountries);
+                    }}
+                  >
+                    LATAM
+                    {field.value.filter(country => ["AR", "BO", "BR", "CL", "CO", "CR", "DO", "EC", "SV", "GT", "HT", "HN", "MX", "NI", "PA", "PY", "PE", "PR", "UY", "VE"].includes(country)).length > 0 && (
+                      <Badge className="ml-2 bg-primary/20">{field.value.filter(country => ["AR", "BO", "BR", "CL", "CO", "CR", "DO", "EC", "SV", "GT", "HT", "HN", "MX", "NI", "PA", "PY", "PE", "PR", "UY", "VE"].includes(country)).length}</Badge>
+                    )}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant={field.value.every(country => ["BN", "KH", "ID", "LA", "MY", "MM", "PH", "SG", "TH", "VN"].includes(country)) ? "default" : "outline"}
+                    size="sm"
+                    className="relative"
+                    onClick={() => {
                       const aseanCountries = ["BN", "KH", "ID", "LA", "MY", "MM", "PH", "SG", "TH", "VN"];
-                      const naftaCountries = ["US", "CA", "MX"];
-                      const allCountries = [
+                      field.onChange(aseanCountries);
+                    }}
+                  >
+                    ASEAN
+                    {field.value.filter(country => ["BN", "KH", "ID", "LA", "MY", "MM", "PH", "SG", "TH", "VN"].includes(country)).length > 0 && (
+                      <Badge className="ml-2 bg-primary/20">{field.value.filter(country => ["BN", "KH", "ID", "LA", "MY", "MM", "PH", "SG", "TH", "VN"].includes(country)).length}</Badge>
+                    )}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant={field.value.every(country => ["US", "CA", "MX"].includes(country)) ? "default" : "outline"}
+                    size="sm"
+                    className="relative"
+                    onClick={() => {
+                      const nafta = ["US", "CA", "MX"];
+                      field.onChange(nafta);
+                    }}
+                  >
+                    NAFTA
+                    {field.value.filter(country => ["US", "CA", "MX"].includes(country)).length > 0 && (
+                      <Badge className="ml-2 bg-primary/20">{field.value.filter(country => ["US", "CA", "MX"].includes(country)).length}</Badge>
+                    )}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      const countries = [
                         { code: "AD", name: "Andorra" },
                         { code: "AE", name: "United Arab Emirates" },
                         { code: "AF", name: "Afghanistan" },
