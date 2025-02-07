@@ -180,8 +180,8 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
             render={({ field }) => (
               <FormItem className="space-y-4">
                 <FormLabel>Target Location</FormLabel>
-                <div className="flex justify-between items-start gap-4">
-                  <div className="flex flex-wrap gap-2">
+                <div className="flex items-center gap-4">
+                  <div className="flex gap-2">
                     <Button
                       type="button"
                     variant={field.value.every(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)) ? "default" : "outline"}
@@ -501,11 +501,11 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     ALL
                   </Button>
                   </div>
-                  <div className="w-[300px]">
+                  <div className="flex items-center gap-2">
                     <Collapsible>
-                  <CollapsibleTrigger asChild>
-                    <Button variant="outline" className="w-full justify-between">
-                      <span>Selected Countries ({field.value.length})</span>
+                      <CollapsibleTrigger asChild>
+                        <Button variant="outline" className="w-[300px] justify-between">
+                          <span>Selected Countries ({field.value.length})</span>
                       <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
                     </Button>
                   </CollapsibleTrigger>
@@ -778,17 +778,15 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     </div>
                   </CollapsibleContent>
                 </Collapsible>
-                </div>
-                </div>
-                <div className="flex justify-end">
-                  <Button 
-                    type="button" 
-                    variant="ghost" 
-                    size="icon"
-                    onClick={() => field.onChange([])}
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
+                <Button 
+                      type="button" 
+                      variant="ghost" 
+                      size="icon"
+                      onClick={() => field.onChange([])}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </div>
                 <FormMessage />
               </FormItem>
