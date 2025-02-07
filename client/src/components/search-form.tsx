@@ -39,45 +39,45 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
       ad_delivery_date_min: undefined,
       ad_delivery_date_max: undefined,
     },
-
-const regions = {
-  ALL: { name: "All Countries", countries: ["ALL"] },
-  EU: { 
-    name: "Europe",
-    countries: ["GB", "FR", "DE", "IT", "ES", "NL", "BE", "PT", "IE", "DK", "SE", "NO", "FI", "PL", "CZ", "HU", "AT", "CH", "GR", "RO"]
-  },
-  LATAM: {
-    name: "Latin America",
-    countries: ["BR", "AR", "CO", "MX", "CL", "PE", "VE", "EC", "UY", "PY", "BO"]
-  },
-  ASIA: {
-    name: "Asia",
-    countries: ["JP", "KR", "CN", "IN", "ID", "MY", "SG", "TH", "VN", "PH"]
-  },
-  NA: {
-    name: "North America",
-    countries: ["US", "CA"]
-  },
-  OCE: {
-    name: "Oceania",
-    countries: ["AU", "NZ"]
-  }
-};
-
-const countryNames = {
-  ALL: "All Countries",
-  US: "United States", GB: "United Kingdom", FR: "France", DE: "Germany", 
-  IT: "Italy", ES: "Spain", NL: "Netherlands", BE: "Belgium", PT: "Portugal",
-  IE: "Ireland", DK: "Denmark", SE: "Sweden", NO: "Norway", FI: "Finland",
-  PL: "Poland", CZ: "Czech Republic", HU: "Hungary", AT: "Austria", 
-  CH: "Switzerland", GR: "Greece", RO: "Romania", BR: "Brazil", AR: "Argentina",
-  CO: "Colombia", MX: "Mexico", CL: "Chile", PE: "Peru", VE: "Venezuela",
-  EC: "Ecuador", UY: "Uruguay", PY: "Paraguay", BO: "Bolivia", JP: "Japan",
-  KR: "South Korea", CN: "China", IN: "India", ID: "Indonesia", MY: "Malaysia",
-  SG: "Singapore", TH: "Thailand", VN: "Vietnam", PH: "Philippines",
-  AU: "Australia", NZ: "New Zealand", CA: "Canada"
-};
   });
+
+  const regions = {
+    ALL: { name: "All Countries", countries: ["ALL"] },
+    EU: { 
+      name: "Europe",
+      countries: ["GB", "FR", "DE", "IT", "ES", "NL", "BE", "PT", "IE", "DK", "SE", "NO", "FI", "PL", "CZ", "HU", "AT", "CH", "GR", "RO"]
+    },
+    LATAM: {
+      name: "Latin America",
+      countries: ["BR", "AR", "CO", "MX", "CL", "PE", "VE", "EC", "UY", "PY", "BO"]
+    },
+    ASIA: {
+      name: "Asia",
+      countries: ["JP", "KR", "CN", "IN", "ID", "MY", "SG", "TH", "VN", "PH"]
+    },
+    NA: {
+      name: "North America",
+      countries: ["US", "CA"]
+    },
+    OCE: {
+      name: "Oceania",
+      countries: ["AU", "NZ"]
+    }
+  };
+
+  const countryNames = {
+    ALL: "All Countries",
+    US: "United States", GB: "United Kingdom", FR: "France", DE: "Germany", 
+    IT: "Italy", ES: "Spain", NL: "Netherlands", BE: "Belgium", PT: "Portugal",
+    IE: "Ireland", DK: "Denmark", SE: "Sweden", NO: "Norway", FI: "Finland",
+    PL: "Poland", CZ: "Czech Republic", HU: "Hungary", AT: "Austria", 
+    CH: "Switzerland", GR: "Greece", RO: "Romania", BR: "Brazil", AR: "Argentina",
+    CO: "Colombia", MX: "Mexico", CL: "Chile", PE: "Peru", VE: "Venezuela",
+    EC: "Ecuador", UY: "Uruguay", PY: "Paraguay", BO: "Bolivia", JP: "Japan",
+    KR: "South Korea", CN: "China", IN: "India", ID: "Indonesia", MY: "Malaysia",
+    SG: "Singapore", TH: "Thailand", VN: "Vietnam", PH: "Philippines",
+    AU: "Australia", NZ: "New Zealand", CA: "Canada"
+  };
 
   return (
     <Form {...form}>
@@ -137,7 +137,7 @@ const countryNames = {
                       Deselect All
                     </Button>
                   </div>
-                  
+
                   {Object.entries(regions).map(([regionKey, region]) => (
                     <div key={regionKey} className="space-y-2">
                       <div className="flex items-center space-x-2">
