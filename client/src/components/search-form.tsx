@@ -114,8 +114,8 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="ACTIVE">Active</SelectItem>
                   <SelectItem value="ALL">All</SelectItem>
+                  <SelectItem value="ACTIVE">Active</SelectItem>
                   <SelectItem value="INACTIVE">Inactive</SelectItem>
                 </SelectContent>
               </Select>
