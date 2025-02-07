@@ -17,7 +17,7 @@ import { SearchIcon } from "lucide-react";
 const searchSchema = z.object({
   search_terms: z.string().min(1, "Search terms are required"),
   ad_type: z.enum(["ALL", "POLITICAL_AND_ISSUE_ADS"]),
-  countries: z.array(z.string()).min(1, "Select at least one country"),
+  country: z.string().min(2, "Country is required"),
   ad_active_status: z.enum(["ACTIVE", "ALL", "INACTIVE"]),
   ad_delivery_date_min: z.string().optional(),
   ad_delivery_date_max: z.string().optional(),
@@ -34,50 +34,12 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
     defaultValues: {
       search_terms: "",
       ad_type: "ALL",
-      countries: ["ALL"],
+      country: "US",
       ad_active_status: "ALL",
       ad_delivery_date_min: undefined,
       ad_delivery_date_max: undefined,
     },
   });
-
-  const regions = {
-    ALL: { name: "All Countries", countries: ["ALL"] },
-    EU: { 
-      name: "Europe",
-      countries: ["GB", "FR", "DE", "IT", "ES", "NL", "BE", "PT", "IE", "DK", "SE", "NO", "FI", "PL", "CZ", "HU", "AT", "CH", "GR", "RO"]
-    },
-    LATAM: {
-      name: "Latin America",
-      countries: ["BR", "AR", "CO", "MX", "CL", "PE", "VE", "EC", "UY", "PY", "BO"]
-    },
-    ASIA: {
-      name: "Asia",
-      countries: ["JP", "KR", "CN", "IN", "ID", "MY", "SG", "TH", "VN", "PH"]
-    },
-    NA: {
-      name: "North America",
-      countries: ["US", "CA"]
-    },
-    OCE: {
-      name: "Oceania",
-      countries: ["AU", "NZ"]
-    }
-  };
-
-  const countryNames = {
-    ALL: "All Countries",
-    US: "United States", GB: "United Kingdom", FR: "France", DE: "Germany", 
-    IT: "Italy", ES: "Spain", NL: "Netherlands", BE: "Belgium", PT: "Portugal",
-    IE: "Ireland", DK: "Denmark", SE: "Sweden", NO: "Norway", FI: "Finland",
-    PL: "Poland", CZ: "Czech Republic", HU: "Hungary", AT: "Austria", 
-    CH: "Switzerland", GR: "Greece", RO: "Romania", BR: "Brazil", AR: "Argentina",
-    CO: "Colombia", MX: "Mexico", CL: "Chile", PE: "Peru", VE: "Venezuela",
-    EC: "Ecuador", UY: "Uruguay", PY: "Paraguay", BO: "Bolivia", JP: "Japan",
-    KR: "South Korea", CN: "China", IN: "India", ID: "Indonesia", MY: "Malaysia",
-    SG: "Singapore", TH: "Thailand", VN: "Vietnam", PH: "Philippines",
-    AU: "Australia", NZ: "New Zealand", CA: "Canada"
-  };
 
   return (
     <Form {...form}>
@@ -121,56 +83,29 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
 
           <FormField
             control={form.control}
-            name="countries"
+            name="country"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Target Location</FormLabel>
-                <div className="border rounded-md p-4 space-y-4">
-                  <div className="flex justify-between items-center mb-2">
-                    <h4 className="font-medium">Select Countries</h4>
-                    <Button 
-                      type="button" 
-                      variant="outline" 
-                      onClick={() => field.onChange([])}
-                      size="sm"
-                    >
-                      Deselect All
-                    </Button>
-                  </div>
-
-                  {Object.entries(regions).map(([regionKey, region]) => (
-                    <div key={regionKey} className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <Checkbox
-                          checked={region.countries.every(c => field.value.includes(c))}
-                          onCheckedChange={(checked) => {
-                            const newValue = checked
-                              ? Array.from(new Set([...field.value, ...region.countries]))
-                              : field.value.filter(c => !region.countries.includes(c));
-                            field.onChange(newValue);
-                          }}
-                        />
-                        <span className="font-medium">{region.name}</span>
-                      </div>
-                      <div className="grid grid-cols-2 gap-2 ml-6">
-                        {region.countries.map(country => (
-                          <div key={country} className="flex items-center space-x-2">
-                            <Checkbox
-                              checked={field.value.includes(country)}
-                              onCheckedChange={(checked) => {
-                                const newValue = checked
-                                  ? [...field.value, country]
-                                  : field.value.filter(c => c !== country);
-                                field.onChange(newValue);
-                              }}
-                            />
-                            <span>{countryNames[country]}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select target location" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="US">United States</SelectItem>
+                    <SelectItem value="GB">United Kingdom</SelectItem>
+                    <SelectItem value="CA">Canada</SelectItem>
+                    <SelectItem value="DE">Germany</SelectItem>
+                    <SelectItem value="FR">France</SelectItem>
+                    <SelectItem value="IT">Italy</SelectItem>
+                    <SelectItem value="ES">Spain</SelectItem>
+                    <SelectItem value="AU">Australia</SelectItem>
+                    <SelectItem value="IN">India</SelectItem>
+                    <SelectItem value="JP">Japan</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}
