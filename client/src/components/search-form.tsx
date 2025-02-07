@@ -815,6 +815,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
               )}
             />
           </div>
+        </div>
 
           <div className="flex items-end gap-4">
             <div className="flex-1">
