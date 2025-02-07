@@ -893,8 +893,6 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
           />
         </div>
 
-        </div>
-
         <Button type="submit" className="w-full" disabled={isLoading}>
           {isLoading ? (
             "Searching..."
