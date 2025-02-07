@@ -72,7 +72,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSearch)} className="space-y-4 max-w-2xl mx-auto bg-white/50 backdrop-blur-sm rounded-lg p-4 shadow-lg border border-gray-100">
+      <form onSubmit={form.handleSubmit(onSearch)} className="space-y-2.5 w-[90%] mx-auto bg-white/50 backdrop-blur-sm rounded-lg p-4 shadow-lg border border-gray-100 divide-y divide-gray-100/50">
         <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-[2fr,1fr] gap-4">
               <FormField

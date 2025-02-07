@@ -15,6 +15,10 @@
     @apply transition-all duration-200;
   }
 
+  .divide-y > * {
+    @apply py-2.5 first:pt-0 last:pb-0;
+  }
+
   .form-container {
     @apply sticky top-0 z-10 backdrop-blur-md bg-background/80 shadow-sm;
   }
