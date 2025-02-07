@@ -18,6 +18,16 @@ export default function Home() {
     ad_delivery_date_max?: string;
   } | null>(null);
 
+  const queryParams = searchParams ? {
+    search_terms: searchParams.search_terms,
+    ad_type: searchParams.ad_type,
+    country: searchParams.country,
+    ad_active_status: searchParams.ad_active_status,
+    media_type: searchParams.media_type,
+    ad_delivery_date_min: searchParams.ad_delivery_date_min,
+    ad_delivery_date_max: searchParams.ad_delivery_date_max,
+  } : null;
+
   const { data: ads, isLoading } = useQuery<Ad[]>({
     queryKey: ['/api/ads', searchParams],
     enabled: !!searchParams,
