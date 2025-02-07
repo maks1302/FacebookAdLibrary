@@ -3,8 +3,15 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --fb-blue: #1877F2;
+    --fb-hover: #166FE5;
+    --fb-dark: #1D3C78;
+    --fb-light: #E7F3FF;
+  }
+
   * {
-    @apply border-border transition-colors duration-200;
+    @apply border-border transition-all duration-200;
   }
 
   body {
@@ -17,6 +24,26 @@
 
   .form-container {
     @apply sticky top-0 z-10 backdrop-blur-md bg-background/80 shadow-sm;
+  }
+
+  .btn-primary {
+    @apply bg-[#1877F2] hover:bg-[#166FE5] text-white transition-all duration-200;
+  }
+
+  .btn-outline {
+    @apply border-[#1877F2] text-[#1877F2] hover:bg-[#E7F3FF] transition-all duration-200;
+  }
+
+  .input-focus {
+    @apply focus:border-[#1877F2] focus:ring-2 focus:ring-[#E7F3FF];
+  }
+
+  .badge-active {
+    @apply bg-[#E7F3FF] text-[#1877F2];
+  }
+
+  .interactive-hover {
+    @apply hover:scale-[1.02] active:scale-[0.98] transition-all duration-200;
   }
 }
 

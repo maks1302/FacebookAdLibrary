@@ -87,7 +87,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                         <Input 
                           placeholder="Enter keywords..." 
                           {...field}
-                          className="pl-10 transition-all focus:ring-2 focus:ring-primary/20" 
+                          className="pl-10 input-focus interactive-hover" 
                         />
                       </div>
                     </FormControl>
@@ -541,7 +541,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     { code: "BO", name: "Bolivia" },
                     { code: "BQ", name: "Caribbean Netherlands" },
                     { code: "BR", name: "Brazil" },
-                    { code: "BS", name: "Bahamas" },
+                    { code: "BS", name: "Bahamas"},
                     { code: "BT", name: "Bhutan" },
                     { code: "BV", name: "Bouvet Island" },
                     { code: "BW", name: "Botswana" },
@@ -934,7 +934,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
           )}
         />
 
-        <Button type="submit" className="w-full" disabled={isLoading}>
+        <Button type="submit" className="w-full interactive-hover" disabled={isLoading}>
           {isLoading ? (
             "Searching..."
           ) : (
