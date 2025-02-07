@@ -64,7 +64,14 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSearch)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSearch)} className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="space-y-6">
+            <Card className="p-4">
+              <CardHeader className="px-2">
+                <CardTitle className="text-lg">Search Parameters</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
         <div className="space-y-2">
             <FormField
               control={form.control}
@@ -803,16 +810,108 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
           )}
         />
 
-        <Button type="submit" className="w-full" disabled={isLoading}>
-          {isLoading ? (
-            "Searching..."
-          ) : (
-            <>
-              <SearchIcon className="mr-2 h-4 w-4" />
-              Search Ads
-            </>
-          )}
-        </Button>
+        </CardContent>
+            </Card>
+          </div>
+
+          <div className="space-y-6">
+            <Card className="p-4">
+              <CardHeader className="px-2">
+                <CardTitle className="text-lg">Filters</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid gap-4">
+                  <FormField
+                    control={form.control}
+                    name="ad_type"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Ad Type</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select ad type" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="ALL">All Ads</SelectItem>
+                            <SelectItem value="POLITICAL_AND_ISSUE_ADS">Political & Issue Ads</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="media_type"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Media Type</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select media type" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="ALL">All</SelectItem>
+                            <SelectItem value="IMAGE">Image</SelectItem>
+                            <SelectItem value="MEME">Meme</SelectItem>
+                            <SelectItem value="VIDEO">Video</SelectItem>
+                            <SelectItem value="NONE">None</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="ad_active_status"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Status</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select status" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="ALL">All</SelectItem>
+                            <SelectItem value="ACTIVE">Active</SelectItem>
+                            <SelectItem value="INACTIVE">Inactive</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        <div className="sticky bottom-4 z-50 mt-6">
+          <Card className="mx-auto max-w-4xl">
+            <CardContent className="p-4">
+              <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
+                {isLoading ? (
+                  "Searching..."
+                ) : (
+                  <>
+                    <SearchIcon className="mr-2 h-4 w-4" />
+                    Search Ads
+                  </>
+                )}
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
       </form>
     </Form>
   );
