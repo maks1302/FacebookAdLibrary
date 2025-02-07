@@ -17,7 +17,7 @@ import { SearchIcon } from "lucide-react";
 const searchSchema = z.object({
   search_terms: z.string().min(1, "Search terms are required"),
   ad_type: z.enum(["ALL", "POLITICAL_AND_ISSUE_ADS"]),
-  country: z.string().min(2, "Country is required"),
+  countries: z.array(z.string()).min(1, "At least one country must be selected"),
   ad_active_status: z.enum(["ACTIVE", "ALL", "INACTIVE"]),
   ad_delivery_date_min: z.string().optional(),
   ad_delivery_date_max: z.string().optional(),
@@ -34,7 +34,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
     defaultValues: {
       search_terms: "",
       ad_type: "ALL",
-      country: "US",
+      countries: ["ALL"],
       ad_active_status: "ALL",
       ad_delivery_date_min: undefined,
       ad_delivery_date_max: undefined,
@@ -83,29 +83,128 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
 
           <FormField
             control={form.control}
-            name="country"
+            name="countries"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Target Location</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select target location" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="US">United States</SelectItem>
-                    <SelectItem value="GB">United Kingdom</SelectItem>
-                    <SelectItem value="CA">Canada</SelectItem>
-                    <SelectItem value="DE">Germany</SelectItem>
-                    <SelectItem value="FR">France</SelectItem>
-                    <SelectItem value="IT">Italy</SelectItem>
-                    <SelectItem value="ES">Spain</SelectItem>
-                    <SelectItem value="AU">Australia</SelectItem>
-                    <SelectItem value="IN">India</SelectItem>
-                    <SelectItem value="JP">Japan</SelectItem>
-                  </SelectContent>
-                </Select>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="w-full justify-start">
+                      {field.value.length} location(s) selected
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56">
+                    <DropdownMenuCheckboxItem
+                      checked={field.value.includes("ALL")}
+                      onCheckedChange={(checked) => {
+                        if (checked) {
+                          field.onChange(["ALL"]);
+                        } else {
+                          field.onChange([]);
+                        }
+                      }}
+                    >
+                      All Countries
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuLabel>Regions</DropdownMenuLabel>
+                    <DropdownMenuCheckboxItem
+                      checked={field.value.includes("EU")}
+                      onCheckedChange={(checked) => {
+                        const euCountries = ["GB", "FR", "DE", "IT", "ES", "NL", "SE", "NO", "DK", "FI", "PL"];
+                        if (checked) {
+                          field.onChange([...new Set([...field.value.filter(c => c !== "ALL"), "EU"])]);
+                        } else {
+                          field.onChange(field.value.filter(c => c !== "EU"));
+                        }
+                      }}
+                    >
+                      Europe (EU)
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      checked={field.value.includes("LATAM")}
+                      onCheckedChange={(checked) => {
+                        if (checked) {
+                          field.onChange([...new Set([...field.value.filter(c => c !== "ALL"), "LATAM"])]);
+                        } else {
+                          field.onChange(field.value.filter(c => c !== "LATAM"));
+                        }
+                      }}
+                    >
+                      Latin America (LATAM)
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuLabel>Countries</DropdownMenuLabel>
+                    <DropdownMenuCheckboxItem
+                      checked={field.value.includes("US")}
+                      onCheckedChange={(checked) => {
+                        if (checked) {
+                          field.onChange([...new Set([...field.value.filter(c => c !== "ALL"), "US"])]);
+                        } else {
+                          field.onChange(field.value.filter(c => c !== "US"));
+                        }
+                      }}
+                    >
+                      United States (US)
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      checked={field.value.includes("GB")}
+                      onCheckedChange={(checked) => {
+                        if (checked) {
+                          field.onChange([...new Set([...field.value.filter(c => c !== "ALL"), "GB"])]);
+                        } else {
+                          field.onChange(field.value.filter(c => c !== "GB"));
+                        }
+                      }}
+                    >
+                      United Kingdom (GB)
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      checked={field.value.includes("FR")}
+                      onCheckedChange={(checked) => {
+                        if (checked) {
+                          field.onChange([...new Set([...field.value.filter(c => c !== "ALL"), "FR"])]);
+                        } else {
+                          field.onChange(field.value.filter(c => c !== "FR"));
+                        }
+                      }}
+                    >
+                      France (FR)
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      checked={field.value.includes("DE")}
+                      onCheckedChange={(checked) => {
+                        if (checked) {
+                          field.onChange([...new Set([...field.value.filter(c => c !== "ALL"), "DE"])]);
+                        } else {
+                          field.onChange(field.value.filter(c => c !== "DE"));
+                        }
+                      }}
+                    >
+                      Germany (DE)
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      checked={field.value.includes("BR")}
+                      onCheckedChange={(checked) => {
+                        if (checked) {
+                          field.onChange([...new Set([...field.value.filter(c => c !== "ALL"), "BR"])]);
+                        } else {
+                          field.onChange(field.value.filter(c => c !== "BR"));
+                        }
+                      }}
+                    >
+                      Brazil (BR)
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuSeparator />
+                    <Button
+                      variant="ghost"
+                      className="w-full"
+                      onClick={() => field.onChange([])}
+                    >
+                      Clear All
+                    </Button>
+                  </DropdownMenuContent>
+                </DropdownMenu>
                 <FormMessage />
               </FormItem>
             )}
