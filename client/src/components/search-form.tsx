@@ -19,8 +19,8 @@ const searchSchema = z.object({
   ad_type: z.enum(["ALL", "POLITICAL_AND_ISSUE_ADS"]),
   country: z.string().min(2, "Country is required"),
   ad_active_status: z.enum(["ACTIVE", "ALL", "INACTIVE"]),
-  ad_delivery_date_min: z.string().optional(),
-  ad_delivery_date_max: z.string().optional(),
+  ad_delivery_date_min: z.date().optional(),
+  ad_delivery_date_max: z.date().optional(),
 });
 
 interface SearchFormProps {
