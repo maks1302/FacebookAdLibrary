@@ -1,0 +1,87 @@
+rest-express@1.0.0 dev
+9:18:08 AM [express] serving on port 5000
+9:18:11 AM [express] GET /api/test-connection 200 in 712ms :: {"status":"connected","api_version":"v…
+Facebook API Error: {
+  error: {
+    message: 'An unknown error has occurred.',
+    type: 'OAuthException',
+    code: 1,
+    fbtrace_id: 'A4I0p9OPpGoYHwN2_7rtKvI'
+  }
+}
+Search ads error: Error: Facebook API error: An unknown error has occurred.
+    at <anonymous> (/home/runner/workspace/server/routes.ts:129:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+9:18:30 AM [express] GET /api/ads 400 in 193ms :: {"message":"Facebook API error: An unknown error h…
+Facebook API Error: {
+  error: {
+    message: 'An unknown error has occurred.',
+    type: 'OAuthException',
+    code: 1,
+    fbtrace_id: 'AL9dOxtUxPODt2RZJ_VkzJ5'
+  }
+}
+Search ads error: Error: Facebook API error: An unknown error has occurred.
+    at <anonymous> (/home/runner/workspace/server/routes.ts:129:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+9:18:40 AM [express] GET /api/ads 400 in 926ms :: {"message":"Facebook API error: An unknown error h…
+Facebook API Error: {
+  error: {
+    message: 'An unknown error has occurred.',
+    type: 'OAuthException',
+    code: 1,
+    fbtrace_id: 'AxGeaQyQXeaqdGLeHz4ZbYW'
+  }
+}
+Search ads error: Error: Facebook API error: An unknown error has occurred.
+    at <anonymous> (/home/runner/workspace/server/routes.ts:129:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+9:18:44 AM [express] GET /api/ads 400 in 65ms :: {"message":"Facebook API error: An unknown error ha…
+Facebook API Error: {
+  error: {
+    message: 'An unknown error has occurred.',
+    type: 'OAuthException',
+    code: 1,
+    fbtrace_id: 'AgtHQN7On0s7N7pW-tBh924'
+  }
+}
+Search ads error: Error: Facebook API error: An unknown error has occurred.
+    at <anonymous> (/home/runner/workspace/server/routes.ts:129:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+9:18:48 AM [express] GET /api/ads 400 in 68ms :: {"message":"Facebook API error: An unknown error ha…
+Facebook API Error: {
+  error: {
+    message: 'An unknown error has occurred.',
+    type: 'OAuthException',
+    code: 1,
+    fbtrace_id: 'AjysfXP-5v44A_wX_yGK9ox'
+  }
+}
+Search ads error: Error: Facebook API error: An unknown error has occurred.
+    at <anonymous> (/home/runner/workspace/server/routes.ts:129:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+9:18:51 AM [express] GET /api/ads 400 in 55ms :: {"message":"Facebook API error: An unknown error ha…
+Facebook API Error: {
+  error: {
+    message: 'An unknown error has occurred.',
+    type: 'OAuthException',
+    code: 1,
+    fbtrace_id: 'A-np0UL_2MHUJ2kNjWdLEQe'
+  }
+}
+Search ads error: Error: Facebook API error: An unknown error has occurred.
+    at <anonymous> (/home/runner/workspace/server/routes.ts:129:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+9:18:55 AM [express] GET /api/ads 400 in 91ms :: {"message":"Facebook API error: An unknown error ha…
+Facebook API Error: {
+  error: {
+    message: 'An unknown error has occurred.',
+    type: 'OAuthException',
+    code: 1,
+    fbtrace_id: 'Aou5zzwUFFCyJPaMPUS9T23'
+  }
+}
+Search ads error: Error: Facebook API error: An unknown error has occurred.
+    at <anonymous> (/home/runner/workspace/server/routes.ts:129:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+9:18:58 AM [express] GET /api/ads 400 in 72ms :: {"message":"Facebook API error: An unknown error ha…
