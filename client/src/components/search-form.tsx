@@ -72,7 +72,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSearch)} className="space-y-2.5 w-[98%] max-w-[1600px] mx-auto bg-white/50 backdrop-blur-sm rounded-lg p-2 shadow-lg border border-gray-100">
+      <form onSubmit={form.handleSubmit(onSearch)} className="space-y-2 w-[1200px] mx-auto bg-white/50 backdrop-blur-sm rounded-lg p-3 shadow-lg border border-gray-100">
         <div className="space-y-4">
             <div className="grid grid-cols-[3fr,1fr,1fr,1fr] gap-3">
               <FormField
@@ -540,7 +540,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     { code: "BN", name: "Brunei" },
                     { code: "BO", name: "Bolivia" },
                     { code: "BQ", name: "Caribbean Netherlands" },
-                    {"BR", name: "Brazil" },
+                    { code: "BR", name: "Brazil" },
                     { code: "BS", name: "Bahamas" },
                     { code: "BT", name: "Bhutan" },
                     { code: "BV", name: "Bouvet Island" },
