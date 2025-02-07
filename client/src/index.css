@@ -18,6 +18,14 @@
   .form-container {
     @apply sticky top-0 z-10 backdrop-blur-md bg-background/80 shadow-sm;
   }
+
+  .form-section {
+    @apply border-b border-gray-100/50 pb-2 mb-2 last:border-b-0;
+  }
+  
+  .form-group {
+    @apply flex flex-col gap-2;
+  }
 }
 
 @font-face {

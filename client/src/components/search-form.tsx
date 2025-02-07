@@ -72,9 +72,9 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSearch)} className="space-y-4 max-w-2xl mx-auto bg-white/50 backdrop-blur-sm rounded-lg p-4 shadow-lg border border-gray-100">
-        <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-[2fr,1fr] gap-4">
+      <form onSubmit={form.handleSubmit(onSearch)} className="space-y-2 w-[90%] mx-auto bg-white/50 backdrop-blur-sm rounded-lg p-3 shadow-lg border border-gray-100">
+        <div className="space-y-2">
+            <div className="form-section grid grid-cols-1 md:grid-cols-[2fr,1fr] gap-3">
               <FormField
                 control={form.control}
                 name="search_terms"
@@ -158,7 +158,8 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
             render={({ field }) => (
               <FormItem className="space-y-4">
                 <FormLabel>Target Location</FormLabel>
-                <div className="flex flex-wrap gap-2 mb-4">
+                <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr] gap-3">
+                  <div className="flex flex-wrap gap-2 items-start">
                   <Button
                     type="button"
                     variant={field.value.every(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)) ? "default" : "outline"}
@@ -489,7 +490,8 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     ALL
                   </Button>
                 </div>
-                <Collapsible>
+                <div className="flex-1">
+                  <Collapsible>
                   <CollapsibleTrigger asChild>
                     <Button variant="outline" className="w-full justify-between">
                       <span>Selected Countries ({field.value.length})</span>
@@ -765,6 +767,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     </div>
                   </CollapsibleContent>
                 </Collapsible>
+                </div>
                 <Button 
                   type="button" 
                   variant="ghost" 
