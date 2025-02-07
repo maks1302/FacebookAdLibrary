@@ -113,6 +113,7 @@ export function registerRoutes(app: Express): Server {
           new URLSearchParams({
             access_token: FB_ACCESS_TOKEN,
             search_terms: search_terms,
+            search_type: req.query.search_type as string || "KEYWORD_UNORDERED",
             ad_type,
             ad_reached_countries: JSON.stringify(country),
             limit: "24",
