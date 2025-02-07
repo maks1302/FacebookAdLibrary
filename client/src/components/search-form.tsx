@@ -88,6 +88,52 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
             render={({ field }) => (
               <FormItem className="space-y-4">
                 <FormLabel>Target Location</FormLabel>
+                <div className="flex gap-2 mb-4">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      const euCountries = ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"];
+                      field.onChange(euCountries);
+                    }}
+                  >
+                    EU
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      const latamCountries = ["AR", "BO", "BR", "CL", "CO", "CR", "CU", "DO", "EC", "SV", "GT", "HT", "HN", "MX", "NI", "PA", "PY", "PE", "PR", "UY", "VE"];
+                      field.onChange(latamCountries);
+                    }}
+                  >
+                    LATAM
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      const aseanCountries = ["BN", "KH", "ID", "LA", "MY", "MM", "PH", "SG", "TH", "VN"];
+                      field.onChange(aseanCountries);
+                    }}
+                  >
+                    ASEAN
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      const nafta = ["US", "CA", "MX"];
+                      field.onChange(nafta);
+                    }}
+                  >
+                    NAFTA
+                  </Button>
+                </div>
                 <div className="grid grid-cols-2 gap-2 max-h-[200px] overflow-y-auto border rounded-md p-4">
                   {[
                     { code: "AD", name: "Andorra" },
