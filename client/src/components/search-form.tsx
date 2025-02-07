@@ -133,6 +133,16 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                   >
                     NAFTA
                   </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      field.onChange(["ALL"]);
+                    }}
+                  >
+                    ALL
+                  </Button>
                 </div>
                 <div className="grid grid-cols-2 gap-2 max-h-[200px] overflow-y-auto border rounded-md p-4">
                   {[
