@@ -539,7 +539,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     { code: "BM", name: "Bermuda" },
                     { code: "BN", name: "Brunei" },
                     { code: "BO", name: "Bolivia" },
-                    { code: "BQ", name: "Caribbean Netherlands" },
+                    { code: "BQ", name: ""Caribbean Netherlands" },
                     { code: "BR", name: "Brazil" },
                     { code: "BS", name: "Bahamas" },
                     { code: "BT", name: "Bhutan" },
