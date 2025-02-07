@@ -1,4 +1,3 @@
-
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { ChevronDown, CalendarIcon, X } from "lucide-react";
@@ -543,7 +542,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     { code: "BQ", name: "Caribbean Netherlands" },
                     { code: "BR", name: "Brazil" },
                     { code: "BS", name: "Bahamas" },
-                    { code: "BT", name: "Bhutan" },
+                    { code: "BT"BT", name: "Bhutan" },
                     { code: "BV", name: "Bouvet Island" },
                     { code: "BW", name: "Botswana" },
                     { code: "BY", name: "Belarus" },
