@@ -13,6 +13,7 @@ export default function Home() {
     ad_type: string;
     country: string[];
     ad_active_status: string;
+    media_type: string;
     ad_delivery_date_min?: string;
     ad_delivery_date_max?: string;
   } | null>(null);

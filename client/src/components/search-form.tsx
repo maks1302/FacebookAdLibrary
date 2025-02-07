@@ -1,4 +1,3 @@
-
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -22,6 +21,7 @@ const searchSchema = z.object({
   ad_active_status: z.enum(["ACTIVE", "ALL", "INACTIVE"]),
   ad_delivery_date_min: z.string().optional(),
   ad_delivery_date_max: z.string().optional(),
+  media_type: z.enum(["ALL", "IMAGE", "MEME", "VIDEO", "NONE"]).default("ALL"),
 });
 
 interface SearchFormProps {
@@ -55,6 +55,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
       ad_active_status: "ALL",
       ad_delivery_date_min: undefined,
       ad_delivery_date_max: undefined,
+      media_type: "ALL",
     },
   });
 
@@ -568,7 +569,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     { code: "MY", name: "Malaysia" },
                     { code: "MZ", name: "Mozambique" },
                     { code: "NA", name: "Namibia" },
-                    { code: "NC", name: "New Caledonia" },
+                    { code: "NC", name: ""New Caledonia" },
                     { code: "NE", name: "Niger" },
                     { code: "NF", name: "Norfolk Island" },
                     { code: "NG", name: "Nigeria" },
@@ -741,6 +742,31 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
             )}
           />
         </div>
+
+        <FormField
+          control={form.control}
+          name="media_type"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Media Type</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select media type" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="ALL">All</SelectItem>
+                  <SelectItem value="IMAGE">Image</SelectItem>
+                  <SelectItem value="MEME">Meme</SelectItem>
+                  <SelectItem value="VIDEO">Video</SelectItem>
+                  <SelectItem value="NONE">None</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <Button type="submit" className="w-full" disabled={isLoading}>
           {isLoading ? (

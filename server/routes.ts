@@ -117,6 +117,7 @@ export function registerRoutes(app: Express): Server {
             limit: "24",
             fields,
             ad_active_status: req.query.ad_active_status || "ACTIVE",
+            media_type: req.query.media_type || "ALL",
             ...(req.query.ad_delivery_date_min && { ad_delivery_date_min: req.query.ad_delivery_date_min as string }),
             ...(req.query.ad_delivery_date_max && { ad_delivery_date_max: req.query.ad_delivery_date_max as string }),
           }),
