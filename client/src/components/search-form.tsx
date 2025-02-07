@@ -514,13 +514,14 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                       field.onChange(countries.map(country => country.code));
                     } else {
                       field.onChange([]);
-                    }}
-                    className="h-4 w-4"
-                  />
-                  <span>ALL</span>
-                  {field.value.length === 249 && (
-                    <Badge className="bg-primary/20">249</Badge>
-                  )}
+                    }
+                  }}
+                  className="h-4 w-4"
+                />
+                <span>ALL</span>
+                {field.value.length === 249 && (
+                  <Badge className="bg-primary/20">249</Badge>
+                )}
                 </label>
                 <Collapsible>
                   <CollapsibleTrigger asChild>
