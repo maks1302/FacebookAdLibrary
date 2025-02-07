@@ -21,9 +21,6 @@ export interface Ad {
 export interface SearchParams {
   search_terms: string;
   ad_type: 'ALL' | 'POLITICAL_AND_ISSUE_ADS';
-  country: string[];
-  ad_active_status?: 'ACTIVE' | 'ALL' | 'INACTIVE';
-  ad_delivery_date_min?: string;
-  ad_delivery_date_max?: string;
+  ad_reached_countries: string[];
   limit?: number;
 }

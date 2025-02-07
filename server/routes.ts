@@ -8,7 +8,7 @@ import type { Ad } from "@shared/types";
 const searchParamsSchema = z.object({
   search_terms: z.string(),
   ad_type: z.enum(["ALL", "POLITICAL_AND_ISSUE_ADS"]),
-  country: z.array(z.string().length(2)),
+  country: z.string().length(2),
   ad_active_status: z.enum(["ACTIVE", "ALL", "INACTIVE"]).default("ACTIVE"),
   ad_delivery_date_min: z.string().optional(),
   ad_delivery_date_max: z.string().optional(),
@@ -114,7 +114,7 @@ export function registerRoutes(app: Express): Server {
             access_token: FB_ACCESS_TOKEN,
             search_terms: search_terms,
             ad_type,
-            ad_reached_countries: JSON.stringify(country),
+            ad_reached_countries: `["${country}"]`,
             limit: "24",
             fields,
             ad_active_status: req.query.ad_active_status || "ACTIVE",
@@ -137,7 +137,7 @@ export function registerRoutes(app: Express): Server {
         access_token: FB_ACCESS_TOKEN.substring(0, 10) + '...',
         search_terms,
         ad_type,
-        ad_reached_countries: JSON.stringify(country),
+        ad_reached_countries: `["${country}"]`,
         limit: "24",
         fields,
         ad_active_status: req.query.ad_active_status || "ACTIVE",
@@ -169,7 +169,7 @@ export function registerRoutes(app: Express): Server {
       await storage.createSearchHistory({
         searchTerms: search_terms,
         adType: ad_type,
-        countries: country,
+        countries: [country],
       });
 
       res.json(apiResponse.data);

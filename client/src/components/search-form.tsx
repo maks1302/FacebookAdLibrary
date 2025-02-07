@@ -17,7 +17,7 @@ import { SearchIcon } from "lucide-react";
 const searchSchema = z.object({
   search_terms: z.string().min(1, "Search terms are required"),
   ad_type: z.enum(["ALL", "POLITICAL_AND_ISSUE_ADS"]),
-  country: z.array(z.string()).min(1, "At least one country is required").transform(val => Array.isArray(val) ? val : [val]),
+  country: z.string().min(2, "Country is required"),
   ad_active_status: z.enum(["ACTIVE", "ALL", "INACTIVE"]),
   ad_delivery_date_min: z.string().optional(),
   ad_delivery_date_max: z.string().optional(),
@@ -34,7 +34,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
     defaultValues: {
       search_terms: "",
       ad_type: "ALL",
-      country: [],
+      country: "US",
       ad_active_status: "ALL",
       ad_delivery_date_min: undefined,
       ad_delivery_date_max: undefined,
@@ -92,13 +92,8 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     <input
                       type="checkbox"
                       value="US"
-                      checked={field.value.includes("US")}
-                      onChange={(e) => {
-                        const newValue = e.target.checked 
-                          ? [...field.value, "US"]
-                          : field.value.filter(c => c !== "US");
-                        field.onChange(newValue);
-                      }}
+                      checked={field.value === "US"}
+                      onChange={(e) => field.onChange(e.target.checked ? "US" : "")}
                       className="h-4 w-4"
                     />
                     <span>United States</span>
@@ -107,13 +102,8 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     <input
                       type="checkbox"
                       value="GB"
-                      checked={field.value.includes("GB")}
-                      onChange={(e) => {
-                        const newValue = e.target.checked 
-                          ? [...field.value, "GB"]
-                          : field.value.filter(c => c !== "GB");
-                        field.onChange(newValue);
-                      }}
+                      checked={field.value === "GB"}
+                      onChange={(e) => field.onChange(e.target.checked ? "GB" : "")}
                       className="h-4 w-4"
                     />
                     <span>United Kingdom</span>
@@ -122,13 +112,8 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     <input
                       type="checkbox"
                       value="CA"
-                      checked={field.value.includes("CA")}
-                      onChange={(e) => {
-                        const newValue = e.target.checked 
-                          ? [...field.value, "CA"]
-                          : field.value.filter(c => c !== "CA");
-                        field.onChange(newValue);
-                      }}
+                      checked={field.value === "CA"}
+                      onChange={(e) => field.onChange(e.target.checked ? "CA" : "")}
                       className="h-4 w-4"
                     />
                     <span>Canada</span>
@@ -138,7 +123,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     variant="outline" 
                     size="sm"
                     className="mt-2 col-span-2"
-                    onClick={() => field.onChange([])}
+                    onClick={() => field.onChange("")}
                   >
                     Clear Selection
                   </Button>
