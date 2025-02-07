@@ -10,6 +10,7 @@ export default function Home() {
   const { toast } = useToast();
   const [searchParams, setSearchParams] = useState<{
     search_terms: string;
+    search_type: string;
     ad_type: string;
     country: string[];
     ad_active_status: string;
@@ -35,6 +36,7 @@ export default function Home() {
       if (!searchParams) return [];
       const params = new URLSearchParams();
       params.append('search_terms', searchParams.search_terms);
+      params.append('search_type', searchParams.search_type);
       params.append('ad_type', searchParams.ad_type);
       params.append('ad_active_status', searchParams.ad_active_status);
       // Ensure country is always sent as array parameters

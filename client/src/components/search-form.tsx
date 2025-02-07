@@ -22,6 +22,7 @@ const searchSchema = z.object({
   ad_delivery_date_min: z.string().optional(),
   ad_delivery_date_max: z.string().optional(),
   media_type: z.enum(["ALL", "IMAGE", "MEME", "VIDEO", "NONE"]).default("ALL"), //Added media_type field
+  search_type: z.enum(["KEYWORD_UNORDERED", "KEYWORD_EXACT_PHRASE"]).default("KEYWORD_UNORDERED"), // Added search_type field
 });
 
 interface SearchFormProps {
@@ -56,25 +57,47 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
       ad_delivery_date_min: undefined,
       ad_delivery_date_max: undefined,
       media_type: "ALL", // Added default value for media_type
+      search_type: "KEYWORD_UNORDERED", // Added default value for search_type
     },
   });
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSearch)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="search_terms"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Search Terms</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter keywords..." {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="space-y-2">
+            <FormField
+              control={form.control}
+              name="search_terms"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Search Terms</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter keywords..." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="search_type"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        checked={field.value === "KEYWORD_EXACT_PHRASE"}
+                        onChange={(e) => field.onChange(e.target.checked ? "KEYWORD_EXACT_PHRASE" : "KEYWORD_UNORDERED")}
+                        className="h-4 w-4"
+                      />
+                      <span className="text-sm">KEYWORD EXACT PHRASE</span>
+                    </div>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormField
@@ -552,7 +575,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     { code: "MF", name: "Saint Martin" },
                     { code: "MG", name: "Madagascar" },
                     { code: "MH", name: "Marshall Islands" },
-                    { code: "MK", name: "North Macedonia" },
+                    { code: "MK", name: "NorthMacedonia" },
                     { code: "ML", name: "Mali" },
                     { code: "MM", name: "Myanmar" },
                     { code: "MN", name: "Mongolia" },
