@@ -1,0 +1,73 @@
+"Create a modern, user-friendly redesign of this ad search interface with the following improvements:
+
+Visual Hierarchy & Layout:
+
+
+Implement a clean card-based layout with subtle shadows and rounded corners
+Use clear visual separation between different search sections
+Add a sticky search button that remains accessible while scrolling
+Consider a two-column layout for larger screens to maximize space usage
+
+
+Search Experience:
+
+
+Add an prominent search icon inside the keyword input field
+Include recent/popular search suggestions as chips below the search bar
+Make the "KEYWORD EXACT PHRASE" tooltip more visible with a modern (?) icon
+Add quick-clear (×) button inside the search input
+
+
+Location Selection:
+
+
+Replace the current checkbox list with an interactive map visualization
+Add a searchable dropdown for quick country selection
+Group countries by regions with collapsible sections
+Show selected country count with a visual indicator
+Make "Clear Selection" more prominent with an undo icon
+
+
+Date Selection:
+
+
+Replace text inputs with an interactive calendar picker
+Add preset date ranges (Last 7 days, Last month, etc.)
+Include a date range slider for quick selection
+Validate and show date errors inline
+
+
+Filter Components:
+
+
+Convert dropdown selectors to modern segmented controls for Ad Type and Media Type
+Add visual icons for different ad and media types
+Include a filter summary showing active filters
+Add quick filter reset options
+
+
+Responsiveness & Accessibility:
+
+
+Ensure full mobile responsiveness with touch-friendly controls
+Implement proper ARIA labels and keyboard navigation
+Add loading states and smooth transitions
+Include high contrast mode support
+
+
+Visual Design:
+
+
+Use a contemporary color palette with primary brand color
+Implement consistent spacing and alignment
+Add subtle hover and focus states
+Use modern system fonts for optimal performance
+
+
+Interaction Design:
+
+
+Add auto-save functionality for search criteria
+Include search history feature
+Implement real-time validation
+Add loading indicators for search results
