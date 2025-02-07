@@ -138,7 +138,11 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     variant="outline"
                     size="sm"
                     onClick={() => {
-                      field.onChange(["ALL"]);
+                      const allCountryCodes = [
+                        { code: "AD", name: "Andorra" },
+                        // ... all other countries
+                      ].map(country => country.code);
+                      field.onChange(allCountryCodes);
                     }}
                   >
                     ALL
