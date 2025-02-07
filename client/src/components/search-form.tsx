@@ -72,7 +72,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
               <CardHeader className="px-2">
                 <CardTitle className="text-lg">Search Parameters</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="px-6 pb-6 space-y-6">
         <div className="space-y-2">
             <FormField
               control={form.control}
@@ -101,7 +101,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                       )}
                     </div>
                   </FormControl>
-                  
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -584,7 +584,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     { code: "IT", name: "Italy" },
                     { code: "JE", name: "Jersey" },
                     { code: "JM", name: "Jamaica" },
-                    { code: "JO", name: "Jordan" },
+                    { code: "JO", name"JO", name: "Jordan" },
                     { code: "JP", name: "Japan" },
                     { code: "KE", name: "Kenya" },
                     { code: "KG", name: "Kyrgyzstan" },
@@ -839,7 +839,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
               <CardHeader className="px-2">
                 <CardTitle className="text-lg">Filters</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="px-6 pb-6 space-y-6">
                 <div className="grid gap-4">
                   <FormField
                     control={form.control}
@@ -862,7 +862,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="media_type"
