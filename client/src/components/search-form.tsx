@@ -1,3 +1,10 @@
+
+import { format } from "date-fns";
+import { ChevronDown, CalendarIcon } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -64,8 +71,8 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSearch)} className="space-y-4">
-        <div className="space-y-2">
+      <form onSubmit={form.handleSubmit(onSearch)} className="space-y-6 max-w-4xl mx-auto bg-white/50 backdrop-blur-sm rounded-lg p-6 shadow-lg border border-gray-100">
+        <div className="space-y-4">
             <FormField
               control={form.control}
               name="search_terms"
@@ -73,7 +80,14 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                 <FormItem>
                   <FormLabel>Search Terms</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter keywords..." {...field} />
+                    <div className="relative">
+                      <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                      <Input 
+                        placeholder="Enter keywords..." 
+                        {...field}
+                        className="pl-10 transition-all focus:ring-2 focus:ring-primary/20" 
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -140,11 +154,12 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
             render={({ field }) => (
               <FormItem className="space-y-4">
                 <FormLabel>Target Location</FormLabel>
-                <div className="flex gap-2 mb-4">
+                <div className="flex flex-wrap gap-2 mb-4">
                   <Button
                     type="button"
                     variant="outline"
                     size="sm"
+                    className="transition-all hover:bg-primary hover:text-primary-foreground"
                     onClick={() => {
                       const euCountries = ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"];
                       field.onChange(euCountries);
@@ -444,7 +459,15 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     ALL
                   </Button>
                 </div>
-                <div className="grid grid-cols-2 gap-2 max-h-[200px] overflow-y-auto border rounded-md p-4">
+                <Collapsible>
+                  <CollapsibleTrigger asChild>
+                    <Button variant="outline" className="w-full justify-between">
+                      <span>Selected Countries ({field.value.length})</span>
+                      <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
+                    </Button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="grid grid-cols-2 gap-2 mt-2 max-h-[300px] overflow-y-auto border rounded-md p-4 bg-white/50 backdrop-blur-sm">
                   {[
                     { code: "AD", name: "Andorra" },
                     { code: "AE", name: "United Arab Emirates" },
@@ -709,7 +732,9 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                       <span>{country.name}</span>
                     </label>
                   ))}
-                </div>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
                 <Button 
                   type="button" 
                   variant="outline" 
@@ -749,33 +774,114 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FormField
-            control={form.control}
-            name="ad_delivery_date_min"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Start Date</FormLabel>
-                <FormControl>
-                  <Input type="date" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="space-y-4">
+            <FormLabel>Date Range</FormLabel>
+            <div className="flex flex-wrap gap-2 mb-4">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const today = new Date();
+                  const sevenDaysAgo = new Date(today.setDate(today.getDate() - 7));
+                  form.setValue('ad_delivery_date_min', sevenDaysAgo.toISOString().split('T')[0]);
+                  form.setValue('ad_delivery_date_max', new Date().toISOString().split('T')[0]);
+                }}
+              >
+                Last 7 days
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const today = new Date();
+                  const thirtyDaysAgo = new Date(today.setDate(today.getDate() - 30));
+                  form.setValue('ad_delivery_date_min', thirtyDaysAgo.toISOString().split('T')[0]);
+                  form.setValue('ad_delivery_date_max', new Date().toISOString().split('T')[0]);
+                }}
+              >
+                Last 30 days
+              </Button>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="ad_delivery_date_min"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Start Date</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "w-full pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? format(field.value, "PPP") : "Pick a date"}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={new Date(field.value)}
+                          onSelect={(date) => field.onChange(date?.toISOString().split('T')[0])}
+                          disabled={(date) =>
+                            date > new Date() || date < new Date("1900-01-01")
+                          }
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          <FormField
-            control={form.control}
-            name="ad_delivery_date_max"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>End Date</FormLabel>
-                <FormControl>
-                  <Input type="date" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+              <FormField
+                control={form.control}
+                name="ad_delivery_date_max"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>End Date</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "w-full pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? format(field.value, "PPP") : "Pick a date"}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={new Date(field.value)}
+                          onSelect={(date) => field.onChange(date?.toISOString().split('T')[0])}
+                          disabled={(date) =>
+                            date > new Date() || date < new Date("1900-01-01")
+                          }
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
         </div>
 
         <FormField
