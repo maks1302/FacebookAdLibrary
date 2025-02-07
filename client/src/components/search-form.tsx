@@ -1,3 +1,4 @@
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -126,25 +127,6 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                       <span>{country.name}</span>
                     </label>
                   ))}
-                      className="h-4 w-4"
-                    />
-                    <span>United Kingdom</span>
-                  </label>
-                  <label className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      value="CA"
-                      checked={field.value.includes("CA")}
-                      onChange={(e) => {
-                        const newValue = e.target.checked 
-                          ? [...field.value, "CA"]
-                          : field.value.filter(c => c !== "CA");
-                        field.onChange(newValue);
-                      }}
-                      className="h-4 w-4"
-                    />
-                    <span>Canada</span>
-                  </label>
                   <Button 
                     type="button" 
                     variant="outline" 
