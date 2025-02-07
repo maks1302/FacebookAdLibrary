@@ -160,32 +160,33 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                 <FormLabel>Target Location</FormLabel>
                 <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr] gap-3">
                   <div className="flex flex-wrap gap-2 items-start">
-                  <Button
-                    type="button"
-                    variant={field.value.every(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)) ? "default" : "outline"}
-                    size="sm"
-                    className="transition-all relative group"
-                    onClick={() => {
-                      const euCountries = ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"];
-                      const currentSelection = field.value.filter(country => euCountries.includes(country));
-                      field.onChange(currentSelection.length === euCountries.length ? [] : euCountries);
-                    }}
-                  >
-                    EU
-                    {field.value.filter(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)).length > 0 && (
-                      <div className="inline-flex items-center ml-2">
-                        <Badge className="bg-primary/20">
-                          {field.value.filter(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)).length}
-                          <X className="w-3 h-3 ml-1 opacity-60 hover:opacity-100 cursor-pointer" 
-                             onClick={(e) => {
-                               e.stopPropagation();
-                               field.onChange(field.value.filter(country => !["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)));
-                             }}
-                          />
-                        </Badge>
-                      </div>
-                    )}
-                  </Button>
+                    <Button
+                      type="button"
+                      variant={field.value.every(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)) ? "default" : "outline"}
+                      size="sm"
+                      className="transition-all relative group"
+                      onClick={() => {
+                        const euCountries = ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"];
+                        const currentSelection = field.value.filter(country => euCountries.includes(country));
+                        field.onChange(currentSelection.length === euCountries.length ? [] : euCountries);
+                      }}
+                    >
+                      EU
+                      {field.value.filter(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)).length > 0 && (
+                        <div className="inline-flex items-center ml-2">
+                          <Badge className="bg-primary/20">
+                            {field.value.filter(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)).length}
+                            <X className="w-3 h-3 ml-1 opacity-60 hover:opacity-100 cursor-pointer" 
+                               onClick={(e) => {
+                                 e.stopPropagation();
+                                 field.onChange(field.value.filter(country => !["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)));
+                               }}
+                            />
+                          </Badge>
+                        </div>
+                      )}
+                    </Button>
+                  </div>
                   <Button
                     type="button"
                     variant={field.value.every(country => ["AR", "BO", "BR", "CL", "CO", "CR", "DO", "EC", "SV", "GT", "HT", "HN", "MX", "NI", "PA", "PY", "PE", "PR", "UY", "VE"].includes(country)) ? "default" : "outline"}
