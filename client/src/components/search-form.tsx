@@ -121,7 +121,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     variant="outline"
                     size="sm"
                     onClick={() => {
-                      const latamCountries = ["AR", "BO", "BR", "CL", "CO", "CR", "CU", "DO", "EC", "SV", "GT", "HT", "HN", "MX", "NI", "PA", "PY", "PE", "PR", "UY", "VE"];
+                      const latamCountries = ["AR", "BO", "BR", "CL", "CO", "CR", "DO", "EC", "SV", "GT", "HT", "HN", "MX", "NI", "PA", "PY", "PE", "PR", "UY", "VE"];
                       field.onChange(latamCountries);
                     }}
                   >
