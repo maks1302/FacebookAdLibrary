@@ -76,9 +76,8 @@ export function registerRoutes(app: Express): Server {
 
   app.get("/api/ads", async (req, res) => {
     try {
-      const { search_terms, ad_type, country } = searchParamsSchema.parse(
-        req.query,
-      );
+      const country = Array.isArray(req.query.country) ? req.query.country : [req.query.country];
+      const { search_terms, ad_type } = searchParamsSchema.omit({ country: true }).parse(req.query);
 
       if (!FB_ACCESS_TOKEN) {
         throw new Error("Facebook API access token not configured");
