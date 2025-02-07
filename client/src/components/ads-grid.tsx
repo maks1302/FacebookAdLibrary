@@ -149,9 +149,9 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
                       {ad.ad_creative_link_descriptions[0]}
                     </p>
                   )}
-                  {ad.bylines && ad.bylines.length > 0 && (
+                  {ad.bylines && (
                     <p className="text-xs text-muted-foreground mt-1">
-                      By: {ad.bylines.join(", ")}
+                      By: {Array.isArray(ad.bylines) ? ad.bylines.join(", ") : ad.bylines}
                     </p>
                   )}
                 </div>

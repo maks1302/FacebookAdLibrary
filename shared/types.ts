@@ -12,7 +12,7 @@ export interface Ad {
   ad_delivery_start_time: string;
   ad_delivery_stop_time?: string;
   ad_snapshot_url?: string;
-  bylines?: string[];
+  bylines?: string[] | string;
   currency?: string;
   languages?: string[];
   publisher_platforms?: string[];
