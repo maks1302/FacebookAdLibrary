@@ -115,7 +115,7 @@ export function registerRoutes(app: Express): Server {
             search_terms: search_terms,
             ad_type,
             ad_reached_countries: JSON.stringify(country),
-            languages: req.query.languages ? JSON.stringify(req.query.languages) : undefined,
+            languages: field.value?.length > 0 ? JSON.stringify(field.value) : undefined,
             limit: "24",
             fields,
             ad_active_status: req.query.ad_active_status || "ACTIVE",
