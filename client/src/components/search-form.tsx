@@ -583,7 +583,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     { code: "IT", name: "Italy" },
                     { code: "JE", name: "Jersey" },
                     { code: "JM", name: "Jamaica" },
-                    { code: "JO", name: "Jordan" },
+                    { code: "JO", name: ""Jordan" },
                     { code: "JP", name: "Japan" },
                     { code: "KE", name: "Kenya" },
                     { code: "KG", name: "Kyrgyzstan" },
