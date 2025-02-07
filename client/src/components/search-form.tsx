@@ -180,9 +180,10 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
             render={({ field }) => (
               <FormItem className="space-y-4">
                 <FormLabel>Target Location</FormLabel>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <Button
-                    type="button"
+                <div className="flex justify-between items-start gap-4">
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      type="button"
                     variant={field.value.every(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)) ? "default" : "outline"}
                     size="sm"
                     className="transition-all relative"
@@ -499,8 +500,9 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                   >
                     ALL
                   </Button>
-                </div>
-                <Collapsible>
+                  </div>
+                  <div className="w-[300px]">
+                    <Collapsible>
                   <CollapsibleTrigger asChild>
                     <Button variant="outline" className="w-full justify-between">
                       <span>Selected Countries ({field.value.length})</span>
@@ -776,6 +778,8 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     </div>
                   </CollapsibleContent>
                 </Collapsible>
+                </div>
+                </div>
                 <div className="flex justify-end">
                   <Button 
                     type="button" 
