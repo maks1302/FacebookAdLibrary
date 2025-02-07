@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -115,7 +116,6 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     <div className="flex items-center space-x-2">
                       <input
                         type="checkbox"
-                        defaultChecked={true}
                         checked={field.value === "KEYWORD_EXACT_PHRASE"}
                         onChange={(e) => field.onChange(e.target.checked ? "KEYWORD_EXACT_PHRASE" : "KEYWORD_UNORDERED")}
                         className="h-4 w-4"
