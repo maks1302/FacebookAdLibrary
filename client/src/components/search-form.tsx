@@ -180,73 +180,91 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
             render={({ field }) => (
               <FormItem className="space-y-4">
                 <FormLabel>Target Location</FormLabel>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <Button
-                    type="button"
-                    variant={field.value.every(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)) ? "default" : "outline"}
-                    size="sm"
-                    className="transition-all relative"
-                    onClick={() => {
-                      const euCountries = ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"];
-                      field.onChange(euCountries);
-                    }}
-                  >
-                    EU
+                <div className="flex flex-wrap gap-4 mb-4">
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      className="h-4 w-4"
+                      checked={field.value.every(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country))}
+                      onChange={(e) => {
+                        const euCountries = ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"];
+                        if (e.target.checked) {
+                          field.onChange(euCountries);
+                        } else {
+                          field.onChange(field.value.filter(country => !euCountries.includes(country)));
+                        }
+                      }}
+                    />
+                    <span>EU</span>
                     {field.value.filter(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)).length > 0 && (
-                      <Badge className="ml-2 bg-primary/20">{field.value.filter(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)).length}</Badge>
+                      <Badge variant="secondary">{field.value.filter(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)).length}</Badge>
                     )}
-                  </Button>
-                  <Button
-                    type="button"
-                    variant={field.value.every(country => ["AR", "BO", "BR", "CL", "CO", "CR", "DO", "EC", "SV", "GT", "HT", "HN", "MX", "NI", "PA", "PY", "PE", "PR", "UY", "VE"].includes(country)) ? "default" : "outline"}
-                    size="sm"
-                    className="relative"
-                    onClick={() => {
-                      const latamCountries = ["AR", "BO", "BR", "CL", "CO", "CR", "DO", "EC", "SV", "GT", "HT", "HN", "MX", "NI", "PA", "PY", "PE", "PR", "UY", "VE"];
-                      field.onChange(latamCountries);
-                    }}
-                  >
-                    LATAM
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      className="h-4 w-4"
+                      checked={field.value.every(country => ["AR", "BO", "BR", "CL", "CO", "CR", "DO", "EC", "SV", "GT", "HT", "HN", "MX", "NI", "PA", "PY", "PE", "PR", "UY", "VE"].includes(country))}
+                      onChange={(e) => {
+                        const latamCountries = ["AR", "BO", "BR", "CL", "CO", "CR", "DO", "EC", "SV", "GT", "HT", "HN", "MX", "NI", "PA", "PY", "PE", "PR", "UY", "VE"];
+                        if (e.target.checked) {
+                          field.onChange(latamCountries);
+                        } else {
+                          field.onChange(field.value.filter(country => !latamCountries.includes(country)));
+                        }
+                      }}
+                    />
+                    <span>LATAM</span>
                     {field.value.filter(country => ["AR", "BO", "BR", "CL", "CO", "CR", "DO", "EC", "SV", "GT", "HT", "HN", "MX", "NI", "PA", "PY", "PE", "PR", "UY", "VE"].includes(country)).length > 0 && (
-                      <Badge className="ml-2 bg-primary/20">{field.value.filter(country => ["AR", "BO", "BR", "CL", "CO", "CR", "DO", "EC", "SV", "GT", "HT", "HN", "MX", "NI", "PA", "PY", "PE", "PR", "UY", "VE"].includes(country)).length}</Badge>
+                      <Badge variant="secondary">{field.value.filter(country => ["AR", "BO", "BR", "CL", "CO", "CR", "DO", "EC", "SV", "GT", "HT", "HN", "MX", "NI", "PA", "PY", "PE", "PR", "UY", "VE"].includes(country)).length}</Badge>
                     )}
-                  </Button>
-                  <Button
-                    type="button"
-                    variant={field.value.every(country => ["BN", "KH", "ID", "LA", "MY", "MM", "PH", "SG", "TH", "VN"].includes(country)) ? "default" : "outline"}
-                    size="sm"
-                    className="relative"
-                    onClick={() => {
-                      const aseanCountries = ["BN", "KH", "ID", "LA", "MY", "MM", "PH", "SG", "TH", "VN"];
-                      field.onChange(aseanCountries);
-                    }}
-                  >
-                    ASEAN
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      className="h-4 w-4"
+                      checked={field.value.every(country => ["BN", "KH", "ID", "LA", "MY", "MM", "PH", "SG", "TH", "VN"].includes(country))}
+                      onChange={(e) => {
+                        const aseanCountries = ["BN", "KH", "ID", "LA", "MY", "MM", "PH", "SG", "TH", "VN"];
+                        if (e.target.checked) {
+                          field.onChange(aseanCountries);
+                        } else {
+                          field.onChange(field.value.filter(country => !aseanCountries.includes(country)));
+                        }
+                      }}
+                    />
+                    <span>ASEAN</span>
                     {field.value.filter(country => ["BN", "KH", "ID", "LA", "MY", "MM", "PH", "SG", "TH", "VN"].includes(country)).length > 0 && (
-                      <Badge className="ml-2 bg-primary/20">{field.value.filter(country => ["BN", "KH", "ID", "LA", "MY", "MM", "PH", "SG", "TH", "VN"].includes(country)).length}</Badge>
+                      <Badge variant="secondary">{field.value.filter(country => ["BN", "KH", "ID", "LA", "MY", "MM", "PH", "SG", "TH", "VN"].includes(country)).length}</Badge>
                     )}
-                  </Button>
-                  <Button
-                    type="button"
-                    variant={field.value.every(country => ["US", "CA", "MX"].includes(country)) ? "default" : "outline"}
-                    size="sm"
-                    className="relative"
-                    onClick={() => {
-                      const nafta = ["US", "CA", "MX"];
-                      field.onChange(nafta);
-                    }}
-                  >
-                    NAFTA
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      className="h-4 w-4"
+                      checked={field.value.every(country => ["US", "CA", "MX"].includes(country))}
+                      onChange={(e) => {
+                        const naftaCountries = ["US", "CA", "MX"];
+                        if (e.target.checked) {
+                          field.onChange(naftaCountries);
+                        } else {
+                          field.onChange(field.value.filter(country => !naftaCountries.includes(country)));
+                        }
+                      }}
+                    />
+                    <span>NAFTA</span>
                     {field.value.filter(country => ["US", "CA", "MX"].includes(country)).length > 0 && (
-                      <Badge className="ml-2 bg-primary/20">{field.value.filter(country => ["US", "CA", "MX"].includes(country)).length}</Badge>
+                      <Badge variant="secondary">{field.value.filter(country => ["US", "CA", "MX"].includes(country)).length}</Badge>
                     )}
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      const countries = [
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      className="h-4 w-4"
+                      checked={field.value.length === 249}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          const countries = [
                         { code: "AD", name: "Andorra" },
                         { code: "AE", name: "United Arab Emirates" },
                         { code: "AF", name: "Afghanistan" },
