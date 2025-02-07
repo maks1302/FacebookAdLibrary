@@ -569,7 +569,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     { code: "MY", name: "Malaysia" },
                     { code: "MZ", name: "Mozambique" },
                     { code: "NA", name: "Namibia" },
-                    { code: "NC","New Caledonia" },
+                    { code: "NC", name: "New Caledonia" },
                     { code: "NE", name: "Niger" },
                     { code: "NF", name: "Norfolk Island" },
                     { code: "NG", name: "Nigeria" },
