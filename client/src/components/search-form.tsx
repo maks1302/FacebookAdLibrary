@@ -172,8 +172,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
             />
           </div>
 
-        <div className="grid grid-cols-[2fr,1fr] gap-3">
-
+        <div className="grid grid-cols-[2fr,2fr] gap-3">
           <FormField
             control={form.control}
             name="country"
@@ -783,14 +782,14 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
             )}
           />
         </div>
-
-        <div className="grid grid-cols-[2fr,3fr] gap-4">
-          <div className="flex gap-4">
+        
+        <div>
+          <div className="grid grid-cols-[1fr,2fr] gap-4">
             <FormField
               control={form.control}
               name="media_type"
               render={({ field }) => (
-                <FormItem className="flex-1">
+                <FormItem>
                   <FormLabel>Media Type</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
@@ -810,12 +809,11 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                 </FormItem>
               )}
             />
-          </div>
 
-          <div className="flex items-end gap-4">
-            <div className="flex-1">
+            <div>
               <FormLabel className="mb-2 block">Date Range</FormLabel>
-            <Select
+              <div className="flex gap-2">
+                <Select
               onValueChange={(value) => {
                 const today = new Date();
                 switch (value) {
