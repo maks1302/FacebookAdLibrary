@@ -87,7 +87,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                         <Input 
                           placeholder="Enter keywords..." 
                           {...field}
-                          className="pl-10 input-focus interactive-hover" 
+                          className="pl-10 transition-all focus:ring-2 focus:ring-primary/20" 
                         />
                       </div>
                     </FormControl>
@@ -184,15 +184,26 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     type="button"
                     variant={field.value.every(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)) ? "default" : "outline"}
                     size="sm"
-                    className="transition-all relative"
+                    className="transition-all relative group"
                     onClick={() => {
                       const euCountries = ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"];
-                      field.onChange(euCountries);
+                      const currentSelection = field.value.filter(country => euCountries.includes(country));
+                      field.onChange(currentSelection.length === euCountries.length ? [] : euCountries);
                     }}
                   >
                     EU
                     {field.value.filter(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)).length > 0 && (
-                      <Badge className="ml-2 bg-primary/20">{field.value.filter(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)).length}</Badge>
+                      <div className="inline-flex items-center ml-2">
+                        <Badge className="bg-primary/20">
+                          {field.value.filter(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)).length}
+                          <X className="w-3 h-3 ml-1 opacity-60 hover:opacity-100 cursor-pointer" 
+                             onClick={(e) => {
+                               e.stopPropagation();
+                               field.onChange(field.value.filter(country => !["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)));
+                             }}
+                          />
+                        </Badge>
+                      </div>
                     )}
                   </Button>
                   <Button
@@ -541,7 +552,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     { code: "BO", name: "Bolivia" },
                     { code: "BQ", name: "Caribbean Netherlands" },
                     { code: "BR", name: "Brazil" },
-                    { code: "BS", name: "Bahamas"},
+                    { code: "BS", name: "Bahamas" },
                     { code: "BT", name: "Bhutan" },
                     { code: "BV", name: "Bouvet Island" },
                     { code: "BW", name: "Botswana" },
@@ -934,7 +945,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
           )}
         />
 
-        <Button type="submit" className="w-full interactive-hover" disabled={isLoading}>
+        <Button type="submit" className="w-full" disabled={isLoading}>
           {isLoading ? (
             "Searching..."
           ) : (
