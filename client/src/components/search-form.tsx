@@ -477,7 +477,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     </Button>
                   </CollapsibleTrigger>
                   <CollapsibleContent>
-                    <div className="grid grid-cols-2 gap-2 mt-2 max-h-[300px] overflow-y-auto border rounded-md p-4 bg-white/50 backdrop-blur-sm">
+                    <div className="absolute z-50 w-[200px] mt-2 max-h-[300px] overflow-y-auto border rounded-md p-4 bg-white/95 backdrop-blur-sm shadow-lg">
                   {[
                     { code: "AD", name: "Andorra" },
                     { code: "AE", name: "United Arab Emirates" },
@@ -726,7 +726,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     { code: "ZM", name: "Zambia" },
                     { code: "ZW", name: "Zimbabwe" }
                   ].map(country => (
-                    <label key={country.code} className="flex items-center space-x-2">
+                    <label key={country.code} className="flex items-center space-x-2 py-1 px-2 hover:bg-gray-50">
                       <input
                         type="checkbox"
                         value={country.code}
