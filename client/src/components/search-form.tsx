@@ -907,6 +907,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
             </Popover>
           </div>
         </div>
+      </div>
 
         <FormField
           control={form.control}
