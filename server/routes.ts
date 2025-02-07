@@ -9,6 +9,7 @@ const searchParamsSchema = z.object({
   search_terms: z.string(),
   ad_type: z.enum(["ALL", "POLITICAL_AND_ISSUE_ADS"]),
   country: z.string().length(2),
+  ad_active_status: z.enum(["ACTIVE", "ALL", "INACTIVE"]).default("ACTIVE"),
 });
 
 const FB_API_VERSION = "v18.0";
@@ -114,7 +115,7 @@ export function registerRoutes(app: Express): Server {
             ad_reached_countries: `["${country}"]`,
             limit: "24",
             fields,
-            ad_active_status: "ALL",
+            ad_active_status: req.query.ad_active_status || "ACTIVE",
           }),
       );
 

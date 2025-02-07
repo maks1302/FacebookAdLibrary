@@ -1,3 +1,5 @@
+export type AdActiveStatus = 'ACTIVE' | 'ALL' | 'INACTIVE';
+
 export interface Ad {
   id: string;
   page_name: string;
