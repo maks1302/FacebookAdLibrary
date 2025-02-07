@@ -841,10 +841,16 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
             )}
           />
 
-          <div className="flex items-end gap-4">
-            <div className="flex-1">
-              <FormLabel className="mb-2 block">Date Range</FormLabel>
-            <Select
+          <FormField
+            control={form.control}
+            name="ad_delivery_date_min"
+            render={({ field }) => (
+              <FormItem className="flex-1">
+                <FormLabel className="mb-2 block">Date Range</FormLabel>
+                <FormControl>
+                  <div className="flex items-end gap-4">
+                    <div className="flex-1">
+                      <Select
               onValueChange={(value) => {
                 const today = new Date();
                 switch (value) {
@@ -924,10 +930,13 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
               </PopoverContent>
             </Popover>
           </div>
-        </div>
-      </div>
+                  </div>
+                </FormControl>
+              </FormItem>
+            )}
+          />
 
-        <Button type="submit" className="w-full" disabled={isLoading}>
+          <Button type="submit" className="w-full" disabled={isLoading}>
           {isLoading ? (
             "Searching..."
           ) : (
