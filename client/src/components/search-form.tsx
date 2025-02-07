@@ -1,3 +1,4 @@
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -108,7 +109,6 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     type="button"
                     variant="outline"
                     size="sm"
-                    className="text-xs px-2 py-1 h-7"
                     onClick={() => {
                       const euCountries = ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"];
                       field.onChange(euCountries);
@@ -120,7 +120,6 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     type="button"
                     variant="outline"
                     size="sm"
-                    className="text-xs px-2 py-1 h-7"
                     onClick={() => {
                       const latamCountries = ["AR", "BO", "BR", "CL", "CO", "CR", "DO", "EC", "SV", "GT", "HT", "HN", "MX", "NI", "PA", "PY", "PE", "PR", "UY", "VE"];
                       field.onChange(latamCountries);
@@ -132,7 +131,6 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     type="button"
                     variant="outline"
                     size="sm"
-                    className="text-xs px-2 py-1 h-7"
                     onClick={() => {
                       const aseanCountries = ["BN", "KH", "ID", "LA", "MY", "MM", "PH", "SG", "TH", "VN"];
                       field.onChange(aseanCountries);
@@ -144,7 +142,6 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     type="button"
                     variant="outline"
                     size="sm"
-                    className="text-xs px-2 py-1 h-7"
                     onClick={() => {
                       const nafta = ["US", "CA", "MX"];
                       field.onChange(nafta);
@@ -156,7 +153,6 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     type="button"
                     variant="outline"
                     size="sm"
-                    className="text-xs px-2 py-1 h-7"
                     onClick={() => {
                       const countries = [
                         { code: "AD", name: "Andorra" },
@@ -571,7 +567,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     { code: "MX", name: "Mexico" },
                     { code: "MY", name: "Malaysia" },
                     { code: "MZ", name: "Mozambique" },
-                    { code: "NA", name: ""Namibia" },
+                    { code: "NA", name: "Namibia" },
                     { code: "NC", name: "New Caledonia" },
                     { code: "NE", name: "Niger" },
                     { code: "NF", name: "Norfolk Island" },
@@ -667,7 +663,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                         value={country.code}
                         checked={field.value.includes(country.code)}
                         onChange={(e) => {
-                          const newValue = e.target.checked
+                          const newValue = e.target.checked 
                             ? [...field.value, country.code]
                             : field.value.filter(c => c !== country.code);
                           field.onChange(newValue);
@@ -677,11 +673,11 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                       <span>{country.name}</span>
                     </label>
                   ))}
-                  <Button
-                    type="button"
-                    variant="outline"
+                  <Button 
+                    type="button" 
+                    variant="outline" 
                     size="sm"
-                    className="mt-2 col-span-2 text-xs px-2 py-1 h-7"
+                    className="mt-2 col-span-2"
                     onClick={() => field.onChange([])}
                   >
                     Clear Selection
