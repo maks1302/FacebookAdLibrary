@@ -10,6 +10,7 @@ const searchParamsSchema = z.object({
   ad_type: z.enum(["ALL", "POLITICAL_AND_ISSUE_ADS"]),
   country: z.array(z.string().length(2)),
   ad_active_status: z.enum(["ACTIVE", "ALL", "INACTIVE"]).default("ACTIVE"),
+  media_type: z.enum(["ALL", "IMAGE", "MEME", "VIDEO", "NONE"]).default("ALL"),
   ad_delivery_date_min: z.string().optional(),
   ad_delivery_date_max: z.string().optional(),
 });
@@ -117,6 +118,7 @@ export function registerRoutes(app: Express): Server {
             limit: "24",
             fields,
             ad_active_status: req.query.ad_active_status || "ACTIVE",
+            media_type: req.query.media_type || "ALL",
             ...(req.query.ad_delivery_date_min && { ad_delivery_date_min: req.query.ad_delivery_date_min as string }),
             ...(req.query.ad_delivery_date_max && { ad_delivery_date_max: req.query.ad_delivery_date_max as string }),
           }),

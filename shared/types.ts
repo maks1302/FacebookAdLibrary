@@ -1,4 +1,5 @@
 export type AdActiveStatus = 'ACTIVE' | 'ALL' | 'INACTIVE';
+export type MediaType = 'ALL' | 'IMAGE' | 'MEME' | 'VIDEO' | 'NONE';
 
 export interface Ad {
   id: string;
