@@ -16,11 +16,10 @@ import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/comp
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
-import { Check, CalendarIcon, ChevronDown, Info, Search, Globe, Filter, X, RotateCcw } from "lucide-react";
+import { Check, CalendarIcon, ChevronDown, Info, Search, Globe, Filter, X, RotateCcw, SearchIcon } from "lucide-react";
 import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { SearchIcon, Info, X } from "lucide-react";
 
 const searchSchema = z.object({
   search_terms: z.string().min(1, "Search terms are required"),
