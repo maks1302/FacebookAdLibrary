@@ -35,7 +35,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
     defaultValues: {
       search_terms: "",
       ad_type: "ALL",
-      country: ["ALL"],
+      country: [],
       ad_active_status: "ALL",
       ad_delivery_date_min: undefined,
       ad_delivery_date_max: undefined,
@@ -90,7 +90,6 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                 <FormLabel>Target Location</FormLabel>
                 <div className="grid grid-cols-2 gap-2 max-h-[200px] overflow-y-auto border rounded-md p-4">
                   {[
-                    { code: "ALL", name: "All Countries" },
                     { code: "AD", name: "Andorra" },
                     { code: "AE", name: "United Arab Emirates" },
                     { code: "AF", name: "Afghanistan" },
