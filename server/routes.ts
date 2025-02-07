@@ -112,14 +112,14 @@ export function registerRoutes(app: Express): Server {
         `https://graph.facebook.com/${FB_API_VERSION}/ads_archive?` +
           new URLSearchParams({
             access_token: FB_ACCESS_TOKEN,
-            search_terms: `"${search_terms}"`,
+            search_terms: search_terms,
             ad_type,
             ad_reached_countries: `["${country}"]`,
             limit: "24",
             fields,
             ad_active_status: req.query.ad_active_status || "ACTIVE",
-            ad_delivery_date_min: req.query.ad_delivery_date_min || undefined,
-            ad_delivery_date_max: req.query.ad_delivery_date_max || undefined,
+            ...(req.query.ad_delivery_date_min && { ad_delivery_date_min: req.query.ad_delivery_date_min as string }),
+            ...(req.query.ad_delivery_date_max && { ad_delivery_date_max: req.query.ad_delivery_date_max as string }),
           }),
       );
 
