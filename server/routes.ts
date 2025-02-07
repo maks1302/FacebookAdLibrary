@@ -131,6 +131,22 @@ export function registerRoutes(app: Express): Server {
         );
       }
 
+      // Log raw query parameters
+      console.log('=== Facebook API Query Parameters ===');
+      const queryParams = {
+        access_token: FB_ACCESS_TOKEN.substring(0, 10) + '...',
+        search_terms,
+        ad_type,
+        ad_reached_countries: `["${country}"]`,
+        limit: "24",
+        fields,
+        ad_active_status: req.query.ad_active_status || "ACTIVE",
+        ad_delivery_date_min: req.query.ad_delivery_date_min,
+        ad_delivery_date_max: req.query.ad_delivery_date_max,
+      };
+      console.log(JSON.stringify(queryParams, null, 2));
+      console.log('=====================================');
+
       const apiResponse = (await response.json()) as FacebookApiResponse;
       console.log('=== Facebook Ads API Response ===');
       console.log('Total ads found:', apiResponse.data?.length || 0);
