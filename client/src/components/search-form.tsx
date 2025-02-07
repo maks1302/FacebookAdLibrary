@@ -673,16 +673,16 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                       <span>{country.name}</span>
                     </label>
                   ))}
-                  <Button 
-                    type="button" 
-                    variant="outline" 
-                    size="sm"
-                    className="mt-2 col-span-2"
-                    onClick={() => field.onChange([])}
-                  >
-                    Clear Selection
-                  </Button>
                 </div>
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  size="sm"
+                  className="mt-1 text-gray-500 text-sm h-8 px-3"
+                  onClick={() => field.onChange([])}
+                >
+                  Clear Selection
+                </Button>
                 <FormMessage />
               </FormItem>
             )}
