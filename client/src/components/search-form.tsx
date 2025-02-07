@@ -13,6 +13,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
+import { Check, CalendarIcon, ChevronDown, Info, Search, Globe, Filter, X, RotateCcw } from "lucide-react";
+import { format } from "date-fns";
+import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SearchIcon, Info, X } from "lucide-react";
 
@@ -78,14 +84,14 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
               control={form.control}
               name="search_terms"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Search Terms</FormLabel>
+                <FormItem className="col-span-2">
+                  <FormLabel className="text-base">Search Terms</FormLabel>
                   <FormControl>
                     <div className="relative">
-                      <SearchIcon className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                      <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                       <Input 
-                        placeholder="Enter keywords..." 
-                        className="pl-8 pr-8" 
+                        placeholder="Enter keywords to search ads..." 
+                        className="pl-10 pr-10 h-12 text-base" 
                         {...field} 
                       />
                       {field.value && (
@@ -93,7 +99,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                           type="button"
                           variant="ghost"
                           size="sm"
-                          className="absolute right-1 top-1.5 h-6 w-6 p-0"
+                          className="absolute right-2 top-2 h-8 hover:bg-muted"
                           onClick={() => field.onChange("")}
                         >
                           <X className="h-4 w-4" />
@@ -101,7 +107,11 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                       )}
                     </div>
                   </FormControl>
-
+                  <div className="flex gap-2 mt-2">
+                    <Badge variant="secondary" className="cursor-pointer hover:bg-secondary/80">election</Badge>
+                    <Badge variant="secondary" className="cursor-pointer hover:bg-secondary/80">news</Badge>
+                    <Badge variant="secondary" className="cursor-pointer hover:bg-secondary/80">politics</Badge>
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}
