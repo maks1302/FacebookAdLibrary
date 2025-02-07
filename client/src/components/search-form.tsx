@@ -72,9 +72,9 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSearch)} className="space-y-2 w-[90%] mx-auto bg-white/50 backdrop-blur-sm rounded-lg p-3 shadow-lg border border-gray-100">
-        <div className="space-y-2">
-            <div className="form-section grid grid-cols-1 md:grid-cols-[2fr,1fr] gap-3">
+      <form onSubmit={form.handleSubmit(onSearch)} className="space-y-4 max-w-2xl mx-auto bg-white/50 backdrop-blur-sm rounded-lg p-4 shadow-lg border border-gray-100">
+        <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-[2fr,1fr] gap-4">
               <FormField
                 control={form.control}
                 name="search_terms"
@@ -158,35 +158,33 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
             render={({ field }) => (
               <FormItem className="space-y-4">
                 <FormLabel>Target Location</FormLabel>
-                <div className="grid grid-cols-1 md:grid-cols-[1fr,2fr] gap-3">
-                  <div className="flex flex-wrap gap-2 items-start">
-                    <Button
-                      type="button"
-                      variant={field.value.every(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)) ? "default" : "outline"}
-                      size="sm"
-                      className="transition-all relative group"
-                      onClick={() => {
-                        const euCountries = ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"];
-                        const currentSelection = field.value.filter(country => euCountries.includes(country));
-                        field.onChange(currentSelection.length === euCountries.length ? [] : euCountries);
-                      }}
-                    >
-                      EU
-                      {field.value.filter(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)).length > 0 && (
-                        <div className="inline-flex items-center ml-2">
-                          <Badge className="bg-primary/20">
-                            {field.value.filter(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)).length}
-                            <X className="w-3 h-3 ml-1 opacity-60 hover:opacity-100 cursor-pointer" 
-                               onClick={(e) => {
-                                 e.stopPropagation();
-                                 field.onChange(field.value.filter(country => !["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)));
-                               }}
-                            />
-                          </Badge>
-                        </div>
-                      )}
-                    </Button>
-                  </div>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <Button
+                    type="button"
+                    variant={field.value.every(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)) ? "default" : "outline"}
+                    size="sm"
+                    className="transition-all relative group"
+                    onClick={() => {
+                      const euCountries = ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"];
+                      const currentSelection = field.value.filter(country => euCountries.includes(country));
+                      field.onChange(currentSelection.length === euCountries.length ? [] : euCountries);
+                    }}
+                  >
+                    EU
+                    {field.value.filter(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)).length > 0 && (
+                      <div className="inline-flex items-center ml-2">
+                        <Badge className="bg-primary/20">
+                          {field.value.filter(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)).length}
+                          <X className="w-3 h-3 ml-1 opacity-60 hover:opacity-100 cursor-pointer" 
+                             onClick={(e) => {
+                               e.stopPropagation();
+                               field.onChange(field.value.filter(country => !["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)));
+                             }}
+                          />
+                        </Badge>
+                      </div>
+                    )}
+                  </Button>
                   <Button
                     type="button"
                     variant={field.value.every(country => ["AR", "BO", "BR", "CL", "CO", "CR", "DO", "EC", "SV", "GT", "HT", "HN", "MX", "NI", "PA", "PY", "PE", "PR", "UY", "VE"].includes(country)) ? "default" : "outline"}
@@ -491,8 +489,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     ALL
                   </Button>
                 </div>
-                <div className="flex-1">
-                  <Collapsible>
+                <Collapsible>
                   <CollapsibleTrigger asChild>
                     <Button variant="outline" className="w-full justify-between">
                       <span>Selected Countries ({field.value.length})</span>
@@ -768,7 +765,6 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     </div>
                   </CollapsibleContent>
                 </Collapsible>
-                </div>
                 <Button 
                   type="button" 
                   variant="ghost" 
@@ -782,6 +778,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
               </FormItem>
             )}
           />
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex gap-4">
@@ -815,7 +812,6 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
               )}
             />
           </div>
-        </div>
 
           <div className="flex items-end gap-4">
             <div className="flex-1">
