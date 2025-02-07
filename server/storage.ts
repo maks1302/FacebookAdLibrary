@@ -1,7 +1,7 @@
+
 import { searchHistory, type SearchHistory, type InsertSearchHistory } from "@shared/schema";
 import { sql } from 'drizzle-orm';
-import { db } from './db'; // Assuming db is defined elsewhere
-
+import { db } from './db';
 
 export interface IStorage {
   createSearchHistory(search: InsertSearchHistory): Promise<SearchHistory>;
@@ -47,4 +47,13 @@ export async function getPopularSearches() {
   return result.map(r => r.searchTerms);
 }
 
-export async function searchAds(
+export async function searchAds(params: any) {
+  // Store search history
+  await storage.createSearchHistory({
+    searchTerms: params.search_terms,
+    adType: params.ad_type,
+    countries: params.country
+  });
+  
+  return params;
+}
