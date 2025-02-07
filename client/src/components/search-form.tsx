@@ -547,7 +547,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                       { code: "AS", name: "American Samoa" },
                       { code: "AT", name: "Austria" },
                       { code: "AU", name: "Australia" },
-                      { code: ""AW", name: "Aruba" },
+                      { code: "AW", name: "Aruba" },
                       { code: "AX", name: "Åland Islands" },
                       { code: "AZ", name: "Azerbaijan" },
                       { code: "BA", name: "Bosnia and Herzegovina" },
