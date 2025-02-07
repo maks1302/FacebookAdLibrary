@@ -15,7 +15,6 @@ import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SearchIcon, Info, X } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
 
 const searchSchema = z.object({
   search_terms: z.string().min(1, "Search terms are required"),
@@ -34,10 +33,6 @@ interface SearchFormProps {
 }
 
 export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
-  const popularSearches = useQuery({
-    queryKey: ['popularSearches'],
-    queryFn: () => fetch('/api/popular-searches').then(res => res.json())
-  });
   const form = useForm<z.infer<typeof searchSchema>>({
     resolver: zodResolver(searchSchema),
     defaultValues: {
@@ -108,7 +103,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                   </FormControl>
                   {!field.value && (
                     <div className="flex flex-wrap gap-2 mt-2">
-                      {popularSearches.data?.map((suggestion) => (
+                      {["Political Ads", "Election", "Healthcare", "Climate Change", "Education"].map((suggestion) => (
                         <Button
                           key={suggestion}
                           variant="outline"
