@@ -46,6 +46,9 @@ export default function Home() {
       if (searchParams.ad_delivery_date_max) {
         params.append('ad_delivery_date_max', searchParams.ad_delivery_date_max);
       }
+      if (searchParams.media_type) {
+        params.append('media_type', searchParams.media_type);
+      }
       const url = `/api/ads?${params}`;
       const response = await fetch(url);
       if (!response.ok) {
