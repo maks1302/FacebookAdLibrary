@@ -211,6 +211,16 @@ export function registerRoutes(app: Express): Server {
     }
   });
 
+  // Add popular searches endpoint
+  app.get("/api/popular-searches", async (req, res) => {
+    try {
+      const popularSearches = await getPopularSearches();
+      res.json(popularSearches);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch popular searches" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
