@@ -476,7 +476,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                           <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-[200px] p-0">
+                      <PopoverContent className="w-[300px] p-0">
                         <div className="max-h-[300px] overflow-y-auto">
                   {[
                     { code: "AD", name: "Andorra" },
