@@ -22,7 +22,7 @@ const searchSchema = z.object({
   ad_delivery_date_min: z.string().optional(),
   ad_delivery_date_max: z.string().optional(),
   media_type: z.enum(["ALL", "IMAGE", "MEME", "VIDEO", "NONE"]).default("ALL"), //Added media_type field
-  search_type: z.enum(["KEYWORD_UNORDERED", "KEYWORD_EXACT_PHRASE"]).default("KEYWORD_UNORDERED"), // Added search_type field
+  search_type: z.enum(["KEYWORD_UNORDERED", "KEYWORD_EXACT_PHRASE"]).default("KEYWORD_EXACT_PHRASE"), // Added search_type field
 });
 
 interface SearchFormProps {
@@ -87,6 +87,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     <div className="flex items-center space-x-2">
                       <input
                         type="checkbox"
+                        defaultChecked={true}
                         checked={field.value === "KEYWORD_EXACT_PHRASE"}
                         onChange={(e) => field.onChange(e.target.checked ? "KEYWORD_EXACT_PHRASE" : "KEYWORD_UNORDERED")}
                         className="h-4 w-4"
