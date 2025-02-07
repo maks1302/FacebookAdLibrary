@@ -817,28 +817,6 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
           <div className="flex gap-4">
             <FormField
               control={form.control}
-              name="ad_active_status"
-              render={({ field }) => (
-                <FormItem className="flex-1">
-                  <FormLabel>Status</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select status" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="ALL">All Status</SelectItem>
-                      <SelectItem value="ACTIVE">Active</SelectItem>
-                      <SelectItem value="INACTIVE">Inactive</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
               name="media_type"
               render={({ field }) => (
                 <FormItem className="flex-1">
