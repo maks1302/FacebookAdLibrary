@@ -74,7 +74,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSearch)} className="space-y-2 w-[98%] max-w-[1600px] mx-auto bg-white/50 backdrop-blur-sm rounded-lg p-2 shadow-lg border border-gray-100">
         <div className="space-y-4">
-            <div className="grid grid-cols-[3fr,1fr,1fr,1fr] gap-3">
+            <div className="grid grid-cols-[3fr,1fr,1fr] gap-3">
               <FormField
                 control={form.control}
                 name="search_terms"
@@ -111,6 +111,28 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                       <SelectContent>
                         <SelectItem value="ALL">All Ads</SelectItem>
                         <SelectItem value="POLITICAL_AND_ISSUE_ADS">Political & Issue Ads</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="ad_active_status"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Status</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select status" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="ALL">All Status</SelectItem>
+                        <SelectItem value="ACTIVE">Active</SelectItem>
+                        <SelectItem value="INACTIVE">Inactive</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -775,15 +797,16 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     </div>
                   </CollapsibleContent>
                 </Collapsible>
-                <Button 
-                  type="button" 
-                  variant="ghost" 
-                  size="icon"
-                  className="mt-1"
-                  onClick={() => field.onChange([])}
-                >
-                  <X className="h-4 w-4" />
-                </Button>
+                <div className="flex justify-end">
+                  <Button 
+                    type="button" 
+                    variant="ghost" 
+                    size="icon"
+                    onClick={() => field.onChange([])}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
                 <FormMessage />
               </FormItem>
             )}
@@ -925,31 +948,6 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
           </div>
         </div>
       </div>
-
-        <FormField
-          control={form.control}
-          name="media_type"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Media Type</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select media type" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="ALL">All</SelectItem>
-                  <SelectItem value="IMAGE">Image</SelectItem>
-                  <SelectItem value="MEME">Meme</SelectItem>
-                  <SelectItem value="VIDEO">Video</SelectItem>
-                  <SelectItem value="NONE">None</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
         <Button type="submit" className="w-full" disabled={isLoading}>
           {isLoading ? (
