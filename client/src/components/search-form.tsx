@@ -1,4 +1,3 @@
-
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -109,6 +108,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     type="button"
                     variant="outline"
                     size="sm"
+                    className="text-xs px-2 py-1 h-7"
                     onClick={() => {
                       const euCountries = ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"];
                       field.onChange(euCountries);
@@ -120,6 +120,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     type="button"
                     variant="outline"
                     size="sm"
+                    className="text-xs px-2 py-1 h-7"
                     onClick={() => {
                       const latamCountries = ["AR", "BO", "BR", "CL", "CO", "CR", "DO", "EC", "SV", "GT", "HT", "HN", "MX", "NI", "PA", "PY", "PE", "PR", "UY", "VE"];
                       field.onChange(latamCountries);
@@ -131,6 +132,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     type="button"
                     variant="outline"
                     size="sm"
+                    className="text-xs px-2 py-1 h-7"
                     onClick={() => {
                       const aseanCountries = ["BN", "KH", "ID", "LA", "MY", "MM", "PH", "SG", "TH", "VN"];
                       field.onChange(aseanCountries);
@@ -142,6 +144,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     type="button"
                     variant="outline"
                     size="sm"
+                    className="text-xs px-2 py-1 h-7"
                     onClick={() => {
                       const nafta = ["US", "CA", "MX"];
                       field.onChange(nafta);
@@ -153,6 +156,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     type="button"
                     variant="outline"
                     size="sm"
+                    className="text-xs px-2 py-1 h-7"
                     onClick={() => {
                       const countries = [
                         { code: "AD", name: "Andorra" },
@@ -567,95 +571,12 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     { code: "MX", name: "Mexico" },
                     { code: "MY", name: "Malaysia" },
                     { code: "MZ", name: "Mozambique" },
-                    { code: "NA", name: "Namibia" },
-                    { code: "NC", name: "New Caledonia" },
-                    { code: "NE", name: "Niger" },
-                    { code: "NF", name: "Norfolk Island" },
-                    { code: "NG", name: "Nigeria" },
-                    { code: "NI", name: "Nicaragua" },
-                    { code: "NL", name: "Netherlands" },
-                    { code: "NO", name: "Norway" },
-                    { code: "NP", name: "Nepal" },
-                    { code: "NR", name: "Nauru" },
-                    { code: "NU", name: "Niue" },
-                    { code: "NZ", name: "New Zealand" },
-                    { code: "OM", name: "Oman" },
-                    { code: "PA", name: "Panama" },
-                    { code: "PE", name: "Peru" },
-                    { code: "PF", name: "French Polynesia" },
-                    { code: "PG", name: "Papua New Guinea" },
-                    { code: "PH", name: "Philippines" },
-                    { code: "PK", name: "Pakistan" },
-                    { code: "PL", name: "Poland" },
-                    { code: "PM", name: "Saint Pierre and Miquelon" },
-                    { code: "PN", name: "Pitcairn Islands" },
-                    { code: "PR", name: "Puerto Rico" },
-                    { code: "PS", name: "Palestine" },
-                    { code: "PT", name: "Portugal" },
-                    { code: "PW", name: "Palau" },
-                    { code: "PY", name: "Paraguay" },
-                    { code: "QA", name: "Qatar" },
-                    { code: "RE", name: "Réunion" },
-                    { code: "RO", name: "Romania" },
-                    { code: "RS", name: "Serbia" },
-                    { code: "RU", name: "Russia" },
-                    { code: "RW", name: "Rwanda" },
-                    { code: "SA", name: "Saudi Arabia" },
-                    { code: "SB", name: "Solomon Islands" },
-                    { code: "SC", name: "Seychelles" },
-                    { code: "SE", name: "Sweden" },
-                    { code: "SG", name: "Singapore" },
-                    { code: "SH", name: "Saint Helena" },
-                    { code: "SI", name: "Slovenia" },
-                    { code: "SJ", name: "Svalbard and Jan Mayen" },
-                    { code: "SK", name: "Slovakia" },
-                    { code: "SL", name: "Sierra Leone" },
-                    { code: "SM", name: "San Marino" },
-                    { code: "SN", name: "Senegal" },
-                    { code: "SO", name: "Somalia" },
-                    { code: "SR", name: "Suriname" },
-                    { code: "SS", name: "South Sudan" },
-                    { code: "ST", name: "São Tomé and Príncipe" },
-                    { code: "SV", name: "El Salvador" },
-                    { code: "SX", name: "Sint Maarten" },
-                    { code: "SZ", name: "Eswatini" },
-                    { code: "TC", name: "Turks and Caicos Islands" },
-                    { code: "TD", name: "Chad" },
-                    { code: "TF", name: "French Southern Territories" },
-                    { code: "TG", name: "Togo" },
-                    { code: "TH", name: "Thailand" },
-                    { code: "TJ", name: "Tajikistan" },
-                    { code: "TK", name: "Tokelau" },
-                    { code: "TL", name: "Timor-Leste" },
-                    { code: "TM", name: "Turkmenistan" },
-                    { code: "TN", name: "Tunisia" },
-                    { code: "TO", name: "Tonga" },
-                    { code: "TR", name: "Turkey" },
-                    { code: "TT", name: "Trinidad and Tobago" },
-                    { code: "TV", name: "Tuvalu" },
-                    { code: "TW", name: "Taiwan" },
-                    { code: "TZ", name: "Tanzania" },
-                    { code: "UA", name: "Ukraine" },
-                    { code: "UG", name: "Uganda" },
-                    { code: "UM", name: "U.S. Minor Outlying Islands" },
-                    { code: "US", name: "United States" },
-                    { code: "UY", name: "Uruguay" },
-                    { code: "UZ", name: "Uzbekistan" },
-                    { code: "VA", name: "Vatican City" },
-                    { code: "VC", name: "Saint Vincent and the Grenadines" },
-                    { code: "VE", name: "Venezuela" },
-                    { code: "VG", name: "British Virgin Islands" },
-                    { code: "VI", name: "U.S. Virgin Islands" },
-                    { code: "VN", name: "Vietnam" },
-                    { code: "VU", name: "Vanuatu" },
-                    { code: "WF", name: "Wallis and Futuna" },
-                    { code: "WS", name: "Samoa" },
-                    { code: "XK", name: "Kosovo" },
-                    { code: "YE", name: "Yemen" },
-                    { code: "YT", name: "Mayotte" },
-                    { code: "ZA", name: "South Africa" },
-                    { code: "ZM", name: "Zambia" },
-                    { code: "ZW", name: "Zimbabwe" }
+                    { code: "NA", name: "Namibia`NA", "NC", "NE", "NF", "NG", "NI", "NL", "NO", "NP", "NR", "NU", "NZ", "OM",
+                    "PA", "PE", "PF", "PG", "PH", "PK", "PL", "PM", "PN", "PR", "PS", "PT", "PW", "PY", "QA", "RE", "RO",
+                    "RS", "RU", "RW", "SA", "SB", "SC", "SE", "SG", "SH", "SI", "SJ", "SK", "SL", "SM", "SN", "SO", "SR",
+                    "SS", "ST", "SV", "SX", "SZ", "TC", "TD", "TF", "TG", "TH", "TJ", "TK", "TL", "TM", "TN", "TO", "TR",
+                    "TT", "TV", "TW", "TZ", "UA", "UG", "UM", "US", "UY", "UZ", "VA", "VC", "VE", "VG", "VI", "VN", "VU",
+                    "WF", "WS", "XK", "YE", "YT", "ZA", "ZM", "ZW"
                   ].map(country => (
                     <label key={country.code} className="flex items-center space-x-2">
                       <input
@@ -663,7 +584,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                         value={country.code}
                         checked={field.value.includes(country.code)}
                         onChange={(e) => {
-                          const newValue = e.target.checked 
+                          const newValue = e.target.checked
                             ? [...field.value, country.code]
                             : field.value.filter(c => c !== country.code);
                           field.onChange(newValue);
@@ -673,11 +594,11 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                       <span>{country.name}</span>
                     </label>
                   ))}
-                  <Button 
-                    type="button" 
-                    variant="outline" 
+                  <Button
+                    type="button"
+                    variant="outline"
                     size="sm"
-                    className="mt-2 col-span-2"
+                    className="mt-2 col-span-2 text-xs px-2 py-1 h-7"
                     onClick={() => field.onChange([])}
                   >
                     Clear Selection
