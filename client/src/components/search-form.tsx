@@ -469,15 +469,15 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     </SelectContent>
                   </Select>
                   <div className="flex items-center gap-2">
-                    <Popover>
-                      <PopoverTrigger asChild>
+                    <Collapsible>
+                      <CollapsibleTrigger asChild>
                         <Button variant="outline" className="w-[300px] justify-between">
                           <span>Selected Countries ({field.value.length})</span>
-                          <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-[200px] p-0">
-                        <div className="max-h-[300px] overflow-y-auto">
+                      <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
+                    </Button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="absolute z-50 w-[200px] mt-2 max-h-[300px] overflow-y-auto border rounded-md p-4 bg-white/95 backdrop-blur-sm shadow-lg">
                   {[
                     { code: "AD", name: "Andorra" },
                     { code: "AE", name: "United Arab Emirates" },
@@ -743,8 +743,8 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     </label>
                   ))}
                     </div>
-                      </PopoverContent>
-                    </Popover>
+                  </CollapsibleContent>
+                </Collapsible>
                 <Button 
                       type="button" 
                       variant="ghost" 
