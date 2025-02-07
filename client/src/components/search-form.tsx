@@ -784,9 +784,24 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                 size="sm"
                 onClick={() => {
                   const today = new Date();
-                  const sevenDaysAgo = new Date(today.setDate(today.getDate() - 7));
+                  const yesterday = new Date(today);
+                  yesterday.setDate(today.getDate() - 1);
+                  form.setValue('ad_delivery_date_min', yesterday.toISOString().split('T')[0]);
+                  form.setValue('ad_delivery_date_max', today.toISOString().split('T')[0]);
+                }}
+              >
+                Last 24 hours
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const today = new Date();
+                  const sevenDaysAgo = new Date(today);
+                  sevenDaysAgo.setDate(today.getDate() - 7);
                   form.setValue('ad_delivery_date_min', sevenDaysAgo.toISOString().split('T')[0]);
-                  form.setValue('ad_delivery_date_max', new Date().toISOString().split('T')[0]);
+                  form.setValue('ad_delivery_date_max', today.toISOString().split('T')[0]);
                 }}
               >
                 Last 7 days
@@ -797,12 +812,38 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                 size="sm"
                 onClick={() => {
                   const today = new Date();
-                  const thirtyDaysAgo = new Date(today.setDate(today.getDate() - 30));
+                  const thirtyDaysAgo = new Date(today);
+                  thirtyDaysAgo.setDate(today.getDate() - 30);
                   form.setValue('ad_delivery_date_min', thirtyDaysAgo.toISOString().split('T')[0]);
-                  form.setValue('ad_delivery_date_max', new Date().toISOString().split('T')[0]);
+                  form.setValue('ad_delivery_date_max', today.toISOString().split('T')[0]);
                 }}
               >
                 Last 30 days
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const today = new Date();
+                  const ninetyDaysAgo = new Date(today);
+                  ninetyDaysAgo.setDate(today.getDate() - 90);
+                  form.setValue('ad_delivery_date_min', ninetyDaysAgo.toISOString().split('T')[0]);
+                  form.setValue('ad_delivery_date_max', today.toISOString().split('T')[0]);
+                }}
+              >
+                Last 90 days
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  form.setValue('ad_delivery_date_min', undefined);
+                  form.setValue('ad_delivery_date_max', undefined);
+                }}
+              >
+                Clear dates
               </Button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
