@@ -15,10 +15,34 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SearchIcon } from "lucide-react";
 
+const languagesList = [
+  { code: "ar", name: "Arabic" },
+  { code: "bn", name: "Bengali" },
+  { code: "cmn", name: "Chinese (Mandarin)" },
+  { code: "yue", name: "Chinese (Cantonese)" },
+  { code: "en", name: "English" },
+  { code: "fr", name: "French" },
+  { code: "de", name: "German" },
+  { code: "hi", name: "Hindi" },
+  { code: "id", name: "Indonesian" },
+  { code: "it", name: "Italian" },
+  { code: "ja", name: "Japanese" },
+  { code: "ko", name: "Korean" },
+  { code: "ms", name: "Malay" },
+  { code: "pt", name: "Portuguese" },
+  { code: "ru", name: "Russian" },
+  { code: "es", name: "Spanish" },
+  { code: "th", name: "Thai" },
+  { code: "tr", name: "Turkish" },
+  { code: "ur", name: "Urdu" },
+  { code: "vi", name: "Vietnamese" }
+];
+
 const searchSchema = z.object({
   search_terms: z.string().min(1, "Search terms are required"),
   ad_type: z.enum(["ALL", "POLITICAL_AND_ISSUE_ADS"]),
   country: z.array(z.string()).min(1, "At least one country is required").transform(val => Array.isArray(val) ? val : [val]),
+  languages: z.array(z.string()).optional(),
   ad_active_status: z.enum(["ACTIVE", "ALL", "INACTIVE"]),
   ad_delivery_date_min: z.string().optional(),
   ad_delivery_date_max: z.string().optional(),
@@ -35,6 +59,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
     defaultValues: {
       search_terms: "",
       ad_type: "ALL",
+      languages: [],
       country: [
         "AD", "AE", "AF", "AG", "AI", "AL", "AM", "AN", "AO", "AQ", "AR", "AS", "AT", "AU", "AW", "AX", "AZ", 
         "BA", "BB", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BL", "BM", "BN", "BO", "BQ", "BR", "BS", "BT", 
@@ -688,6 +713,79 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
             )}
           />
         </div>
+
+        <FormField
+          control={form.control}
+          name="languages"
+          render={({ field }) => (
+            <FormItem className="space-y-4">
+              <FormLabel>Languages</FormLabel>
+              <div className="flex gap-2 mb-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => field.onChange(languagesList.map(lang => lang.code))}
+                >
+                  ALL
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => field.onChange(["en"])}
+                >
+                  English
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => field.onChange(["es", "pt"])}
+                >
+                  Latin
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => field.onChange(["cmn", "yue", "ja", "ko"])}
+                >
+                  East Asian
+                </Button>
+              </div>
+              <div className="grid grid-cols-2 gap-2 max-h-[200px] overflow-y-auto border rounded-md p-4">
+                {languagesList.map(lang => (
+                  <label key={lang.code} className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      value={lang.code}
+                      checked={field.value?.includes(lang.code)}
+                      onChange={(e) => {
+                        const newValue = e.target.checked 
+                          ? [...(field.value || []), lang.code]
+                          : (field.value || []).filter(c => c !== lang.code);
+                        field.onChange(newValue);
+                      }}
+                      className="h-4 w-4"
+                    />
+                    <span>{lang.name}</span>
+                  </label>
+                ))}
+              </div>
+              <Button 
+                type="button" 
+                variant="outline" 
+                size="sm"
+                className="mt-1 text-gray-500 text-sm h-8 px-3"
+                onClick={() => field.onChange([])}
+              >
+                Clear Selection
+              </Button>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={form.control}
