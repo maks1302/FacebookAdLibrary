@@ -18,6 +18,9 @@ const searchSchema = z.object({
   search_terms: z.string().min(1, "Search terms are required"),
   ad_type: z.enum(["ALL", "POLITICAL_AND_ISSUE_ADS"]),
   country: z.string().min(2, "Country is required"),
+  ad_active_status: z.enum(["ACTIVE", "ALL", "INACTIVE"]),
+  ad_delivery_date_min: z.string().optional(),
+  ad_delivery_date_max: z.string().optional(),
 });
 
 interface SearchFormProps {
@@ -32,6 +35,9 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
       search_terms: "",
       ad_type: "ALL",
       country: "US",
+      ad_active_status: "ALL",
+      ad_delivery_date_min: undefined,
+      ad_delivery_date_max: undefined,
     },
   });
 
@@ -93,6 +99,59 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     <SelectItem value="CA">Canada</SelectItem>
                   </SelectContent>
                 </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <FormField
+          control={form.control}
+          name="ad_active_status"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Status</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select status" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="ALL">All</SelectItem>
+                  <SelectItem value="ACTIVE">Active</SelectItem>
+                  <SelectItem value="INACTIVE">Inactive</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="ad_delivery_date_min"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Start Date</FormLabel>
+                <FormControl>
+                  <Input type="date" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="ad_delivery_date_max"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>End Date</FormLabel>
+                <FormControl>
+                  <Input type="date" {...field} />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
