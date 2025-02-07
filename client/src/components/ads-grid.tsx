@@ -83,7 +83,14 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
       {ads.map((ad) => (
         <Card key={ad.id} className="flex flex-col">
           <CardHeader className="py-2 px-3">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between relative">
+              <div className="w-2 h-2 rounded-full absolute -top-1 right-0" 
+                style={{ 
+                  backgroundColor: !ad.ad_delivery_stop_time || new Date(ad.ad_delivery_stop_time) > new Date() 
+                    ? '#22c55e' // green-500 for active
+                    : '#94a3b8' // slate-400 for inactive
+                }}
+              />
               <CardTitle className="text-base">{ad.page_name}</CardTitle>
               {ad.ad_snapshot_url && (
                 <Button
