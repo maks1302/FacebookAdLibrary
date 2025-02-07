@@ -57,7 +57,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
       ad_delivery_date_min: undefined,
       ad_delivery_date_max: undefined,
       media_type: "ALL", // Added default value for media_type
-      search_type: "KEYWORD_UNORDERED", // Added default value for search_type
+      search_type: "KEYWORD_EXACT_PHRASE", // Set exact phrase as default
     },
   });
 
