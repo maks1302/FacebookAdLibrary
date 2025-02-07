@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SearchIcon, Info } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "./ui/tooltip";
 
 const searchSchema = z.object({
   search_terms: z.string().min(1, "Search terms are required"),
@@ -94,14 +94,16 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                         className="h-4 w-4"
                       />
                       <span className="text-sm">KEYWORD EXACT PHRASE</span>
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <Info className="h-4 w-4 ml-1 text-muted-foreground" />
-                        </TooltipTrigger>
-                        <TooltipContent className="max-w-[350px]">
-                          <p>When unchecked, the search engine will treat each word individually, and return results that contain these words in any order. When marked the search engine will treat the words as a single phrase, and only return results that match that exact phrase. To search for multiple phrases at once, separate groups of words by commas. This will retrieve results that contain an exact match for every phrase.</p>
-                        </TooltipContent>
-                      </Tooltip>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <Info className="h-4 w-4 ml-1 text-muted-foreground" />
+                          </TooltipTrigger>
+                          <TooltipContent className="max-w-[350px]">
+                            <p>When unchecked, the search engine will treat each word individually, and return results that contain these words in any order. When marked the search engine will treat the words as a single phrase, and only return results that match that exact phrase. To search for multiple phrases at once, separate groups of words by commas. This will retrieve results that contain an exact match for every phrase.</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </div>
                   </FormControl>
                 </FormItem>
