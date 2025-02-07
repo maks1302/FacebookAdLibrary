@@ -72,7 +72,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSearch)} className="space-y-6 max-w-4xl mx-auto bg-white/50 backdrop-blur-sm rounded-lg p-6 shadow-lg border border-gray-100">
+      <form onSubmit={form.handleSubmit(onSearch)} className="space-y-4 max-w-2xl mx-auto bg-white/50 backdrop-blur-sm rounded-lg p-4 shadow-lg border border-gray-100">
         <div className="space-y-4">
             <FormField
               control={form.control}
@@ -777,75 +777,52 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-4">
             <FormLabel>Date Range</FormLabel>
-            <div className="flex flex-wrap gap-2 mb-4">
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  const today = new Date();
-                  const yesterday = new Date(today);
-                  yesterday.setDate(today.getDate() - 1);
-                  form.setValue('ad_delivery_date_min', yesterday.toISOString().split('T')[0]);
-                  form.setValue('ad_delivery_date_max', today.toISOString().split('T')[0]);
-                }}
-              >
-                Last 24 hours
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  const today = new Date();
-                  const sevenDaysAgo = new Date(today);
-                  sevenDaysAgo.setDate(today.getDate() - 7);
-                  form.setValue('ad_delivery_date_min', sevenDaysAgo.toISOString().split('T')[0]);
-                  form.setValue('ad_delivery_date_max', today.toISOString().split('T')[0]);
-                }}
-              >
-                Last 7 days
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  const today = new Date();
-                  const thirtyDaysAgo = new Date(today);
-                  thirtyDaysAgo.setDate(today.getDate() - 30);
-                  form.setValue('ad_delivery_date_min', thirtyDaysAgo.toISOString().split('T')[0]);
-                  form.setValue('ad_delivery_date_max', today.toISOString().split('T')[0]);
-                }}
-              >
-                Last 30 days
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  const today = new Date();
-                  const ninetyDaysAgo = new Date(today);
-                  ninetyDaysAgo.setDate(today.getDate() - 90);
-                  form.setValue('ad_delivery_date_min', ninetyDaysAgo.toISOString().split('T')[0]);
-                  form.setValue('ad_delivery_date_max', today.toISOString().split('T')[0]);
-                }}
-              >
-                Last 90 days
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  form.setValue('ad_delivery_date_min', undefined);
-                  form.setValue('ad_delivery_date_max', undefined);
-                }}
-              >
-                Clear dates
-              </Button>
-            </div>
+            <Select
+              onValueChange={(value) => {
+                const today = new Date();
+                switch (value) {
+                  case "24h":
+                    const yesterday = new Date(today);
+                    yesterday.setDate(today.getDate() - 1);
+                    form.setValue('ad_delivery_date_min', yesterday.toISOString().split('T')[0]);
+                    form.setValue('ad_delivery_date_max', today.toISOString().split('T')[0]);
+                    break;
+                  case "7d":
+                    const sevenDaysAgo = new Date(today);
+                    sevenDaysAgo.setDate(today.getDate() - 7);
+                    form.setValue('ad_delivery_date_min', sevenDaysAgo.toISOString().split('T')[0]);
+                    form.setValue('ad_delivery_date_max', today.toISOString().split('T')[0]);
+                    break;
+                  case "30d":
+                    const thirtyDaysAgo = new Date(today);
+                    thirtyDaysAgo.setDate(today.getDate() - 30);
+                    form.setValue('ad_delivery_date_min', thirtyDaysAgo.toISOString().split('T')[0]);
+                    form.setValue('ad_delivery_date_max', today.toISOString().split('T')[0]);
+                    break;
+                  case "90d":
+                    const ninetyDaysAgo = new Date(today);
+                    ninetyDaysAgo.setDate(today.getDate() - 90);
+                    form.setValue('ad_delivery_date_min', ninetyDaysAgo.toISOString().split('T')[0]);
+                    form.setValue('ad_delivery_date_max', today.toISOString().split('T')[0]);
+                    break;
+                  case "clear":
+                    form.setValue('ad_delivery_date_min', undefined);
+                    form.setValue('ad_delivery_date_max', undefined);
+                    break;
+                }
+              }}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select range" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="24h">Last 24 hours</SelectItem>
+                <SelectItem value="7d">Last 7 days</SelectItem>
+                <SelectItem value="30d">Last 30 days</SelectItem>
+                <SelectItem value="90d">Last 90 days</SelectItem>
+                <SelectItem value="clear">Clear dates</SelectItem>
+              </SelectContent>
+            </Select>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}

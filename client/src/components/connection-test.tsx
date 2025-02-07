@@ -37,23 +37,23 @@ export function ConnectionTest() {
   }, [error, errorMessage, toast]);
 
   return (
-    <div className="fixed top-4 right-4 flex items-start gap-2">
-      <div className="relative flex items-center">
-        <div
-          className={`h-3 w-3 rounded-full ${
-            isConnected ? "bg-green-500" : "bg-red-500"
-          }`}
-        />
-        <div
-          className={`absolute -inset-0.5 rounded-full ${
-            isConnected ? "bg-green-500" : "bg-red-500"
-          } animate-pulse opacity-20`}
-        />
-      </div>
-
-      {data && (
-        <Card className="w-64">
-          <CardContent className="p-4 text-xs space-y-2">
+    <div className="fixed top-4 right-4">
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div className="relative flex items-center cursor-help">
+            <div
+              className={`h-2.5 w-2.5 rounded-full ${
+                isConnected ? "bg-green-500" : "bg-red-500"
+              }`}
+            />
+            <div
+              className={`absolute -inset-0.5 rounded-full ${
+                isConnected ? "bg-green-500" : "bg-red-500"
+              } animate-pulse opacity-20`}
+            />
+          </div>
+        </TooltipTrigger>
+        <TooltipContent className="text-xs">
             <div className="font-semibold">
               Status: {data.status}
             </div>
@@ -70,9 +70,8 @@ export function ConnectionTest() {
             {data.message && (
               <div className="text-red-500">{data.message}</div>
             )}
-          </CardContent>
-        </Card>
-      )}
+          </TooltipContent>
+      </Tooltip>
     </div>
   );
 }
