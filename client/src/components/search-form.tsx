@@ -86,17 +86,24 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
             name="country"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Country</FormLabel>
+                <FormLabel>Target Location</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select country" />
+                      <SelectValue placeholder="Select target location" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
                     <SelectItem value="US">United States</SelectItem>
                     <SelectItem value="GB">United Kingdom</SelectItem>
                     <SelectItem value="CA">Canada</SelectItem>
+                    <SelectItem value="DE">Germany</SelectItem>
+                    <SelectItem value="FR">France</SelectItem>
+                    <SelectItem value="IT">Italy</SelectItem>
+                    <SelectItem value="ES">Spain</SelectItem>
+                    <SelectItem value="AU">Australia</SelectItem>
+                    <SelectItem value="IN">India</SelectItem>
+                    <SelectItem value="JP">Japan</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
