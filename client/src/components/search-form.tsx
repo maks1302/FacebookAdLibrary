@@ -172,28 +172,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
             />
           </div>
 
-        <div className="grid grid-cols-[1fr,2fr,1fr] gap-3">
-          <FormField
-            control={form.control}
-            name="ad_type"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Ad Type</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select ad type" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="ALL">All Ads</SelectItem>
-                    <SelectItem value="POLITICAL_AND_ISSUE_ADS">Political & Issue Ads</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <div className="grid grid-cols-[2fr,1fr] gap-3">
 
           <FormField
             control={form.control}
