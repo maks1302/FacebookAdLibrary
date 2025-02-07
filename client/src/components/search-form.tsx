@@ -1,4 +1,3 @@
-
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -15,10 +14,42 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SearchIcon } from "lucide-react";
 
+const languagesList = [
+  { code: "ar", name: "Arabic" },
+  { code: "bn", name: "Bengali" },
+  { code: "cmn", name: "Chinese (Mandarin)" },
+  { code: "yue", name: "Chinese (Cantonese)" },
+  { code: "cs", name: "Czech" },
+  { code: "da", name: "Danish" },
+  { code: "nl", name: "Dutch" },
+  { code: "en", name: "English" },
+  { code: "fi", name: "Finnish" },
+  { code: "fr", name: "French" },
+  { code: "de", name: "German" },
+  { code: "el", name: "Greek" },
+  { code: "hi", name: "Hindi" },
+  { code: "id", name: "Indonesian" },
+  { code: "it", name: "Italian" },
+  { code: "ja", name: "Japanese" },
+  { code: "ko", name: "Korean" },
+  { code: "ms", name: "Malay" },
+  { code: "no", name: "Norwegian" },
+  { code: "pl", name: "Polish" },
+  { code: "pt", name: "Portuguese" },
+  { code: "ru", name: "Russian" },
+  { code: "es", name: "Spanish" },
+  { code: "sv", name: "Swedish" },
+  { code: "th", name: "Thai" },
+  { code: "tr", name: "Turkish" },
+  { code: "ur", name: "Urdu" },
+  { code: "vi", name: "Vietnamese" }
+];
+
 const searchSchema = z.object({
   search_terms: z.string().min(1, "Search terms are required"),
   ad_type: z.enum(["ALL", "POLITICAL_AND_ISSUE_ADS"]),
   country: z.array(z.string()).min(1, "At least one country is required").transform(val => Array.isArray(val) ? val : [val]),
+  languages: z.array(z.string()).optional(),
   ad_active_status: z.enum(["ACTIVE", "ALL", "INACTIVE"]),
   ad_delivery_date_min: z.string().optional(),
   ad_delivery_date_max: z.string().optional(),
@@ -52,6 +83,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
         "TT", "TV", "TW", "TZ", "UA", "UG", "UM", "US", "UY", "UZ", "VA", "VC", "VE", "VG", "VI", "VN", "VU", 
         "WF", "WS", "XK", "YE", "YT", "ZA", "ZM", "ZW"
       ],
+      languages: [],
       ad_active_status: "ALL",
       ad_delivery_date_min: undefined,
       ad_delivery_date_max: undefined,
@@ -543,7 +575,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     { code: "LT", name: "Lithuania" },
                     { code: "LU", name: "Luxembourg" },
                     { code: "LV", name: "Latvia" },
-                    { code: "LY", name: "Libya" },
+                    { code"LY", name: "Libya" },
                     { code: "MA", name: "Morocco" },
                     { code: "MC", name: "Monaco" },
                     { code: "MD", name: "Moldova" },
