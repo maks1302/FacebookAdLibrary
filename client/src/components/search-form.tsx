@@ -9,17 +9,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
-import { Check, CalendarIcon, ChevronDown, Info, Search, Globe, Filter, X, RotateCcw, SearchIcon } from "lucide-react";
-import { format } from "date-fns";
-import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { SearchIcon, Info } from "lucide-react";
 
 const searchSchema = z.object({
   search_terms: z.string().min(1, "Search terms are required"),
@@ -70,47 +64,17 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSearch)} className="space-y-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="space-y-6">
-            <Card className="p-4">
-              <CardHeader className="px-2">
-                <CardTitle className="text-lg">Search Parameters</CardTitle>
-              </CardHeader>
-              <CardContent className="px-6 pb-6 space-y-6">
+      <form onSubmit={form.handleSubmit(onSearch)} className="space-y-4">
         <div className="space-y-2">
             <FormField
               control={form.control}
               name="search_terms"
               render={({ field }) => (
-                <FormItem className="col-span-2">
-                  <FormLabel className="text-base">Search Terms</FormLabel>
+                <FormItem>
+                  <FormLabel>Search Terms</FormLabel>
                   <FormControl>
-                    <div className="relative">
-                      <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                      <Input 
-                        placeholder="Enter keywords to search ads..." 
-                        className="pl-10 pr-10 h-12 text-base" 
-                        {...field} 
-                      />
-                      {field.value && (
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          className="absolute right-2 top-2 h-8 hover:bg-muted"
-                          onClick={() => field.onChange("")}
-                        >
-                          <X className="h-4 w-4" />
-                        </Button>
-                      )}
-                    </div>
+                    <Input placeholder="Enter keywords..." {...field} />
                   </FormControl>
-                  <div className="flex gap-2 mt-2">
-                    <Badge variant="secondary" className="cursor-pointer hover:bg-secondary/80">election</Badge>
-                    <Badge variant="secondary" className="cursor-pointer hover:bg-secondary/80">news</Badge>
-                    <Badge variant="secondary" className="cursor-pointer hover:bg-secondary/80">politics</Badge>
-                  </div>
                   <FormMessage />
                 </FormItem>
               )}
@@ -124,6 +88,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     <div className="flex items-center space-x-2">
                       <input
                         type="checkbox"
+                        defaultChecked={true}
                         checked={field.value === "KEYWORD_EXACT_PHRASE"}
                         onChange={(e) => field.onChange(e.target.checked ? "KEYWORD_EXACT_PHRASE" : "KEYWORD_UNORDERED")}
                         className="h-4 w-4"
@@ -838,108 +803,16 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
           )}
         />
 
-        </CardContent>
-            </Card>
-          </div>
-
-          <div className="space-y-6">
-            <Card className="p-4">
-              <CardHeader className="px-2">
-                <CardTitle className="text-lg">Filters</CardTitle>
-              </CardHeader>
-              <CardContent className="px-6 pb-6 space-y-6">
-                <div className="grid gap-4">
-                  <FormField
-                    control={form.control}
-                    name="ad_type"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Ad Type</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select ad type" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectItem value="ALL">All Ads</SelectItem>
-                            <SelectItem value="POLITICAL_AND_ISSUE_ADS">Political & Issue Ads</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="media_type"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Media Type</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select media type" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectItem value="ALL">All</SelectItem>
-                            <SelectItem value="IMAGE">Image</SelectItem>
-                            <SelectItem value="MEME">Meme</SelectItem>
-                            <SelectItem value="VIDEO">Video</SelectItem>
-                            <SelectItem value="NONE">None</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="ad_active_status"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Status</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select status" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectItem value="ALL">All</SelectItem>
-                            <SelectItem value="ACTIVE">Active</SelectItem>
-                            <SelectItem value="INACTIVE">Inactive</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-
-        <div className="sticky bottom-4 z-50 mt-6">
-          <Card className="mx-auto max-w-4xl">
-            <CardContent className="p-4">
-              <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
-                {isLoading ? (
-                  "Searching..."
-                ) : (
-                  <>
-                    <SearchIcon className="mr-2 h-4 w-4" />
-                    Search Ads
-                  </>
-                )}
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
+        <Button type="submit" className="w-full" disabled={isLoading}>
+          {isLoading ? (
+            "Searching..."
+          ) : (
+            <>
+              <SearchIcon className="mr-2 h-4 w-4" />
+              Search Ads
+            </>
+          )}
+        </Button>
       </form>
     </Form>
   );

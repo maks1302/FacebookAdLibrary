@@ -151,7 +151,7 @@ export function AdsGrid({ ads, isLoading }: AdsGridProps) {
                   )}
                   {ad.bylines && (
                     <p className="text-xs text-muted-foreground mt-1">
-                      By: {typeof ad.bylines === 'string' ? ad.bylines : Array.isArray(ad.bylines) ? ad.bylines.join(", ") : ''}
+                      By: {Array.isArray(ad.bylines) ? ad.bylines.join(", ") : ad.bylines}
                     </p>
                   )}
                 </div>
