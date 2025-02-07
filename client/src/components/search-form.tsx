@@ -19,6 +19,8 @@ const searchSchema = z.object({
   ad_type: z.enum(["ALL", "POLITICAL_AND_ISSUE_ADS"]),
   country: z.string().min(2, "Country is required"),
   ad_active_status: z.enum(["ACTIVE", "ALL", "INACTIVE"]),
+  ad_delivery_date_min: z.date().optional(),
+  ad_delivery_date_max: z.date().optional(),
 });
 
 interface SearchFormProps {
@@ -34,6 +36,8 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
       ad_type: "ALL",
       country: "US",
       ad_active_status: "ALL",
+      ad_delivery_date_min: undefined,
+      ad_delivery_date_max: undefined,
     },
   });
 
@@ -123,6 +127,36 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
             </FormItem>
           )}
         />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="ad_delivery_date_min"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Start Date</FormLabel>
+                <FormControl>
+                  <Input type="date" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="ad_delivery_date_max"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>End Date</FormLabel>
+                <FormControl>
+                  <Input type="date" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <Button type="submit" className="w-full" disabled={isLoading}>
           {isLoading ? (
