@@ -477,6 +477,29 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-[300px] p-0">
+                        <Input
+                          placeholder="Search countries..."
+                          className="m-2 w-[calc(100%-16px)]"
+                          onChange={(e) => {
+                            const searchField = document.getElementById('countrySearch');
+                            if (searchField) {
+                              searchField.focus();
+                            }
+                          }}
+                          id="countrySearch"
+                          onInput={(e) => {
+                            const searchValue = e.currentTarget.value.toLowerCase();
+                            const countryElements = document.querySelectorAll('.country-option');
+                            countryElements.forEach((el) => {
+                              const countryName = el.getAttribute('data-name')?.toLowerCase() || '';
+                              if (countryName.includes(searchValue)) {
+                                (el as HTMLElement).style.display = 'flex';
+                              } else {
+                                (el as HTMLElement).style.display = 'none';
+                              }
+                            });
+                          }}
+                        />
                         <div className="max-h-[300px] overflow-y-auto">
                   {[
                     { code: "AD", name: "Andorra" },
@@ -726,7 +749,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     { code: "ZM", name: "Zambia" },
                     { code: "ZW", name: "Zimbabwe" }
                   ].map(country => (
-                    <label key={country.code} className="flex items-center justify-between py-1 px-2 hover:bg-gray-50">
+                    <label key={country.code} className="flex items-center justify-between py-1 px-2 hover:bg-gray-50 country-option" data-name={country.name}>
                       <span>{country.name}</span>
                       <input
                         type="checkbox"
