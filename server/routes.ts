@@ -14,7 +14,7 @@ const searchParamsSchema = z.object({
   ad_delivery_date_max: z.string().optional(),
 });
 
-const FB_API_VERSION = "v18.0";
+const FB_API_VERSION = "v22.0";
 const FB_ACCESS_TOKEN = process.env.FB_ACCESS_TOKEN;
 
 type FacebookApiResponse = {
