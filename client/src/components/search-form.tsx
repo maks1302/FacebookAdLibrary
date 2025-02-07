@@ -96,7 +96,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                       <span className="text-sm">KEYWORD EXACT PHRASE</span>
                       <TooltipProvider>
                         <Tooltip>
-                          <TooltipTrigger>
+                          <TooltipTrigger onClick={(e) => e.preventDefault()}>
                             <Info className="h-4 w-4 ml-1 text-muted-foreground" />
                           </TooltipTrigger>
                           <TooltipContent className="max-w-[350px]">
@@ -332,7 +332,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                         { code: "MF", name: "Saint Martin" },
                         { code: "MG", name: "Madagascar" },
                         { code: "MH", name: "Marshall Islands" },
-                        { code: "MK", name: "North Macedonia" },
+                        { code: "MK", name: "NorthMacedonia" },
                         { code: "ML", name: "Mali" },
                         { code: "MM", name: "Myanmar" },
                         { code: "MN", name: "Mongolia" },
@@ -574,7 +574,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     { code: "LC", name: "Saint Lucia" },
                     { code: "LI", name: "Liechtenstein" },
                     { code: "LK", name: "Sri Lanka" },
-                    { code: "LR", name: "Liberia" },
+                    { code: "LR"LR", name: "Liberia" },
                     { code: "LS", name: "Lesotho" },
                     { code: "LT", name: "Lithuania" },
                     { code: "LU", name: "Luxembourg" },
