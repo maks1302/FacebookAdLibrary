@@ -12,8 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { SearchIcon, Info } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "./ui/tooltip";
+import { SearchIcon } from "lucide-react";
 
 const searchSchema = z.object({
   search_terms: z.string().min(1, "Search terms are required"),
@@ -94,16 +93,6 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                         className="h-4 w-4"
                       />
                       <span className="text-sm">KEYWORD EXACT PHRASE</span>
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger onClick={(e) => e.preventDefault()}>
-                            <Info className="h-4 w-4 ml-1 text-muted-foreground" />
-                          </TooltipTrigger>
-                          <TooltipContent className="max-w-[350px]">
-                            <p>When unchecked, the search engine will treat each word individually, and return results that contain these words in any order. When marked the search engine will treat the words as a single phrase, and only return results that match that exact phrase. To search for multiple phrases at once, separate groups of words by commas. This will retrieve results that contain an exact match for every phrase.</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
                     </div>
                   </FormControl>
                 </FormItem>
@@ -332,7 +321,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                         { code: "MF", name: "Saint Martin" },
                         { code: "MG", name: "Madagascar" },
                         { code: "MH", name: "Marshall Islands" },
-                        { code: "MK", name: "NorthMacedonia" },
+                        { code: "MK", name: "North Macedonia" },
                         { code: "ML", name: "Mali" },
                         { code: "MM", name: "Myanmar" },
                         { code: "MN", name: "Mongolia" },
@@ -574,7 +563,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     { code: "LC", name: "Saint Lucia" },
                     { code: "LI", name: "Liechtenstein" },
                     { code: "LK", name: "Sri Lanka" },
-                    { code: "LR"LR", name: "Liberia" },
+                    { code: "LR", name: "Liberia" },
                     { code: "LS", name: "Lesotho" },
                     { code: "LT", name: "Lithuania" },
                     { code: "LU", name: "Luxembourg" },
