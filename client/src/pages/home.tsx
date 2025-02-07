@@ -22,14 +22,15 @@ export default function Home() {
     enabled: !!searchParams,
     queryFn: async () => {
       if (!searchParams) return [];
-      const url = `/api/ads?${new URLSearchParams({
-        search_terms: searchParams.search_terms,
-        ad_type: searchParams.ad_type,
-        country: searchParams.country,
-        ad_active_status: searchParams.ad_active_status,
-        ...(searchParams.ad_delivery_date_min && { ad_delivery_date_min: searchParams.ad_delivery_date_min }),
-        ...(searchParams.ad_delivery_date_max && { ad_delivery_date_max: searchParams.ad_delivery_date_max }),
-      })}`;
+      const url = `/api/ads?${new URLSearchParams(
+        searchParams.country.map(c => ['country', c]).concat([
+          ['search_terms', searchParams.search_terms],
+          ['ad_type', searchParams.ad_type],
+          ['ad_active_status', searchParams.ad_active_status],
+          ...(searchParams.ad_delivery_date_min ? [['ad_delivery_date_min', searchParams.ad_delivery_date_min]] : []),
+          ...(searchParams.ad_delivery_date_max ? [['ad_delivery_date_max', searchParams.ad_delivery_date_max]] : []),
+        ])
+      )}`;
       const response = await fetch(url);
       if (!response.ok) {
         const error = await response.json();
