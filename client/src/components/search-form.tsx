@@ -101,21 +101,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                       )}
                     </div>
                   </FormControl>
-                  {!field.value && (
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {["Political Ads", "Election", "Healthcare", "Climate Change", "Education"].map((suggestion) => (
-                        <Button
-                          key={suggestion}
-                          variant="outline"
-                          size="sm"
-                          className="h-7"
-                          onClick={() => field.onChange(suggestion)}
-                        >
-                          {suggestion}
-                        </Button>
-                      ))}
-                    </div>
-                  )}
+                  
                   <FormMessage />
                 </FormItem>
               )}
