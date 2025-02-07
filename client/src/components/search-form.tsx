@@ -94,11 +94,36 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     variant="outline"
                     size="sm"
                     onClick={() => {
+                      const countries = [
+                        { code: "AD", name: "Andorra" },
+                        // ... all other countries
+                      ].map(country => country.code);
+                      field.onChange(countries);
+                    }}
+                  >
+                    ALL
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
                       const euCountries = ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"];
                       field.onChange(euCountries);
                     }}
                   >
                     EU
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      const nafta = ["US", "CA", "MX"];
+                      field.onChange(nafta);
+                    }}
+                  >
+                    NAFTA
                   </Button>
                   <Button
                     type="button"
@@ -121,17 +146,6 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     }}
                   >
                     ASEAN
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      const nafta = ["US", "CA", "MX"];
-                      field.onChange(nafta);
-                    }}
-                  >
-                    NAFTA
                   </Button>
                   <Button
                     type="button"
