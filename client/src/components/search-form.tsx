@@ -181,40 +181,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
               <FormItem className="space-y-4">
                 <FormLabel>Target Location</FormLabel>
                 <div className="flex justify-between items-start gap-4">
-                  <div className="w-[300px]">
-                    <Collapsible>
-                      <CollapsibleTrigger asChild>
-                        <Button variant="outline" className="w-full justify-between">
-                          <span>Selected Countries ({field.value.length})</span>
-                          <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
-                        </Button>
-                      </CollapsibleTrigger>
-                      <CollapsibleContent>
-                        <div className="grid grid-cols-2 gap-2 mt-2 max-h-[300px] overflow-y-auto border rounded-md p-4 bg-white/50 backdrop-blur-sm">
-                          {[
-                            // Country list remains the same
-                          ].map(country => (
-                            <label key={country.code} className="flex items-center space-x-2">
-                              <input
-                                type="checkbox"
-                                value={country.code}
-                                checked={field.value.includes(country.code)}
-                                onChange={(e) => {
-                                  const newValue = e.target.checked 
-                                    ? [...field.value, country.code]
-                                    : field.value.filter(c => c !== country.code);
-                                  field.onChange(newValue);
-                                }}
-                                className="h-4 w-4"
-                              />
-                              <span>{country.name}</span>
-                            </label>
-                          ))}
-                        </div>
-                      </CollapsibleContent>
-                    </Collapsible>
-                  </div>
-                  <div className="flex flex-wrap gap-2 flex-1">
+                  <div className="flex flex-wrap gap-2">
                     <Button
                       type="button"
                     variant={field.value.every(country => ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"].includes(country)) ? "default" : "outline"}
@@ -534,6 +501,16 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     ALL
                   </Button>
                   </div>
+                  <div className="w-[300px]">
+                    <Collapsible>
+                  <CollapsibleTrigger asChild>
+                    <Button variant="outline" className="w-full justify-between">
+                      <span>Selected Countries ({field.value.length})</span>
+                      <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
+                    </Button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="grid grid-cols-2 gap-2 mt-2 max-h-[300px] overflow-y-auto border rounded-md p-4 bg-white/50 backdrop-blur-sm">
                   {[
                     { code: "AD", name: "Andorra" },
                     { code: "AE", name: "United Arab Emirates" },
