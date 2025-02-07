@@ -12,7 +12,6 @@ export default function Home() {
     search_terms: string;
     ad_type: string;
     country: string;
-    ad_active_status: string;
   } | null>(null);
 
   const { data: ads, isLoading } = useQuery<Ad[]>({
@@ -24,7 +23,6 @@ export default function Home() {
         search_terms: searchParams.search_terms,
         ad_type: searchParams.ad_type,
         country: searchParams.country,
-        ad_active_status: searchParams.ad_active_status,
       })}`;
       const response = await fetch(url);
       if (!response.ok) {
@@ -37,7 +35,7 @@ export default function Home() {
     retry: false,
   });
 
-  const handleSearch = (data: { search_terms: string; ad_type: string; country: string; ad_active_status: string }) => {
+  const handleSearch = (data: { search_terms: string; ad_type: string; country: string }) => {
     setSearchParams(data);
   };
 
