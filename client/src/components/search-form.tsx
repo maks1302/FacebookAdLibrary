@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { SearchIcon, Info } from "lucide-react";
+import { SearchIcon, Info, X } from "lucide-react";
 
 const searchSchema = z.object({
   search_terms: z.string().min(1, "Search terms are required"),
@@ -81,8 +81,41 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                 <FormItem>
                   <FormLabel>Search Terms</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter keywords..." {...field} />
+                    <div className="relative">
+                      <SearchIcon className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                      <Input 
+                        placeholder="Enter keywords..." 
+                        className="pl-8 pr-8" 
+                        {...field} 
+                      />
+                      {field.value && (
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="absolute right-1 top-1.5 h-6 w-6 p-0"
+                          onClick={() => field.onChange("")}
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
                   </FormControl>
+                  {!field.value && (
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {["Political Ads", "Election", "Healthcare", "Climate Change", "Education"].map((suggestion) => (
+                        <Button
+                          key={suggestion}
+                          variant="outline"
+                          size="sm"
+                          className="h-7"
+                          onClick={() => field.onChange(suggestion)}
+                        >
+                          {suggestion}
+                        </Button>
+                      ))}
+                    </div>
+                  )}
                   <FormMessage />
                 </FormItem>
               )}
