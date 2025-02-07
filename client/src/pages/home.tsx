@@ -22,15 +22,20 @@ export default function Home() {
     enabled: !!searchParams,
     queryFn: async () => {
       if (!searchParams) return [];
-      const url = `/api/ads?${new URLSearchParams(
-        searchParams.country.map(c => ['country', c]).concat([
-          ['search_terms', searchParams.search_terms],
-          ['ad_type', searchParams.ad_type],
-          ['ad_active_status', searchParams.ad_active_status],
-          ...(searchParams.ad_delivery_date_min ? [['ad_delivery_date_min', searchParams.ad_delivery_date_min]] : []),
-          ...(searchParams.ad_delivery_date_max ? [['ad_delivery_date_max', searchParams.ad_delivery_date_max]] : []),
-        ])
-      )}`;
+      const params = new URLSearchParams();
+      params.append('search_terms', searchParams.search_terms);
+      params.append('ad_type', searchParams.ad_type);
+      params.append('ad_active_status', searchParams.ad_active_status);
+      // Ensure country is always sent as array parameters
+      const countries = Array.isArray(searchParams.country) ? searchParams.country : [searchParams.country];
+      countries.forEach(c => params.append('country', c));
+      if (searchParams.ad_delivery_date_min) {
+        params.append('ad_delivery_date_min', searchParams.ad_delivery_date_min);
+      }
+      if (searchParams.ad_delivery_date_max) {
+        params.append('ad_delivery_date_max', searchParams.ad_delivery_date_max);
+      }
+      const url = `/api/ads?${params}`;
       const response = await fetch(url);
       if (!response.ok) {
         const error = await response.json();
