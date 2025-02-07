@@ -44,7 +44,7 @@ export default function Home() {
   const handleSearch = (data: { 
     search_terms: string; 
     ad_type: string; 
-    country: string; 
+    country: string[]; 
     ad_active_status: string;
     ad_delivery_date_min?: string;
     ad_delivery_date_max?: string;
