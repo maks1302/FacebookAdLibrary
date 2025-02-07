@@ -88,32 +88,44 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
               <FormItem className="space-y-4">
                 <FormLabel>Target Location</FormLabel>
                 <div className="grid grid-cols-2 gap-2 max-h-[200px] overflow-y-auto border rounded-md p-4">
-                  <label className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      value="US"
-                      checked={field.value.includes("US")}
-                      onChange={(e) => {
-                        const newValue = e.target.checked 
-                          ? [...field.value, "US"]
-                          : field.value.filter(c => c !== "US");
-                        field.onChange(newValue);
-                      }}
-                      className="h-4 w-4"
-                    />
-                    <span>United States</span>
-                  </label>
-                  <label className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      value="GB"
-                      checked={field.value.includes("GB")}
-                      onChange={(e) => {
-                        const newValue = e.target.checked 
-                          ? [...field.value, "GB"]
-                          : field.value.filter(c => c !== "GB");
-                        field.onChange(newValue);
-                      }}
+                  {[
+                    { code: "US", name: "United States" },
+                    { code: "GB", name: "United Kingdom" },
+                    { code: "CA", name: "Canada" },
+                    { code: "AU", name: "Australia" },
+                    { code: "DE", name: "Germany" },
+                    { code: "FR", name: "France" },
+                    { code: "JP", name: "Japan" },
+                    { code: "BR", name: "Brazil" },
+                    { code: "IN", name: "India" },
+                    { code: "IT", name: "Italy" },
+                    { code: "ES", name: "Spain" },
+                    { code: "NL", name: "Netherlands" },
+                    { code: "SG", name: "Singapore" },
+                    { code: "SE", name: "Sweden" },
+                    { code: "CH", name: "Switzerland" },
+                    { code: "KR", name: "South Korea" },
+                    { code: "IE", name: "Ireland" },
+                    { code: "NZ", name: "New Zealand" },
+                    { code: "MX", name: "Mexico" },
+                    { code: "CN", name: "China" }
+                  ].map(country => (
+                    <label key={country.code} className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        value={country.code}
+                        checked={field.value.includes(country.code)}
+                        onChange={(e) => {
+                          const newValue = e.target.checked 
+                            ? [...field.value, country.code]
+                            : field.value.filter(c => c !== country.code);
+                          field.onChange(newValue);
+                        }}
+                        className="h-4 w-4"
+                      />
+                      <span>{country.name}</span>
+                    </label>
+                  ))}
                       className="h-4 w-4"
                     />
                     <span>United Kingdom</span>
