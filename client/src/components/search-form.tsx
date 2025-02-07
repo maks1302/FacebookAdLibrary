@@ -542,7 +542,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                       { code: "AM", name: "Armenia" },
                       { code: "AN", name: "Netherlands Antilles" },
                       { code: "AO", name: "Angola" },
-                      { code: "AQ", name: "Antarctica" },
+                      { code: "AQ","Antarctica" },
                       { code: "AR", name: "Argentina" },
                       { code: "AS", name: "American Samoa" },
                       { code: "AT", name: "Austria" },
@@ -843,95 +843,91 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
 
             <FormField
               control={form.control}
-              name="ad_delivery_date_min"
+              name="date_range"
               render={({ field }) => (
                 <FormItem className="flex-1">
                   <FormLabel className="mb-2 block">Date Range</FormLabel>
                   <FormControl>
-                    <div className="flex items-end gap-4">
-                      <div className="flex-1">
-                        <Select
-                onValueChange={(value) => {
-                  const today = new Date();
-                  switch (value) {
-                    case "24h":
-                      const yesterday = new Date(today);
-                      yesterday.setDate(today.getDate() - 1);
-                      form.setValue('ad_delivery_date_min', yesterday.toISOString().split('T')[0]);
-                      form.setValue('ad_delivery_date_max', today.toISOString().split('T')[0]);
-                      break;
-                    case "7d":
-                      const sevenDaysAgo = new Date(today);
-                      sevenDaysAgo.setDate(today.getDate() - 7);
-                      form.setValue('ad_delivery_date_min', sevenDaysAgo.toISOString().split('T')[0]);
-                      form.setValue('ad_delivery_date_max', today.toISOString().split('T')[0]);
-                      break;
-                    case "30d":
-                      const thirtyDaysAgo = new Date(today);
-                      thirtyDaysAgo.setDate(today.getDate() - 30);
-                      form.setValue('ad_delivery_date_min', thirtyDaysAgo.toISOString().split('T')[0]);
-                      form.setValue('ad_delivery_date_max', today.toISOString().split('T')[0]);
-                      break;
-                    case "90d":
-                      const ninetyDaysAgo = new Date(today);
-                      ninetyDaysAgo.setDate(today.getDate() - 90);
-                      form.setValue('ad_delivery_date_min', ninetyDaysAgo.toISOString().split('T')[0]);
-                      form.setValue('ad_delivery_date_max', today.toISOString().split('T')[0]);
-                      break;
-                    case "clear":
-                      form.setValue('ad_delivery_date_min', undefined);
-                      form.setValue('ad_delivery_date_max', undefined);
-                      break;
-                  }
-                }}
-              >
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Select range" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="24h">Last 24 hours</SelectItem>
-                  <SelectItem value="7d">Last 7 days</SelectItem>
-                  <SelectItem value="30d">Last 30 days</SelectItem>
-                  <SelectItem value="90d">Last 90 days</SelectItem>
-                  <SelectItem value="clear">Clear dates</SelectItem>
-                </SelectContent>
-              </Select>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant="outline" className="w-[240px]">
-                    {form.watch('ad_delivery_date_min') && form.watch('ad_delivery_date_max') ? (
-                      `${format(new Date(form.watch('ad_delivery_date_min')), "MMM d")} - ${format(new Date(form.watch('ad_delivery_date_max')), "MMM d, yyyy")}`
-                    ) : (
-                      "Select dates"
-                    )}
-                    <CalendarIcon className="ml-2 h-4 w-4" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="range"
-                    selected={{
-                      from: form.watch('ad_delivery_date_min') ? new Date(form.watch('ad_delivery_date_min')) : undefined,
-                      to: form.watch('ad_delivery_date_max') ? new Date(form.watch('ad_delivery_date_max')) : undefined,
-                    }}
-                    onSelect={(range) => {
-                      if (range?.from) {
-                        form.setValue('ad_delivery_date_min', range.from.toISOString().split('T')[0]);
-                      }
-                      if (range?.to) {
-                        form.setValue('ad_delivery_date_max', range.to.toISOString().split('T')[0]);
-                      }
-                    }}
-                    disabled={(date) =>
-                      date > new Date() || date < new Date("1900-01-01")
-                    }
-                    numberOfMonths={2}
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
-                    </div>
-                  </FormControl>
+                    <Select
+                      onValueChange={(value) => {
+                        const today = new Date();
+                        switch (value) {
+                          case "24h":
+                            const yesterday = new Date(today);
+                            yesterday.setDate(today.getDate() - 1);
+                            form.setValue('ad_delivery_date_min', yesterday.toISOString().split('T')[0]);
+                            form.setValue('ad_delivery_date_max', today.toISOString().split('T')[0]);
+                            break;
+                          case "7d":
+                            const sevenDaysAgo = new Date(today);
+                            sevenDaysAgo.setDate(today.getDate() - 7);
+                            form.setValue('ad_delivery_date_min', sevenDaysAgo.toISOString().split('T')[0]);
+                            form.setValue('ad_delivery_date_max', today.toISOString().split('T')[0]);
+                            break;
+                          case "30d":
+                            const thirtyDaysAgo = new Date(today);
+                            thirtyDaysAgo.setDate(today.getDate() - 30);
+                            form.setValue('ad_delivery_date_min', thirtyDaysAgo.toISOString().split('T')[0]);
+                            form.setValue('ad_delivery_date_max', today.toISOString().split('T')[0]);
+                            break;
+                          case "90d":
+                            const ninetyDaysAgo = new Date(today);
+                            ninetyDaysAgo.setDate(today.getDate() - 90);
+                            form.setValue('ad_delivery_date_min', ninetyDaysAgo.toISOString().split('T')[0]);
+                            form.setValue('ad_delivery_date_max', today.toISOString().split('T')[0]);
+                            break;
+                          case "clear":
+                            form.setValue('ad_delivery_date_min', undefined);
+                            form.setValue('ad_delivery_date_max', undefined);
+                            break;
+                        }
+                      }}
+                    >
+                      <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="Select range" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="24h">Last 24 hours</SelectItem>
+                        <SelectItem value="7d">Last 7 days</SelectItem>
+                        <SelectItem value="30d">Last 30 days</SelectItem>
+                        <SelectItem value="90d">Last 90 days</SelectItem>
+                        <SelectItem value="clear">Clear dates</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button variant="outline" className="w-[240px]">
+                          {form.watch('ad_delivery_date_min') && form.watch('ad_delivery_date_max') ? (
+                            `${format(new Date(form.watch('ad_delivery_date_min')), "MMM d")} - ${format(new Date(form.watch('ad_delivery_date_max')), "MMM d, yyyy")}`
+                          ) : (
+                            "Select dates"
+                          )}
+                          <CalendarIcon className="ml-2 h-4 w-4" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="range"
+                          selected={{
+                            from: form.watch('ad_delivery_date_min') ? new Date(form.watch('ad_delivery_date_min')) : undefined,
+                            to: form.watch('ad_delivery_date_max') ? new Date(form.watch('ad_delivery_date_max')) : undefined,
+                          }}
+                          onSelect={(range) => {
+                            if (range?.from) {
+                              form.setValue('ad_delivery_date_min', range.from.toISOString().split('T')[0]);
+                            }
+                            if (range?.to) {
+                              form.setValue('ad_delivery_date_max', range.to.toISOString().split('T')[0]);
+                            }
+                          }}
+                          disabled={(date) =>
+                            date > new Date() || date < new Date("1900-01-01")
+                          }
+                          numberOfMonths={2}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
                 </FormItem>
               )}
             />
