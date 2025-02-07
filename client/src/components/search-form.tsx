@@ -85,27 +85,49 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
             control={form.control}
             name="country"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="space-y-4">
                 <FormLabel>Target Location</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select target location" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="US">United States</SelectItem>
-                    <SelectItem value="GB">United Kingdom</SelectItem>
-                    <SelectItem value="CA">Canada</SelectItem>
-                    <SelectItem value="DE">Germany</SelectItem>
-                    <SelectItem value="FR">France</SelectItem>
-                    <SelectItem value="IT">Italy</SelectItem>
-                    <SelectItem value="ES">Spain</SelectItem>
-                    <SelectItem value="AU">Australia</SelectItem>
-                    <SelectItem value="IN">India</SelectItem>
-                    <SelectItem value="JP">Japan</SelectItem>
-                  </SelectContent>
-                </Select>
+                <div className="grid grid-cols-2 gap-2 max-h-[200px] overflow-y-auto border rounded-md p-4">
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      value="US"
+                      checked={field.value === "US"}
+                      onChange={(e) => field.onChange(e.target.checked ? "US" : "")}
+                      className="h-4 w-4"
+                    />
+                    <span>United States</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      value="GB"
+                      checked={field.value === "GB"}
+                      onChange={(e) => field.onChange(e.target.checked ? "GB" : "")}
+                      className="h-4 w-4"
+                    />
+                    <span>United Kingdom</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      value="CA"
+                      checked={field.value === "CA"}
+                      onChange={(e) => field.onChange(e.target.checked ? "CA" : "")}
+                      className="h-4 w-4"
+                    />
+                    <span>Canada</span>
+                  </label>
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    size="sm"
+                    className="mt-2 col-span-2"
+                    onClick={() => field.onChange("")}
+                  >
+                    Clear Selection
+                  </Button>
+                </div>
                 <FormMessage />
               </FormItem>
             )}
