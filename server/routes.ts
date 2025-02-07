@@ -10,8 +10,6 @@ const searchParamsSchema = z.object({
   ad_type: z.enum(["ALL", "POLITICAL_AND_ISSUE_ADS"]),
   country: z.string().length(2),
   ad_active_status: z.enum(["ACTIVE", "ALL", "INACTIVE"]).default("ACTIVE"),
-  ad_delivery_date_min: z.string().optional(),
-  ad_delivery_date_max: z.string().optional(),
 });
 
 const FB_API_VERSION = "v18.0";
@@ -118,8 +116,6 @@ export function registerRoutes(app: Express): Server {
             limit: "24",
             fields,
             ad_active_status: req.query.ad_active_status || "ACTIVE",
-            ad_delivery_date_min: req.query.ad_delivery_date_min || undefined,
-            ad_delivery_date_max: req.query.ad_delivery_date_max || undefined,
           }),
       );
 
