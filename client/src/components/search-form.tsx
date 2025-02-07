@@ -542,7 +542,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                       { code: "AM", name: "Armenia" },
                       { code: "AN", name: "Netherlands Antilles" },
                       { code: "AO", name: "Angola" },
-                      { code: "AQ","Antarctica" },
+                      { code: "AQ", name: "Antarctica" },
                       { code: "AR", name: "Argentina" },
                       { code: "AS", name: "American Samoa" },
                       { code: "AT", name: "Austria" },
