@@ -726,7 +726,8 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     { code: "ZM", name: "Zambia" },
                     { code: "ZW", name: "Zimbabwe" }
                   ].map(country => (
-                    <label key={country.code} className="flex items-center space-x-2 py-1 px-2 hover:bg-gray-50">
+                    <label key={country.code} className="flex items-center justify-between py-1 px-2 hover:bg-gray-50">
+                      <span>{country.name}</span>
                       <input
                         type="checkbox"
                         value={country.code}
@@ -739,7 +740,6 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                         }}
                         className="h-4 w-4"
                       />
-                      <span>{country.name}</span>
                     </label>
                   ))}
                     </div>
