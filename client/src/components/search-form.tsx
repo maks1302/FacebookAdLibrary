@@ -816,32 +816,30 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
         </div>
 
         <div className="grid grid-cols-[2fr,3fr] gap-4">
-          <div className="flex gap-4">
-            <FormField
-              control={form.control}
-              name="media_type"
-              render={({ field }) => (
-                <FormItem className="flex-1">
-                  <FormLabel>Media Type</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select media type" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="ALL">All Media</SelectItem>
-                      <SelectItem value="IMAGE">Image</SelectItem>
-                      <SelectItem value="VIDEO">Video</SelectItem>
-                      <SelectItem value="MEME">Meme</SelectItem>
-                      <SelectItem value="NONE">None</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+          <FormField
+            control={form.control}
+            name="media_type"
+            render={({ field }) => (
+              <FormItem className="flex-1">
+                <FormLabel>Media Type</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select media type" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="ALL">All Media</SelectItem>
+                    <SelectItem value="IMAGE">Image</SelectItem>
+                    <SelectItem value="VIDEO">Video</SelectItem>
+                    <SelectItem value="MEME">Meme</SelectItem>
+                    <SelectItem value="NONE">None</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           <div className="flex items-end gap-4">
             <div className="flex-1">
