@@ -74,7 +74,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSearch)} className="space-y-2 w-[98%] max-w-[1600px] mx-auto bg-white/50 backdrop-blur-sm rounded-lg p-2 shadow-lg border border-gray-100">
         <div className="space-y-4">
-            <div className="grid grid-cols-[3fr,1fr,1fr] gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-[3fr,1fr,1fr] gap-3">
               <FormField
                 control={form.control}
                 name="search_terms"
@@ -172,16 +172,16 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
             />
           </div>
 
-        <div className="grid grid-cols-[1fr,1fr,2fr] gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-[1fr,2fr,2fr] gap-3">
           <FormField
               control={form.control}
               name="media_type"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="space-y-2">
                   <FormLabel>Media Type</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
-                      <SelectTrigger>
+                      <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select media type" />
                       </SelectTrigger>
                     </FormControl>
@@ -198,9 +198,9 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
               )}
             />
 
-            <div>
+            <FormItem className="space-y-2">
               <FormLabel>Date Range</FormLabel>
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 <Select
                   onValueChange={(value) => {
                     const today = new Date();
@@ -236,7 +236,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                     }
                   }}
                 >
-                  <SelectTrigger className="w-[120px]">
+                  <SelectTrigger className="w-full md:w-[120px]">
                     <SelectValue placeholder="Select range" />
                   </SelectTrigger>
                   <SelectContent>
@@ -249,7 +249,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                 </Select>
                 <Popover>
                   <PopoverTrigger asChild>
-                    <Button variant="outline" className="w-[160px]">
+                    <Button variant="outline" className="w-full md:w-[160px]">
                       {form.watch('ad_delivery_date_min') && form.watch('ad_delivery_date_max') ? (
                         `${format(new Date(form.watch('ad_delivery_date_min')), "MMM d")} - ${format(new Date(form.watch('ad_delivery_date_max')), "MMM d, yyyy")}`
                       ) : (
@@ -281,15 +281,15 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                   </PopoverContent>
                 </Popover>
               </div>
-            </div>
+            </FormItem>
 
           <FormField
             control={form.control}
             name="country"
             render={({ field }) => (
-              <FormItem className="space-y-4">
+              <FormItem className="space-y-2">
                 <FormLabel>Target Location</FormLabel>
-                <div className="flex items-center gap-4">
+                <div className="flex flex-wrap items-center gap-2">
                   <Select
                     onValueChange={(value) => {
                       const euCountries = ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"];
@@ -453,7 +453,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                         { code: "MF", name: "Saint Martin" },
                         { code: "MG", name: "Madagascar" },
                         { code: "MH", name: "Marshall Islands" },
-                        { code: "MK", name: "North Macedonia" },
+                        { code: "MK", name: "NorthMacedonia" },
                         { code: "ML", name: "Mali" },
                         { code: "MM", name: "Myanmar" },
                         { code: "MN", name: "Mongolia" },
@@ -564,11 +564,9 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                       }
                     }}
                   >
-                    <FormControl>
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Select region" />
-                      </SelectTrigger>
-                    </FormControl>
+                    <SelectTrigger className="w-[180px] shrink-0">
+                      <SelectValue placeholder="Select region" />
+                    </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="ALL">All Countries</SelectItem>
                       <SelectItem value="EU">EU (27)</SelectItem>
@@ -577,12 +575,12 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                       <SelectItem value="NAFTA">NAFTA (3)</SelectItem>
                     </SelectContent>
                   </Select>
-                  <div className="flex items-center gap-2">
+                  <div className="flex-1 flex items-center gap-2">
                     <Popover>
                       <PopoverTrigger asChild>
-                        <Button variant="outline" className="w-[300px] justify-between">
+                        <Button variant="outline" className="flex-1">
                           <span>Selected Countries ({field.value.length})</span>
-                          <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
+                          <ChevronDown className="h-4 w-4 ml-2 opacity-50" />
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-[300px] p-0">
@@ -881,6 +879,7 @@ export function SearchForm({ onSearch, isLoading }: SearchFormProps) {
                       type="button" 
                       variant="ghost" 
                       size="icon"
+                      className="shrink-0"
                       onClick={() => field.onChange([])}
                     >
                       <X className="h-4 w-4" />

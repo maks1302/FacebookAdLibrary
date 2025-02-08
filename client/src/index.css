@@ -6,26 +6,23 @@
   * {
     @apply border-border transition-colors duration-200;
   }
-
   body {
-    @apply font-sans antialiased bg-background text-foreground tracking-tight;
+    @apply bg-background text-foreground;
   }
+}
 
-  input, button {
-    @apply transition-all duration-200;
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-4;
   }
-
-  .divide-y > * {
-    @apply py-2.5 first:pt-0 last:pb-0;
+  .link {
+    @apply text-primary hover:text-primary/80 underline-offset-4 hover:underline;
   }
+}
 
-  .form-container {
-    @apply sticky top-0 z-10 backdrop-blur-md bg-background/80 shadow-sm;
-  }
-
-  .space-y-2 > * {
-    margin-top: 0.35rem;
-    margin-bottom: 0.35rem;
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
   }
 }
 
