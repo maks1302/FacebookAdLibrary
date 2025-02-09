@@ -303,44 +303,6 @@ function AdCard({ ad, onSave, onShare }: { ad: Ad; onSave?: (ad: Ad) => void; on
               </div>
             </div>
           </div>
-
-          <div className="flex flex-wrap items-center gap-2">
-            {/* Languages */}
-            {ad.languages && ad.languages.length > 0 && (
-              <HoverCard>
-                <HoverCardTrigger asChild>
-                  <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 cursor-pointer">
-                    <Languages className="h-3 w-3 mr-1" />
-                    {ad.languages.length > 1 ? `${ad.languages.length} Languages` : ad.languages[0]}
-                  </Badge>
-                </HoverCardTrigger>
-                <HoverCardContent className="w-48">
-                  <div className="space-y-2">
-                    <h4 className="text-sm font-semibold">Languages</h4>
-                    <div className="flex flex-wrap gap-1">
-                      {ad.languages.map(lang => (
-                        <Badge key={lang} variant="secondary" className="text-xs">
-                          {lang}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                </HoverCardContent>
-              </HoverCard>
-            )}
-
-            {/* Platforms */}
-            {ad.publisher_platforms && ad.publisher_platforms.map(platform => (
-              <Badge 
-                key={platform} 
-                variant="secondary" 
-                className="text-xs px-2 py-0.5 bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
-              >
-                <Monitor className="h-3 w-3 mr-1" />
-                {platform}
-              </Badge>
-            ))}
-          </div>
         </CardHeader>
 
         <CardContent className="space-y-6">
@@ -406,63 +368,8 @@ function AdCard({ ad, onSave, onShare }: { ad: Ad; onSave?: (ad: Ad) => void; on
             </div>
           )}
 
-          {/* Demographics Distribution */}
-          {ad.demographic_distribution && ad.demographic_distribution.length > 0 && (
-            <Collapsible>
-              <CollapsibleTrigger asChild>
-                <div className="flex items-center justify-between p-2 hover:bg-gray-50 rounded-md cursor-pointer">
-                  <div className="flex items-center gap-2 text-sm font-medium text-gray-900">
-                    <BarChart3 className="h-4 w-4" />
-                    <span>Demographics</span>
-                  </div>
-                  <ChevronRight className="h-4 w-4 text-gray-400" />
-                </div>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <ScrollArea className="h-[120px] w-full rounded-md border p-2 mt-2">
-                  <div className="grid grid-cols-2 gap-2 pr-4">
-                    {ad.demographic_distribution
-                      .sort((a, b) => b.percentage - a.percentage)
-                      .map((demo, index) => {
-                        const percentage = demo.percentage * 100;
-                        return (
-                          <motion.div 
-                            key={index}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: index * 0.1 }}
-                            className={cn(
-                              "relative text-xs p-2 rounded-md transition-all duration-200",
-                              "hover:bg-gray-100 cursor-default",
-                              percentage > 20 ? "bg-blue-50" : "bg-gray-50"
-                            )}
-                          >
-                            <div className="flex justify-between font-medium">
-                              <span>{demo.gender} - {demo.age}</span>
-                              <span>{percentage.toFixed(1)}%</span>
-                            </div>
-                            <div className="mt-1 h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
-                              <motion.div 
-                                initial={{ width: 0 }}
-                                animate={{ width: `${percentage}%` }}
-                                transition={{ duration: 0.5, delay: index * 0.1 }}
-                                className={cn(
-                                  "h-full rounded-full",
-                                  percentage > 20 ? "bg-blue-500" : "bg-gray-400"
-                                )}
-                              />
-                            </div>
-                          </motion.div>
-                        );
-                    })}
-                  </div>
-                </ScrollArea>
-              </CollapsibleContent>
-            </Collapsible>
-          )}
-
           {/* Target Demographics */}
-          {(ad.target_ages || ad.target_gender || ad.target_locations) && (
+          {(ad.target_ages || ad.target_gender || ad.target_locations || ad.languages || ad.publisher_platforms) && (
             <Collapsible>
               <CollapsibleTrigger asChild>
                 <div className="flex items-center justify-between p-2 hover:bg-gray-50 rounded-md cursor-pointer">
@@ -474,6 +381,50 @@ function AdCard({ ad, onSave, onShare }: { ad: Ad; onSave?: (ad: Ad) => void; on
                 </div>
               </CollapsibleTrigger>
               <CollapsibleContent className="pt-2 space-y-3">
+                {/* Platforms & Languages */}
+                <div className="space-y-2">
+                  {ad.publisher_platforms && (
+                    <div className="flex items-start gap-1.5">
+                      <Monitor className="h-3.5 w-3.5 text-gray-400 mt-0.5" />
+                      <div className="flex-1">
+                        <div className="text-xs font-medium text-gray-700 mb-1">Platforms:</div>
+                        <div className="flex flex-wrap gap-1">
+                          {ad.publisher_platforms.map(platform => (
+                            <Badge 
+                              key={platform} 
+                              variant="secondary" 
+                              className="text-xs px-2 py-0.5 bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+                            >
+                              {platform}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {ad.languages && ad.languages.length > 0 && (
+                    <div className="flex items-start gap-1.5">
+                      <Languages className="h-3.5 w-3.5 text-gray-400 mt-0.5" />
+                      <div className="flex-1">
+                        <div className="text-xs font-medium text-gray-700 mb-1">Languages:</div>
+                        <div className="flex flex-wrap gap-1">
+                          {ad.languages.map(lang => (
+                            <Badge 
+                              key={lang} 
+                              variant="outline" 
+                              className="text-xs px-2 py-0.5 bg-blue-50 text-blue-700 border-blue-200"
+                            >
+                              {lang}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Demographics */}
                 <div className="flex flex-wrap gap-2">
                   {ad.target_ages && (
                     <MetricBadge 
@@ -490,6 +441,8 @@ function AdCard({ ad, onSave, onShare }: { ad: Ad; onSave?: (ad: Ad) => void; on
                     />
                   )}
                 </div>
+
+                {/* Locations */}
                 {ad.target_locations && (
                   <div className="flex items-start gap-1.5 text-xs text-gray-600 bg-gray-50 p-2 rounded-md">
                     <Globe2 className="h-3.5 w-3.5 text-gray-400 mt-0.5" />
