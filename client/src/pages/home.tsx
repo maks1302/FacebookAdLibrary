@@ -5,6 +5,9 @@ import { AdsGrid } from "@/components/ads-grid";
 import { ConnectionTest } from "@/components/connection-test";
 import { type Ad } from "@shared/types";
 import { useToast } from "@/hooks/use-toast";
+import { AppShell } from "@/components/layout/app-shell";
+import { ArrowUpDown, Filter } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const { toast } = useToast();
@@ -39,7 +42,6 @@ export default function Home() {
       params.append('search_type', searchParams.search_type);
       params.append('ad_type', searchParams.ad_type);
       params.append('ad_active_status', searchParams.ad_active_status);
-      // Ensure country is always sent as array parameters
       const countries = Array.isArray(searchParams.country) ? searchParams.country : [searchParams.country];
       countries.forEach(c => params.append('country', c));
       if (searchParams.ad_delivery_date_min) {
@@ -75,26 +77,58 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8">
-        <div className="w-full mx-auto mb-8">
-          <h1 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-            Facebook Ads Library Browser
-          </h1>
-
-          <div className="mb-6">
-            <ConnectionTest />
+    <AppShell>
+      <div className="max-w-[1600px] mx-auto">
+        {/* Header Section */}
+        <div className="flex flex-col items-center space-y-6 mb-8">
+          <div className="text-center space-y-2">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              Facebook Ads Library Browser
+            </h1>
+            <p className="text-gray-500 max-w-2xl mx-auto">
+              Explore and analyze Facebook ads from around the world. Find inspiration,
+              track competitors, and understand market trends.
+            </p>
           </div>
 
-          <SearchForm onSearch={handleSearch} isLoading={isLoading} />
+          <div className="w-full max-w-3xl">
+            <SearchForm onSearch={handleSearch} isLoading={isLoading} />
+          </div>
+
+          <div className="w-full">
+            <ConnectionTest />
+          </div>
         </div>
 
-        <div className="mt-8">
-          {searchParams && (
+        {/* Results Section */}
+        {searchParams && (
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-baseline space-x-3">
+                <h2 className="text-lg font-semibold text-gray-900">Results</h2>
+                {ads && (
+                  <span className="text-sm text-gray-500">
+                    {ads.length.toLocaleString()} ads found
+                  </span>
+                )}
+              </div>
+              
+              <div className="flex items-center gap-3">
+                <Button variant="outline" size="sm" className="text-gray-600">
+                  <Filter className="h-4 w-4 mr-2" />
+                  Filter
+                </Button>
+                <Button variant="outline" size="sm" className="text-gray-600">
+                  <ArrowUpDown className="h-4 w-4 mr-2" />
+                  Sort
+                </Button>
+              </div>
+            </div>
+
             <AdsGrid ads={ads || []} isLoading={isLoading} />
-          )}
-        </div>
+          </div>
+        )}
       </div>
-    </div>
+    </AppShell>
   );
 }

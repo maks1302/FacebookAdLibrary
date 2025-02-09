@@ -4,9 +4,8 @@ export type MediaType = 'ALL' | 'IMAGE' | 'MEME' | 'VIDEO' | 'NONE';
 export interface Ad {
   id: string;
   page_name: string;
-  ad_creative_bodies: string[];
+  ad_creative_bodies?: string[];
   ad_creative_link_captions?: string[];
-  ad_creative_link_descriptions?: string[];
   ad_creative_link_titles?: string[];
   ad_creation_time: string;
   ad_delivery_start_time: string;
@@ -41,4 +40,5 @@ export interface Ad {
     lower_bound: number;
     upper_bound: number;
   };
+  categories?: string[];
 }

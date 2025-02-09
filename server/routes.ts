@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import fetch from "node-fetch";
 import { z } from "zod";
 import type { Ad } from "@shared/types";
+import { CategorizationService, Category } from './services/categorization';
 
 const searchParamsSchema = z.object({
   search_terms: z.string(),
@@ -27,6 +28,8 @@ type FacebookApiResponse = {
     };
   };
 };
+
+const categorizationService = new CategorizationService(process.env.GEMINI_API_KEY || '');
 
 export function registerRoutes(app: Express): Server {
   // Test API connection endpoint
@@ -167,6 +170,30 @@ export function registerRoutes(app: Express): Server {
       }
       console.log('\n===============================');
 
+      // Categorize ads
+      const adContents = apiResponse.data.map(ad => ({
+        page_name: ad.page_name,
+        ad_creative_bodies: ad.ad_creative_bodies || [],
+        ad_creative_link_captions: ad.ad_creative_link_captions || [],
+        ad_creative_link_titles: ad.ad_creative_link_titles || [],
+      }));
+
+      const categories = await categorizationService.categorizeAds(adContents);
+      
+      // Add categories to each ad
+      const adsWithCategories = apiResponse.data.map((ad, index) => ({
+        ...ad,
+        categories: categories.get(index + 1) || [],
+      }));
+
+      console.log("\n=== FINAL ADS WITH CATEGORIES ===");
+      adsWithCategories.forEach((ad, index) => {
+        console.log(`\nAd #${index + 1}:`);
+        console.log("Page:", ad.page_name);
+        console.log("Categories:", ad.categories);
+      });
+      console.log("\n=== END FINAL ADS ===\n");
+
       // Store search in history
       await storage.createSearchHistory({
         searchTerms: search_terms,
@@ -174,7 +201,7 @@ export function registerRoutes(app: Express): Server {
         countries: country,
       });
 
-      res.json(apiResponse.data);
+      res.json(adsWithCategories);
     } catch (error) {
       console.error("Search ads error:", error);
       const message =
