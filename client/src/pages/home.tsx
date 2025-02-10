@@ -5,8 +5,7 @@ import { AdsGrid } from "@/components/ads-grid";
 import { ConnectionTest } from "@/components/connection-test";
 import { type Ad } from "@shared/types";
 import { useToast } from "@/hooks/use-toast";
-import { AppShell } from "@/components/layout/app-shell";
-import { ArrowUpDown, Filter } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
@@ -77,8 +76,8 @@ export default function Home() {
   };
 
   return (
-    <AppShell>
-      <div className="max-w-[1600px] mx-auto">
+    <main className="min-h-screen bg-gray-50 py-8">
+      <div className="container mx-auto px-4 max-w-[1600px]">
         {/* Header Section */}
         <div className="flex flex-col items-center space-y-6 mb-8">
           <div className="text-center space-y-2">
@@ -115,10 +114,6 @@ export default function Home() {
               
               <div className="flex items-center gap-3">
                 <Button variant="outline" size="sm" className="text-gray-600">
-                  <Filter className="h-4 w-4 mr-2" />
-                  Filter
-                </Button>
-                <Button variant="outline" size="sm" className="text-gray-600">
                   <ArrowUpDown className="h-4 w-4 mr-2" />
                   Sort
                 </Button>
@@ -129,6 +124,6 @@ export default function Home() {
           </div>
         )}
       </div>
-    </AppShell>
+    </main>
   );
 }
