@@ -86,7 +86,7 @@ Only include the ad number and categories, nothing else.`;
     for (const line of lines) {
       const match = line.match(/^#(\d+):\s*(.+)$/);
       if (match) {
-        const adNumber = parseInt(match[1]);
+        const adNumber = parseInt(match[1]) - 1; // Convert 1-based to 0-based index
         const categories = match[2].split(",")
           .map(cat => cat.trim())
           .filter(cat => CATEGORIES.includes(cat as Category)) as Category[];
