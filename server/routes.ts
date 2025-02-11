@@ -1,79 +1,24 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import fetch from "node-fetch";
-import { z } from "zod";
-import type { Ad } from "@shared/types";
-import { CategorizationService, Category } from './services/categorization';
+import { FacebookApiServiceFactory } from "./services/facebook-api.factory";
+import { type SearchParams, searchParamsSchema } from "./services/facebook-api.types";
+import { CategorizationService } from './services/categorization';
 
-const searchParamsSchema = z.object({
-  search_terms: z.string(),
-  ad_type: z.enum(["ALL", "POLITICAL_AND_ISSUE_ADS"]),
-  country: z.array(z.string().length(2)),
-  ad_active_status: z.enum(["ACTIVE", "ALL", "INACTIVE"]).default("ACTIVE"),
-  media_type: z.enum(["ALL", "IMAGE", "MEME", "VIDEO", "NONE"]).default("ALL"),
-  ad_delivery_date_min: z.string().optional(),
-  ad_delivery_date_max: z.string().optional(),
+const facebookApi = FacebookApiServiceFactory.create({
+  accessToken: process.env.FB_ACCESS_TOKEN || '',
+  apiVersion: 'v22.0'
 });
-
-const FB_API_VERSION = "v22.0";
-const FB_ACCESS_TOKEN = process.env.FB_ACCESS_TOKEN;
-
-type FacebookApiResponse = {
-  data: Ad[];
-  paging?: {
-    cursors: {
-      before: string;
-      after: string;
-    };
-  };
-};
-
 const categorizationService = new CategorizationService(process.env.GEMINI_API_KEY || '');
 
 export function registerRoutes(app: Express): Server {
   // Test API connection endpoint
   app.get("/api/test-connection", async (_req, res) => {
     try {
-      if (!FB_ACCESS_TOKEN) {
-        throw new Error("Facebook API access token not configured");
-      }
-
-      const response = await fetch(
-        `https://graph.facebook.com/${FB_API_VERSION}/ads_archive?` +
-          new URLSearchParams({
-            access_token: FB_ACCESS_TOKEN,
-            search_terms: "test",
-            ad_type: "ALL",
-            ad_reached_countries: '["US"]',
-            limit: "1",
-            fields: [
-              "id",
-              "page_name",
-              "ad_creative_bodies",
-              "bylines"
-            ].join(","),
-          }),
-      );
-
-      const responseData = await response.json() as any;
-
-      if (!response.ok) {
-        throw new Error(`Facebook API error: ${JSON.stringify(responseData)}`);
-      }
-
-      res.json({
-        status: "connected",
-        api_version: FB_API_VERSION,
-        response_data: {
-          data_count: responseData.data?.length || 0,
-          has_paging: !!responseData.paging,
-          timestamp: new Date().toISOString()
-        }
-      });
+      const result = await facebookApi.testConnection();
+      res.json(result);
     } catch (error) {
-      const message =
-        error instanceof Error ? error.message : "An unexpected error occurred";
+      const message = error instanceof Error ? error.message : "An unexpected error occurred";
       res.status(400).json({ status: "error", message });
     }
   });
@@ -81,132 +26,73 @@ export function registerRoutes(app: Express): Server {
   app.get("/api/ads", async (req, res) => {
     try {
       const country = Array.isArray(req.query.country) ? req.query.country : [req.query.country];
-      const { search_terms, ad_type } = searchParamsSchema.omit({ country: true }).parse(req.query);
-
-      if (!FB_ACCESS_TOKEN) {
-        throw new Error("Facebook API access token not configured");
-      }
-
-      const fields = [
-        "id",
-        "page_name",
-        "ad_creative_bodies",
-        "ad_creative_link_captions",
-        "ad_creative_link_descriptions",
-        "ad_creative_link_titles",
-        "ad_creation_time",
-        "ad_delivery_start_time",
-        "ad_delivery_stop_time",
-        "ad_snapshot_url",
-        "currency",
-        "impressions",
-        "spend",
-        "demographic_distribution",
-        "delivery_by_region",
-        "publisher_platforms",
-        "target_ages",
-        "target_gender",
-        "target_locations",
-        "bylines",
-        "languages"
-      ].join(",");
-
-      const response = await fetch(
-        `https://graph.facebook.com/${FB_API_VERSION}/ads_archive?` +
-          new URLSearchParams({
-            access_token: FB_ACCESS_TOKEN,
-            search_terms: search_terms,
-            search_type: req.query.search_type as string || "KEYWORD_UNORDERED",
-            ad_type,
-            ad_reached_countries: JSON.stringify(country),
-            limit: "24",
-            fields,
-            ad_active_status: req.query.ad_active_status || "ACTIVE",
-            media_type: req.query.media_type || "ALL",
-            ...(req.query.ad_delivery_date_min && { ad_delivery_date_min: req.query.ad_delivery_date_min as string }),
-            ...(req.query.ad_delivery_date_max && { ad_delivery_date_max: req.query.ad_delivery_date_max as string }),
-          }),
-      );
-
-      if (!response.ok) {
-        const error = await response.json();
-        console.error("Facebook API Error:", error);
-        throw new Error(
-          `Facebook API error: ${error.error?.message || JSON.stringify(error)}`
-        );
-      }
-
-      // Log raw query parameters
-      console.log('=== Facebook API Query Parameters ===');
-      const queryParams = {
-        access_token: FB_ACCESS_TOKEN.substring(0, 10) + '...',
-        search_terms,
-        ad_type,
-        ad_reached_countries: JSON.stringify(country),
-        limit: "24",
-        fields,
-        ad_active_status: req.query.ad_active_status || "ACTIVE",
-        ad_delivery_date_min: req.query.ad_delivery_date_min,
-        ad_delivery_date_max: req.query.ad_delivery_date_max,
+      const searchParams: SearchParams = {
+        ...searchParamsSchema.omit({ country: true }).parse(req.query),
+        country,
+        search_type: (req.query.search_type as string || "KEYWORD_UNORDERED"),
+        ad_active_status: (req.query.ad_active_status as any) || "ACTIVE",
+        media_type: (req.query.media_type as any) || "ALL",
       };
-      console.log(JSON.stringify(queryParams, null, 2));
-      console.log('=====================================');
 
-      const apiResponse = (await response.json()) as FacebookApiResponse;
-      console.log('=== Facebook Ads API Response ===');
-      console.log('Total ads found:', apiResponse.data?.length || 0);
+      // Log query parameters
+      console.log('=== Facebook API Query Parameters ===');
+      console.log({
+        ...searchParams,
+        access_token: '***' // Hide token in logs
+      });
 
-      if (apiResponse.data && apiResponse.data.length > 0) {
-        console.log('\nAvailable fields in ads:');
-        console.log(Object.keys(apiResponse.data[0]).sort());
-
-        console.log('\nAll Ads Raw Data:');
-        apiResponse.data.forEach((ad, index) => {
-          console.log(`\n=== Ad ${index + 1} ===`);
-          console.log(JSON.stringify(ad, null, 2));
-        });
-      } else {
-        console.log('\nNo ads found in the response');
-      }
-      console.log('\n===============================');
-
-      // Categorize ads
-      const adContents = apiResponse.data.map(ad => ({
-        page_name: ad.page_name,
-        ad_creative_bodies: ad.ad_creative_bodies || [],
-        ad_creative_link_captions: ad.ad_creative_link_captions || [],
-        ad_creative_link_titles: ad.ad_creative_link_titles || [],
-      }));
-
-      const categories = await categorizationService.categorizeAds(adContents);
+      const response = await facebookApi.searchAds(searchParams);
       
-      // Add categories to each ad
-      const adsWithCategories = apiResponse.data.map((ad, index) => ({
-        ...ad,
-        categories: categories.get(index + 1) || [],
-      }));
-
-      console.log("\n=== FINAL ADS WITH CATEGORIES ===");
-      adsWithCategories.forEach((ad, index) => {
-        console.log(`\nAd #${index + 1}:`);
-        console.log("Page:", ad.page_name);
-        console.log("Categories:", ad.categories);
-      });
-      console.log("\n=== END FINAL ADS ===\n");
-
-      // Store search in history
+      // Store search history
       await storage.createSearchHistory({
-        searchTerms: search_terms,
-        adType: ad_type,
-        countries: country,
+        search_terms: searchParams.search_terms,
+        ad_type: searchParams.ad_type,
+        country: searchParams.country,
+        ad_active_status: searchParams.ad_active_status,
+        media_type: searchParams.media_type,
+        ad_delivery_date_min: searchParams.ad_delivery_date_min,
+        ad_delivery_date_max: searchParams.ad_delivery_date_max,
+        results_count: response.data.length,
       });
 
-      res.json(adsWithCategories);
+      // Categorize ads if needed
+      if (response.data.length > 0) {
+        try {
+          const categories = await categorizationService.categorizeAds(
+            response.data.map(ad => ({
+              page_name: ad.page_name,
+              ad_creative_bodies: ad.ad_creative_bodies || [],
+              ad_creative_link_captions: ad.ad_creative_link_captions || [],
+              ad_creative_link_titles: ad.ad_creative_link_titles || [],
+            }))
+          );
+
+          // Attach categories to ads
+          response.data = response.data.map((ad, index) => ({
+            ...ad,
+            categories: categories.get(index) || [],
+          }));
+        } catch (error) {
+          console.error('Error categorizing ads:', error);
+          // Continue without categories if categorization fails
+        }
+      }
+
+      res.json(response);
     } catch (error) {
-      console.error("Search ads error:", error);
-      const message =
-        error instanceof Error ? error.message : "An unexpected error occurred";
-      res.status(400).json({ message });
+      console.error('Error processing request:', error);
+      const message = error instanceof Error ? error.message : "An unexpected error occurred";
+      res.status(400).json({ error: message });
+    }
+  });
+
+  app.get("/api/search-history", async (_req, res) => {
+    try {
+      const history = await storage.getSearchHistory();
+      res.json(history);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "An unexpected error occurred";
+      res.status(400).json({ error: message });
     }
   });
 
@@ -238,6 +124,5 @@ export function registerRoutes(app: Express): Server {
     }
   });
 
-  const httpServer = createServer(app);
-  return httpServer;
+  return createServer(app);
 }

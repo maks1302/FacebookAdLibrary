@@ -31,16 +31,17 @@ export default function Home() {
     ad_delivery_date_max: searchParams.ad_delivery_date_max,
   } : null;
 
-  const { data: ads, isLoading } = useQuery<Ad[]>({
+  const { data: response, isLoading } = useQuery<{ data: Ad[] }>({
     queryKey: ['/api/ads', searchParams],
     enabled: !!searchParams,
     queryFn: async () => {
-      if (!searchParams) return [];
+      if (!searchParams) return { data: [] };
       const params = new URLSearchParams();
       params.append('search_terms', searchParams.search_terms);
       params.append('search_type', searchParams.search_type);
       params.append('ad_type', searchParams.ad_type);
       params.append('ad_active_status', searchParams.ad_active_status);
+      params.append('media_type', searchParams.media_type);
       const countries = Array.isArray(searchParams.country) ? searchParams.country : [searchParams.country];
       countries.forEach(c => params.append('country', c));
       if (searchParams.ad_delivery_date_min) {
@@ -49,20 +50,19 @@ export default function Home() {
       if (searchParams.ad_delivery_date_max) {
         params.append('ad_delivery_date_max', searchParams.ad_delivery_date_max);
       }
-      if (searchParams.media_type) {
-        params.append('media_type', searchParams.media_type);
-      }
-      const url = `/api/ads?${params}`;
-      const response = await fetch(url);
+
+      const response = await fetch(`/api/ads?${params}`);
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.message);
+        throw new Error(error.message || 'Failed to fetch ads');
       }
       return response.json();
     },
     gcTime: 0,
     retry: false,
   });
+
+  const ads = response?.data || [];
 
   const handleSearch = (data: { 
     search_terms: string; 
@@ -105,11 +105,11 @@ export default function Home() {
             <div className="flex items-center justify-between">
               <div className="flex items-baseline space-x-3">
                 <h2 className="text-lg font-semibold text-gray-900">Results</h2>
-                {ads && (
+                {ads?.length ? (
                   <span className="text-sm text-gray-500">
                     {ads.length.toLocaleString()} ads found
                   </span>
-                )}
+                ) : null}
               </div>
               
               <div className="flex items-center gap-3">
@@ -120,7 +120,7 @@ export default function Home() {
               </div>
             </div>
 
-            <AdsGrid ads={ads || []} isLoading={isLoading} />
+            <AdsGrid ads={ads} isLoading={isLoading} />
           </div>
         )}
       </div>
